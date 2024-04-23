@@ -29,15 +29,21 @@ void extract_lines(t_cub *cub)
 	lines = get_how_many_lines(cub->fd);
 	cub->file = ft_safe_malloc(sizeof(char *) * (lines + 1));
 	i = 0;
-	while(cub->file[i] = get_next_line(cub->fd))
+	while((cub->file[i] = get_next_line(cub->fd)))
 		i++;
 	cub->file[i] = NULL;
 	close(cub->fd);
 }
 
+// void check_texture(t_cub *cub)
+// {
+
+// }
+
 void map_validation(t_cub *cub)
 {
 	extract_lines(cub);
+	// check_texture(cub);
 	//check the texture (first 4 lines)
 	//if the file exists
 

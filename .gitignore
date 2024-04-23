@@ -1,4 +1,5 @@
 cub3d
+/includes/MLX42/
 /obj/
 /includes/libft/obj/
 /includes/libft/libft.a
