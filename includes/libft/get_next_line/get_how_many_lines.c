@@ -1,32 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   get_how_many_lines.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/23 13:16:48 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/04/23 14:26:19 by eddos-sa         ###   ########.fr       */
+/*   Created: 2024/04/23 14:34:49 by eddos-sa          #+#    #+#             */
+/*   Updated: 2024/04/23 14:40:09 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#include "../libft.h"
 
-# include "libft/libft.h"
-# include <fcntl.h>
-# include <stdio.h>
-# include <stdlib.h>
-
-typedef struct s_cub
+int	get_how_many_lines(int fd)
 {
-	int	fd;
-	char **file;
-}		t_cub;
+	char	*line;
+	int		i;
 
-t_cub	*init(t_cub *cub);
-void	*ft_safe_malloc(size_t size);
-t_cub	*get_struct(void);
-void	validation(int argc, char **argv, t_cub *cub);
-
-#endif
+	line = NULL;
+	i = 0;
+	while ((line = get_next_line(fd)) != NULL)
+	{
+		i++;
+		free(line);
+	}
+	if(line)
+		free(line);
+	return (i);
+}

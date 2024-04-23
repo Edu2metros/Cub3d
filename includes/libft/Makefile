@@ -6,7 +6,7 @@
 #    By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/17 16:56:58 by eddos-sa          #+#    #+#              #
-#    Updated: 2024/04/18 12:24:01 by eddos-sa         ###   ########.fr        #
+#    Updated: 2024/04/23 14:38:46 by eddos-sa         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -90,7 +90,8 @@ src += $(addprefix handle_char/, ft_isalnum.c \
                                  ft_isalldigit.c \
                                  ft_ismetachar.c)
 
-src += $(addprefix get_next_line/, get_next_line.c)
+src += $(addprefix get_next_line/, get_next_line.c \
+								   get_how_many_lines.c)
 
 src += $(addprefix ft_printf_fd/, ft_printf_fd.c)
 

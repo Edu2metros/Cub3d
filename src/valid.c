@@ -22,16 +22,31 @@ static void check_file(char *file, t_cub *cub)
     cub->fd = fd;
 }
 
-// void map_validation(t_cub *cub)
-// {
+void extract_lines(t_cub *cub)
+{
+	int lines;
+	int i;
+	lines = get_how_many_lines(cub->fd);
+	cub->file = ft_safe_malloc(sizeof(char *) * (lines + 1));
+	i = 0;
+	while(cub->file[i] = get_next_line(cub->fd))
+		i++;
+	cub->file[i] = NULL;
+	close(cub->fd);
+}
+
+void map_validation(t_cub *cub)
+{
+	extract_lines(cub);
 	//check the texture (first 4 lines)
 	//if the file exists
+
 
 	//check the RGB of the sky and the ground (5 and 6 lines)
 	//check if is in the range (0-255)
 
-	//check the map
-// }
+	// check the map
+}
 
 void validation(int argc, char **argv, t_cub *cub)
 {

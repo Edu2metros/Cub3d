@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:26:11 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/04/18 12:23:50 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/04/23 14:38:17 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct s_list
 
 // Get Next Line
 char				*get_next_line(int fd);
+int					get_how_many_lines(int fd);
 
 // Printf fd
 int					ft_printf_fd(int fd, const char *format, ...);
