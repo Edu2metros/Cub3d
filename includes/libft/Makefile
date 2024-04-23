@@ -103,7 +103,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@$(CC) $(FLAGS) $(INCLUDES) -c $< -o $@
 
 libft: $(SRC_OBJ)
-	@$(CC) $(FLAGS) -o libft $(SRC_OBJ)
+	@ar rc $(NAME).a $^
 
 clean: 
 		@rm -rf $(OBJ_DIR)
