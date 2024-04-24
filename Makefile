@@ -47,7 +47,7 @@ clean:
 	@rm -rf $(OBJ_DIR)
 	@make -C ./includes/libft clean
 
-fclean: clean delete_mlx
+fclean: clean
 	@rm -f $(NAME)
 	@make -C ./includes/libft fclean
 

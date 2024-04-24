@@ -23,18 +23,16 @@ static void	check_file(char *file, t_cub *cub)
 	cub->fd = fd;
 }
 
-void	exit_program(t_cub *cub)
+void	print_lines(t_cub *cub)
 {
 	int	i;
 
 	i = 0;
-	while(cub->file[i])
+	while (cub->file[i])
 	{
-		free(cub->file[i]);
+		printf("%s\n", cub->file[i]);
 		i++;
 	}
-	free(cub);
-	exit(EXIT_FAILURE);
 }
 
 void	extract_lines(t_cub *cub)
@@ -45,37 +43,17 @@ void	extract_lines(t_cub *cub)
 	lines = get_how_many_lines(cub->fd);
 	cub->file = ft_safe_malloc(sizeof(char *) * (lines + 1));
 	i = 0;
-	while ((cub->file[i] = get_next_line(cub->fd)))
+	while ((cub->file[i] = get_next_line(cub->fd)) != NULL)
 		i++;
 	cub->file[i] = NULL;
 	close(cub->fd);
 }
 
-/* int	check_texture(t_cub *cub)
-{
-	char	**str;
-	int		i;
-	int		i;
-
-	str = {"NO", "SO", "WE", "EA"};
-	i = 0;
-	while (i < 4)
-	{
-		if (ft_strncmp(cub->file[i], str[i], 2) != 0)
-		{
-			ft_printf_fd(STDERR_FILENO, "Error\nInvalid texture\n");
-			free(cub);
-			exit(EXIT_FAILURE);
-		}
-		i++;
-	}
-	// first 4 lines
-	// check if the file exists
-} */
 void	map_validation(t_cub *cub)
 {
 	// i = 0;
 	extract_lines(cub);
+	print_lines(cub);
 	// i = check_texture(cub);
 	// check the texture (first 4 lines)
 	// if the file exists
@@ -93,5 +71,5 @@ void	validation(int argc, char **argv, t_cub *cub)
 		exit(EXIT_FAILURE);
 	}
 	check_file(argv[1], cub);
-	// map validation
+	map_validation(cub);
 }
