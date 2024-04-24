@@ -35,6 +35,8 @@ int find_first_char(char *str)
 	return (-1);
 }
 
+
+
 void	check_texture_color(t_cub *cub)
 {
 	// mandar a textura e as cores pra uma struct separada (?)
@@ -49,13 +51,13 @@ void	check_texture_color(t_cub *cub)
 		if(cub->file[i][0] == '\n')
 			continue;
 		char_pos = find_first_char(cub->file[i]);
-		if(ft_isdigit(cub->file[i][char_pos]) == 1)
+		if(ft_isdigit(cub->file[i][char_pos]) == 1) //apartir dali começa numero, entao considerar que dali pra baixo é mapa
 			break ;
 		else
 		{
 			if(cub->file[i][char_pos] == 'C')
 				;
-				//fazer a validação se ali dentro tá tudo certo, cor dentro do range, se n tem um caractere estranho se tiver tudo ok, uma variável de outra struct tem um ponteiro apontando pra cub->file[i]
+				//fazer a validação se ali dentro tá tudo certo, cor dentro do range, se n tem um caractere estranho e etc. Se tiver tudo ok, uma variável de outra struct tem um ponteiro apontando pra cub->file[i]
 			else if(cub->file[i][char_pos] == 'F')
 				;
 				//mesma coisa
@@ -63,4 +65,5 @@ void	check_texture_color(t_cub *cub)
 			//else exit (alguma coisa de estranha está onde nao deveria estar)
 		}
 	}
+	//uma função que checa se todas as flags são todas iguais a 1, se tiver um igual a 0 ou maior que 1, erro.
 }
