@@ -37,24 +37,27 @@ void	print_lines(t_cub *cub)
 	}
 }
 
-void	extract_lines(t_cub *cub)
+void	extract_lines(char *file, t_cub *cub)
 {
 	int	lines;
+	int	temp_fd;
 	int	i;
 
-	lines = get_how_many_lines(cub->fd);
+	temp_fd = open(file, O_RDONLY);
+	lines = get_how_many_lines(temp_fd);
 	cub->file = ft_safe_malloc(sizeof(char *) * (lines + 1));
 	i = 0;
 	while ((cub->file[i] = get_next_line(cub->fd)) != NULL)
 		i++;
 	cub->file[i] = NULL;
+	close(temp_fd);
 	close(cub->fd);
 }
 
-void	map_validation(t_cub *cub)
+void	map_validation(char *file, t_cub *cub)
 {
 	// i = 0;
-	extract_lines(cub);
+	extract_lines(file, cub);
 	print_lines(cub);
 	// i = check_texture(cub);
 	// check the texture (first 4 lines)
@@ -73,5 +76,5 @@ void	validation(int argc, char **argv, t_cub *cub)
 		exit(EXIT_FAILURE);
 	}
 	check_file(argv[1], cub);
-	map_validation(cub);
+	map_validation(argv[1], cub);
 }
