@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nprudenc <nprudenc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:16:48 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/04/23 14:26:19 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/04/24 20:27:17 by nprudenc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,26 @@
 # include <stdio.h>
 # include <stdlib.h>
 
+# define FALSE 0
+# define TRUE 1
+# define ERROR 2
+
+typedef struct s_colors
+{
+	char **cel;
+	char **flo;
+	char *no;
+	char *so;
+	char *we;
+	char *ea;
+}		t_colors;
+
 typedef struct s_cub
 {
 	int	fd;
+	int	clr_flag;
 	char **file;
+	t_colors *colors;
 }		t_cub;
 
 t_cub	*init(t_cub *cub);

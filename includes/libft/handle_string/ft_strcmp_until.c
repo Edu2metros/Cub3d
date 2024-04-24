@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strcmp_until.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nprudenc <nprudenc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/23 13:16:22 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/04/24 19:57:13 by nprudenc         ###   ########.fr       */
+/*   Created: 2024/01/24 03:19:30 by jaqribei          #+#    #+#             */
+/*   Updated: 2024/04/24 20:00:59 by nprudenc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../libft.h"
 
-int	main(int argc, char **argv)
+int	ft_strcmp_until(char *s1, char *s2, char stop)
 {
-	t_cub *cub;
-	cub = (t_cub *)ft_safe_malloc(sizeof(t_cub));
-	// cub = init(cub);
-	validation(argc, argv, cub);
-	// assing_colors();
-	free(cub);
-	// Cub3d function (entire project here)
-	// finish
-	return (EXIT_SUCCESS);
+	int	i;
+
+	i = 0;
+	while (s1[i] != '\0' || s2[i] != '\0' || (s1[i] == stop && s2[i] == stop))
+	{
+		if (s1[i] != s2[i])
+			break ;
+		i++;
+	}
+	return (s1[i] - s2[i]);
 }

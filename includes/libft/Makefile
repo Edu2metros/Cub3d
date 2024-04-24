@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+         #
+#    By: nprudenc <nprudenc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/17 16:56:58 by eddos-sa          #+#    #+#              #
-#    Updated: 2024/04/23 14:38:46 by eddos-sa         ###   ########.fr        #
+#    Updated: 2024/04/24 20:01:56 by nprudenc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ src += $(addprefix handle_string/, ft_array_len.c \
                                     ft_strchr.c \
                                     ft_strcmp_len.c \
                                     ft_strcmp.c \
+                                    ft_strcmp_until.c \
                                     ft_strdup.c \
                                     ft_striteri.c \
                                     ft_strjoin_char.c \

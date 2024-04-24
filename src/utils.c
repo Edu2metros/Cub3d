@@ -30,11 +30,20 @@ int find_first_char(char *str)
 	{
 		if(ft_isalnum(str[i]) == 1)
 			return (i);
+		else if(str[i] == '\t' || str[i] == '\f' || str[i] == '\f')
+			return(-1);
 		i++;
 	}
 	return (-1);
 }
 
+void exit_program(t_cub *cub, char *str)
+{
+	ft_printf_fd(STDERR_FILENO, "%s", str);
+	free_array(cub->file);
+	free(cub);
+	exit(EXIT_FAILURE);
+}
 
 
 void	check_texture_color(t_cub *cub)
@@ -45,8 +54,9 @@ void	check_texture_color(t_cub *cub)
 
 	int	i;
 	int char_pos;
+
 	i = -1;
-	while(cub->file[i++] != NULL)
+	while(cub->file[++i] != NULL)
 	{
 		if(cub->file[i][0] == '\n')
 			continue;
@@ -54,16 +64,45 @@ void	check_texture_color(t_cub *cub)
 		if(ft_isdigit(cub->file[i][char_pos]) == 1) //apartir dali começa numero, entao considerar que dali pra baixo é mapa
 			break ;
 		else
-		{
-			if(cub->file[i][char_pos] == 'C')
-				;
-				//fazer a validação se ali dentro tá tudo certo, cor dentro do range, se n tem um caractere estranho e etc. Se tiver tudo ok, uma variável de outra struct tem um ponteiro apontando pra cub->file[i]
-			else if(cub->file[i][char_pos] == 'F')
-				;
-				//mesma coisa
-			// else if(NO, SO, WE, EA)
-			//else exit (alguma coisa de estranha está onde nao deveria estar)
-		}
+			validate_colors(cub, cub->file[i][char_pos]);
 	}
 	//uma função que checa se todas as flags são todas iguais a 1, se tiver um igual a 0 ou maior que 1, erro.
+}
+
+void	validate_cel_n_floor(t_cub *cub, char *line)
+{
+	int	i;
+
+	i = 0;
+	if (line[i] == ' ')
+		i++;
+	while (line[i] && line[++i])
+	{
+		if (!ft_isdigit(line[i]) || line[i] != ',')
+			cub->clr_flag = ERROR;
+	}
+}
+
+void	validate_colors(t_cub *cub, char *line)
+{
+	int	i;
+	char **directions;
+
+	directions = ft_safe_malloc(sizeof(char *) * 5);
+	directions[0] = "NO";
+	directions[1] = "SO";
+	directions[2] = "WE";
+	directions[3] = "EA";
+	directions[4] = NULL;
+	if (line[0] == 'C' || line[0] == 'F')
+		validate_cel_n_floor(cub, line);
+	else
+	{	
+		i = -1;
+		while (directions[++i])
+		{
+			if (ft_strcmp_until(line, directions[i], ' ') != 0)
+				cub->clr_flag = ERROR;
+		}
+	}
 }

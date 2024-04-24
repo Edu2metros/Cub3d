@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nprudenc <nprudenc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:26:11 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/04/23 14:38:17 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/04/24 20:01:23 by nprudenc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int					ft_array_len(char **array);
 int					ft_strcmp(char *s1, char *s2);
 int					ft_strcmp_len(char *s1, char *s2);
 int					ft_strncmp(const char *str1, const char *str2, size_t n);
+int	ft_strcmp_until(char *s1, char *s2, char stop);
 
 size_t				ft_strlen(const char *s);
 size_t				ft_strlcpy(char *dst, const char *src, size_t n);
