@@ -6,7 +6,7 @@
 /*   By: nprudenc <nprudenc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:16:48 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/04/24 20:27:17 by nprudenc         ###   ########.fr       */
+/*   Updated: 2024/04/25 17:35:01 by nprudenc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,13 @@
 # include <stdio.h>
 # include <stdlib.h>
 
-# define FALSE 0
-# define TRUE 1
-# define ERROR 2
+enum e_flags
+{
+	FALSE = 0,
+	TRUE,
+	ERROR,
+	TOTAL_INFOS = 6
+};
 
 typedef struct s_colors
 {
@@ -35,7 +39,7 @@ typedef struct s_colors
 typedef struct s_cub
 {
 	int	fd;
-	int	clr_flag;
+	int	err_flag;
 	char **file;
 	t_colors *colors;
 }		t_cub;
@@ -43,6 +47,14 @@ typedef struct s_cub
 t_cub	*init(t_cub *cub);
 void	*ft_safe_malloc(size_t size);
 t_cub	*get_struct(void);
+int		find_first_char(char *str);
+void exit_program(t_cub *cub, char *str);
+
+// VALUDATION
+
 void	validation(int argc, char **argv, t_cub *cub);
+int		map_validate(t_cub *cub, char *line);
+void	map_is_valid(t_cub *cub);
+
 
 #endif

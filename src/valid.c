@@ -37,7 +37,7 @@ void	print_lines(t_cub *cub)
 	}
 }
 
-void	extract_lines(char *file, t_cub *cub)
+static void	extract_lines(char *file, t_cub *cub)
 {
 	int	lines;
 	int	temp_fd;
@@ -58,6 +58,7 @@ void	map_validation(char *file, t_cub *cub)
 {
 	// i = 0;
 	extract_lines(file, cub);
+	map_is_valid(cub);
 	print_lines(cub);
 	// i = check_texture(cub);
 	// check the texture (first 4 lines)

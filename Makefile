@@ -10,7 +10,7 @@ SRC_DIR = src/
 
 NAME = cub3d
 
-src += main.c init.c utils.c valid.c
+src += main.c init.c utils.c valid.c validate_utils.c
 
 SRC_OBJ = $(addprefix $(OBJ_DIR), $(src:.c=.o))
 
