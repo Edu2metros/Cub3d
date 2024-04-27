@@ -1,12 +1,5 @@
 #include "../includes/cub3d.h"
 
-t_cub	*get_struct(void)
-{
-	static t_cub	cub;
-
-	return (&cub);
-}
-
 void	*ft_safe_malloc(size_t size)
 {
 	void	*ptr;
@@ -19,7 +12,6 @@ void	*ft_safe_malloc(size_t size)
 	}
 	return (ptr);
 }
-// levando em conta que o probleminha da GNL tá consertado
 
 int find_first_char(char *str)
 {

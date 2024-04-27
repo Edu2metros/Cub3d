@@ -11,12 +11,12 @@
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
-# define CUB3D_H
+#define CUB3D_H
 
-# include "libft/libft.h"
-# include <fcntl.h>
-# include <stdio.h>
-# include <stdlib.h>
+#include "libft/libft.h"
+#include <fcntl.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 enum e_flags
 {
@@ -34,27 +34,31 @@ typedef struct s_colors
 	char *so;
 	char *we;
 	char *ea;
-}		t_colors;
+} t_colors;
 
 typedef struct s_cub
 {
-	int	fd;
-	int	err_flag;
+	int fd;
+	int err_flag;
 	char **file;
 	t_colors *colors;
-}		t_cub;
+} t_cub;
 
-t_cub	*init(t_cub *cub);
-void	*ft_safe_malloc(size_t size);
-t_cub	*get_struct(void);
-int		find_first_char(char *str);
+t_cub *init(t_cub *cub);
+void *ft_safe_malloc(size_t size);
+t_cub *get_struct(void);
+int find_first_char(char *str);
 void exit_program(t_cub *cub, char *str);
 
 // VALUDATION
 
-void	validation(int argc, char **argv, t_cub *cub);
-int		map_validate(t_cub *cub, char *line);
-void	map_is_valid(t_cub *cub);
-int validate_directions(char *line);
+void validation(int argc, char **argv, t_cub *cub);
+int map_validate(t_cub *cub, char *line);
+void map_is_valid(t_cub *cub);
+void print_lines(t_cub *cub);
+void map_is_valid(t_cub *cub);
+void pop_string_array(char **directions, char *line);
+int has_in_array(char *str, char **array);
+char **fill_info(void);
 
 #endif

@@ -13,7 +13,8 @@ NAME = cub3d
 src += main.c init.c utils.c
 
 src += $(addprefix validate/,	valid.c \
-								utils.c)
+								valid_utils.c \
+								valid_map.c)
 
 SRC_OBJ = $(addprefix $(OBJ_DIR), $(src:.c=.o))
 

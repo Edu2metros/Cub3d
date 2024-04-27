@@ -1,4 +1,4 @@
-#include "../includes/cub3d.h"
+#include "../../includes/cub3d.h"
 
 int has_in_array(char *str, char **array)
 {
@@ -30,17 +30,17 @@ void pop_string_array(char **directions, char *line)
 	}
 }
 
-char **fill_directions(void)
+char **fill_info(void)
 {
-	char **directions;
+	char **info;
 
-	directions = (char **)ft_safe_malloc(sizeof(char *) * 7);
-	directions[0] = ft_strdup("NO ");
-	directions[1] = ft_strdup("SO ");
-	directions[2] = ft_strdup("EA ");
-	directions[3] = ft_strdup("WE ");
-	directions[4] = ft_strdup("C ");
-	directions[5] = ft_strdup("F ");
-	directions[6] = NULL;
-	return (directions);
+	info = (char **)ft_safe_malloc(sizeof(char *) * 7);
+	info[0] = ft_strdup("NO ");
+	info[1] = ft_strdup("SO ");
+	info[2] = ft_strdup("EA ");
+	info[3] = ft_strdup("WE ");
+	info[4] = ft_strdup("C ");
+	info[5] = ft_strdup("F ");
+	info[6] = NULL;
+	return (info);
 }
