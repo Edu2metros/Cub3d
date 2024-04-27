@@ -44,3 +44,15 @@ void exit_program(t_cub *cub, char *str)
 	free(cub);
 	exit(EXIT_FAILURE);
 }
+
+void	print_lines(t_cub *cub)
+{
+	int	i;
+
+	i = 0;
+	while (cub->file[i])
+	{
+		printf("%s\n", cub->file[i]);
+		i++;
+	}
+}

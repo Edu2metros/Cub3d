@@ -55,6 +55,6 @@ void exit_program(t_cub *cub, char *str);
 void	validation(int argc, char **argv, t_cub *cub);
 int		map_validate(t_cub *cub, char *line);
 void	map_is_valid(t_cub *cub);
-
+int validate_directions(char *line);
 
 #endif

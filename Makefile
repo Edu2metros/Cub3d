@@ -10,14 +10,17 @@ SRC_DIR = src/
 
 NAME = cub3d
 
-src += main.c init.c utils.c valid.c validate_utils.c
+src += main.c init.c utils.c
+
+src += $(addprefix validate/,	valid.c \
+								utils.c)
 
 SRC_OBJ = $(addprefix $(OBJ_DIR), $(src:.c=.o))
 
 all: build_mlx libft $(NAME)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)/%.c
-	@mkdir -p $(OBJ_DIR)
+	@mkdir -p $(@D)
 	@$(cc) $(FLAGS) $(INCLUDES) -c $< -o $@
 
 $(NAME): $(SRC_OBJ)
@@ -36,6 +39,9 @@ ifeq (,$(wildcard ./includes/MLX42/build/libmlx42.a))
 		cmake --build build -j4; \
 	fi
 endif
+
+gdb: all
+	@gdb --tui --args ./cub3d maps/andrey.cub
 
 delete_mlx:
 	@rm -rf includes/MLX42

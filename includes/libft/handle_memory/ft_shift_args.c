@@ -12,15 +12,15 @@
 
 #include "../libft.h"
 
-void	shift_args(char **args, int start)
+void shift_args(char **args, int start)
 {
-	int	j;
-
-	j = start;
-	while (args[j])
-	{
-		args[j] = args[j + 1];
-		j++;
-	}
-	free(args[j]);
+    int j = start;
+    free(args[j]);
+    while (args[j + 1] != NULL)
+    {
+        args[j] = args[j + 1];
+        j++;
+    }
+    args[j] = NULL;
 }
+
