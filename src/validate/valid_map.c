@@ -64,6 +64,8 @@ static int validate_directions(char *line, char **info, t_cub *cub)
 }
 
 /*
+	is_valid_characters
+
 	param map_start -> ponto inicial onde iniciam-se os vetores
 
 	o loop while roda por todo o mapa, e utiliza a string
@@ -100,6 +102,8 @@ int	is_valid_characters(char **map_start)
 }
 
 /*
+	is_more_than_one_player
+
 	param map_start -> ponto inicial onde iniciam-se os vetores
 
 	o loop while roda por todo o mapa, e utiliza a string
@@ -129,10 +133,87 @@ int is_more_than_one_player(char **map_start)
 			if (ft_strchr(player_chars, map_start[i][j]))
 				player_counter++;
 	}
-	printf("players: %i\n", player_counter);
 	if (player_counter != 1)
 		return (TRUE);
 	return (FALSE);
+}
+
+/*
+	find_map_height
+
+	seu retorno é + 1 por conta que 
+	a última linha não contém '\n'
+*/
+
+int	find_map_height(char **map_start)
+{
+	int	i;
+	int	j;
+	int	line_counter;
+
+	i = -1;
+	line_counter = 0;
+	while (map_start[++i])
+	{
+		if (ft_strchr(map_start[i], '\n'))
+			line_counter++;
+	}
+	return (line_counter + 1);
+}
+
+int is_a_dif_char(char *s, char c)
+{
+	int	i;
+
+	i = -1;
+	while (s[++i])
+	{
+		if (s[i] != c && s[i] != '\n')
+			return (TRUE);
+	}
+	return (FALSE);
+}
+
+/*
+	is_extremities_closed
+
+	Checa se as linhas do topo e do final contém
+	apenas paredes
+*/
+
+int	is_extremities_closed(char *top_line, char *bot_line)
+{
+	if (is_a_dif_char(top_line, '1') || is_a_dif_char(bot_line, '1'))
+		return (FALSE);
+	return (TRUE);
+}
+
+/*
+	is_all_land_closed
+
+	até o momento checa se existe um espaco ao redor dos numeros zeros que definem o piso do mapa, precisa de refatoracao e aprimoramentos.
+*/
+
+int	is_all_land_closed(char **map_start)
+{
+	int	i;
+	int	j;
+	int	map_height;
+
+	map_height = find_map_height(map_start);
+	if (!is_extremities_closed(map_start[0], map_start[map_height - 1]))
+		return (FALSE);
+	i = 0;	
+	while(map_start[++i] && i < map_height - 2)
+	{
+		j = -1;
+		while (map_start[i][++j])
+		{
+			if (map_start[i][j] == '0' && (ft_isspace(map_start[i][j + 1]) || ft_isspace(map_start[i][j - 1]) || ft_isspace(map_start[i + 1][j]) || ft_isspace(map_start[i - 1][j])))
+				return (FALSE);
+		}
+	}
+	return (TRUE);
 }
 
 void	validate_map(t_cub *cub, char **map_start)
@@ -146,6 +227,11 @@ void	validate_map(t_cub *cub, char **map_start)
 		return ;
 	}
 	if (is_more_than_one_player(map_start))
+	{
+		cub->err_flag = TRUE;
+		return ;
+	}
+	if (!is_all_land_closed(map_start))
 	{
 		cub->err_flag = TRUE;
 		return ;
