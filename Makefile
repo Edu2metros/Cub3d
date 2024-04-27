@@ -1,6 +1,6 @@
 cc =  cc
 
-FLAGS = -Wall -Wextra -Werror -g3
+FLAGS = -g3
 
 MLX_FLAGS = -ldl -lglfw -pthread -lm
 
@@ -40,6 +40,9 @@ ifeq (,$(wildcard ./includes/MLX42/build/libmlx42.a))
 		cmake --build build -j4; \
 	fi
 endif
+
+valgrind: all
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./cub3d maps/andrey.cub
 
 gdb: all
 	@gdb --tui --args ./cub3d maps/andrey.cub

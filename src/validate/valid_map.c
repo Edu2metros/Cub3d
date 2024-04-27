@@ -56,6 +56,10 @@ void map_is_valid(t_cub *cub)
 	}
 	//Se o arquivo tiver mais de 0 strings na matriz ou se o arquivo tiver um erro, o programa é encerrado.
 	if (cub->err_flag == TRUE || ft_array_len(info) != 0)
+	{
+		free_array(info);
 		exit_program(cub, "Error in file. Exit\n");
+	}
+	free(info);
 }
 

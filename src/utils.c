@@ -32,8 +32,7 @@ int find_first_char(char *str)
 void exit_program(t_cub *cub, char *str)
 {
 	ft_printf_fd(STDERR_FILENO, "%s", str);
-	free_array(cub->file);
-	free(cub);
+	free_gargabe_collector(cub->garbage);
 	exit(EXIT_FAILURE);
 }
 

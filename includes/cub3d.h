@@ -36,15 +36,23 @@ typedef struct s_colors
 	char *ea;
 } t_colors;
 
+typedef struct s_garbage
+{
+	void *ptr;
+	struct s_garbage *next;
+} t_garbage;
+
 typedef struct s_cub
 {
 	int fd;
 	int err_flag;
 	char **file;
 	t_colors *colors;
+	t_garbage *garbage;
 } t_cub;
 
-t_cub *init(t_cub *cub);
+
+t_cub *init(void);
 void *ft_safe_malloc(size_t size);
 t_cub *get_struct(void);
 int find_first_char(char *str);
@@ -60,5 +68,10 @@ void map_is_valid(t_cub *cub);
 void pop_string_array(char **directions, char *line);
 int has_in_array(char *str, char **array);
 char **fill_info(void);
+
+
+// Memory
+void *malloc_garbage_collector(t_garbage **garbage_collector, size_t size);
+void free_gargabe_collector(t_garbage *list);
 
 #endif

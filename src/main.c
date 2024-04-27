@@ -12,14 +12,35 @@
 
 #include "../includes/cub3d.h"
 
-int	main(int argc, char **argv)
+void *malloc_garbage_collector(t_garbage **garbage_collector, size_t size)
+{
+	void *ptr = ft_safe_malloc(size);
+	t_garbage *new = (t_garbage *)ft_safe_malloc(sizeof(t_garbage));
+	new->ptr = ptr;
+	new->next = *garbage_collector;
+	*garbage_collector = new;
+	return ptr;
+}
+
+void free_gargabe_collector(t_garbage *list)
+{
+	while (list != NULL)
+	{
+		t_garbage *temp = list;
+		list = list->next;
+		free(temp->ptr);
+		free(temp);
+	}
+}
+
+int main(int argc, char **argv)
 {
 	t_cub *cub;
-	cub = (t_cub *)ft_safe_malloc(sizeof(t_cub));
-	// cub = init(cub);
+
+	cub = init();
 	validation(argc, argv, cub);
 	// assing_colors();
-	free(cub);
+	free_gargabe_collector(cub->garbage);
 	// Cub3d function (entire project here)
 	// finish
 	return (EXIT_SUCCESS);
