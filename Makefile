@@ -14,7 +14,11 @@ src += main.c init.c utils.c
 
 src += $(addprefix validate/,	valid.c \
 								valid_utils.c \
-								valid_map.c)
+								valid_map.c \
+								valid_info.c \
+								utils_valid.c)
+
+src += $(addprefix memory/,	memory_manager.c)
 
 SRC_OBJ = $(addprefix $(OBJ_DIR), $(src:.c=.o))
 

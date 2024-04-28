@@ -1,38 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   valid_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/28 00:56:48 by eddos-sa          #+#    #+#             */
+/*   Updated: 2024/04/28 00:56:58 by eddos-sa         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/cub3d.h"
 
-int has_in_array(char *str, char **array)
+char	**fill_info(void)
 {
-	int i;
-
-	i = 0;
-	while (array[i] != NULL)
-	{
-		if (ft_strcmp_until(str, array[i], ' ') == 0)
-			return (TRUE);
-		i++;
-	}
-	return (FALSE);
-}
-
-void pop_string_array(char **directions, char *line)
-{
-	int i;
-
-	i = 0;
-	while (directions[i] != NULL)
-	{
-		if (ft_strcmp_until(line, directions[i], ' ') == 0)
-		{
-			shift_args(directions, i);
-			break;
-		}
-		i++;
-	}
-}
-
-char **fill_info(void)
-{
-	char **info;
+	char	**info;
 
 	info = (char **)ft_safe_malloc(sizeof(char *) * 7);
 	info[0] = ft_strdup("NO ");
@@ -43,4 +25,63 @@ char **fill_info(void)
 	info[5] = ft_strdup("F ");
 	info[6] = NULL;
 	return (info);
+}
+
+int	find_first_char(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (ft_isalnum(str[i]) == 1)
+			return (i);
+		else if (str[i] == '\t' || str[i] == '\f' || str[i] == '\f')
+			return (-1);
+		i++;
+	}
+	return (-1);
+}
+
+/*
+	find_map_height
+
+	seu retorno é + 1 por conta que
+	a última linha não contém '\n'
+*/
+
+int	map_adjust(char **map_start, int line_counter)
+{
+	while (!map_start[line_counter])
+		line_counter--;
+	return (line_counter);
+}
+
+int	find_map_height(char **map_start)
+{
+	int	i;
+	int	line_counter;
+
+	i = -1;
+	line_counter = 0;
+	while (map_start[++i])
+	{
+		if (ft_strchr(map_start[i], '\n'))
+			line_counter++;
+	}
+	line_counter = map_adjust(map_start, line_counter);
+	return (line_counter);
+}
+
+int	is_a_dif_char(char *s, char c)
+{
+	int	i;
+
+	i = -1;
+	while (s[++i])
+	{
+		if (s[i] != c && s[i] != '\n' && s[i] != ' ')
+			return (FALSE);
+	}
+	return (TRUE);
 }
