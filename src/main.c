@@ -44,8 +44,8 @@ int main(int argc, char **argv)
 	cub = init();
 	validation(argc, argv, cub);
 	// assing_colors();
-	free_gargabe_collector(cub->garbage);
 	// Cub3d function (entire project here)
 	// finish
+	free_gargabe_collector(cub->garbage);
 	return (EXIT_SUCCESS);
 }

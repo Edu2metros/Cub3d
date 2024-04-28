@@ -166,7 +166,6 @@ int map_adjust(char **map_start, int line_counter)
 int	find_map_height(char **map_start)
 {
 	int	i;
-	int	j;
 	int	line_counter;
 
 	i = -1;
@@ -251,9 +250,6 @@ int	is_all_land_closed(char **map_start)
 
 void	validate_map(t_cub *cub, char **map_start)
 {
-	int	i;
-	int	j;
-
 	if (!is_valid_characters(map_start))
 		cub->err_flag = TRUE;
 	else if (is_more_than_one_player(map_start))
