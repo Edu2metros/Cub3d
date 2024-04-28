@@ -8,7 +8,7 @@
 		"type": "cppdbg",
 		"request": "launch",
 		"program": "${workspaceFolder}/cub3D",
-		"args": ["/home/eddos-sa/projects/Cub3d/tests/maps/valid/00_valid_texture_parameters.cub"],
+		"args": ["/home/eddos-sa/projects/Cub3d/maps/valid/51_starting_position_within_bumpy_map.cub"],
 		"stopAtEntry": true,
 		"cwd": "${fileDirname}",
 		"environment": [],

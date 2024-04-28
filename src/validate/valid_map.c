@@ -156,6 +156,13 @@ int is_more_than_one_player(char **map_start)
 	a última linha não contém '\n'
 */
 
+int map_adjust(char **map_start, int line_counter)
+{
+	while(!map_start[line_counter])
+		line_counter--;
+	return (line_counter);
+}
+
 int	find_map_height(char **map_start)
 {
 	int	i;
@@ -169,7 +176,8 @@ int	find_map_height(char **map_start)
 		if (ft_strchr(map_start[i], '\n'))
 			line_counter++;
 	}
-	return (line_counter + 1);
+	line_counter = map_adjust(map_start, line_counter);
+	return (line_counter);
 }
 
 int is_a_dif_char(char *s, char c)
@@ -179,10 +187,10 @@ int is_a_dif_char(char *s, char c)
 	i = -1;
 	while (s[++i])
 	{
-		if (s[i] != c && s[i] != '\n')
-			return (TRUE);
+		if (s[i] != c && s[i] != '\n' && s[i] != ' ')
+			return (FALSE);
 	}
-	return (FALSE);
+	return (TRUE);
 }
 
 /*
@@ -194,9 +202,9 @@ int is_a_dif_char(char *s, char c)
 
 int	is_extremities_closed(char *top_line, char *bot_line)
 {
-	if (is_a_dif_char(top_line, '1') || is_a_dif_char(bot_line, '1'))
-		return (TRUE);
-	return (FALSE);
+	if (is_a_dif_char(top_line, '1') == FALSE || is_a_dif_char(bot_line, '1') == FALSE)
+		return (FALSE);
+	return (TRUE);
 }
 
 /*
@@ -214,6 +222,11 @@ int ft_isspace_two(char **map_start, int i, int j)
 	return (TRUE);
 }
 
+int ft_isvalid(char c)
+{
+	return(c == '0' || c == 'N' || c == 'S' || c == 'E' || c == 'W');
+}
+
 int	is_all_land_closed(char **map_start)
 {
 	int	i;
@@ -221,16 +234,16 @@ int	is_all_land_closed(char **map_start)
 	int	map_height;
 
 	map_height = find_map_height(map_start);
-	if (!is_extremities_closed(map_start[0], map_start[map_height - 2]))
+	if (is_extremities_closed(map_start[0], map_start[map_height]) == FALSE)
 		return (FALSE);
 	i = 0;	
-	while(map_start[++i] && i < map_height - 2)
+	while(map_start[++i] && i < map_height)
 	{
 		j = -1;
 		while (map_start[i][++j])
 		{
-			if (map_start[i][j] == '0' && ft_isspace_two(map_start, i, j) == FALSE)
-				return (FALSE);
+			if (ft_isvalid(map_start[i][j]) && ft_isspace_two(map_start, i, j) == FALSE)
+				return (FALSE);	
 		}
 	}
 	return (TRUE);
