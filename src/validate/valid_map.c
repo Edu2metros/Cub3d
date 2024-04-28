@@ -13,6 +13,33 @@ static int ft_strcmp_directions(char *line, char *direction, char **info)
 	return (FALSE);
 }
 
+int range_color(t_cub *cub, char *line)
+{
+	char **colors;
+	int i;
+	
+	colors = ft_split(line, ',');
+	i = 0;
+	if(ft_array_len(colors) != 3)
+	{
+		cub->err_flag = TRUE;
+		free_array(colors);
+		return(FALSE);
+	}
+	while(colors[i])
+	{
+		if(ft_atof(colors[i]) < 0 || ft_atof(colors[i]) > 255)
+		{
+			cub->err_flag = TRUE;
+			free_array(colors);
+			return(FALSE);
+		}
+		i++;
+	}
+	free_array(colors);
+	return (TRUE);
+}
+
 static int	validate_cel_n_floor(t_cub *cub, char *line)
 {
 	int	i;
@@ -31,6 +58,8 @@ static int	validate_cel_n_floor(t_cub *cub, char *line)
 			return (FALSE);
 		}
 	}
+	if(range_color(cub, line) == FALSE)
+		return (FALSE);
 	return (TRUE);
 }
 
@@ -77,24 +106,13 @@ int	is_valid_characters(char **map_start)
 {
 	int	i;
 	int	j;
-	char valid_chars[9];
-
-	valid_chars[0] = '0';
-	valid_chars[1] = '1';
-	valid_chars[2] = ' ';
-	valid_chars[3] = '\n';
-	valid_chars[4] = 'N';
-	valid_chars[5] = 'S';
-	valid_chars[6] = 'E';
-	valid_chars[7] = 'W';
-	valid_chars[8] = '\0';
 	i = -1;
 	while (map_start[++i])
 	{
 		j = -1;
 		while (map_start[i][++j])
 		{
-			if (!ft_strchr(valid_chars, map_start[i][j]))
+			if (!ft_strchr(VALID_CHARS, map_start[i][j]))
 				return (FALSE);
 		}
 	}
@@ -117,20 +135,13 @@ int is_more_than_one_player(char **map_start)
 	int	i;
 	int	j;
 	int	player_counter;
-	char player_chars[5];
-
-	player_chars[0] = 'N';
-	player_chars[1] = 'S';
-	player_chars[2] = 'E';
-	player_chars[3] = 'W';
-	player_chars[4] = '\0';
 	i = -1;
 	player_counter = 0;
 	while (map_start[++i])
 	{
 		j = -1;
 		while (map_start[i][++j])
-			if (ft_strchr(player_chars, map_start[i][j]))
+			if (ft_strchr(PLAYER_CHARS, map_start[i][j]))
 				player_counter++;
 	}
 	if (player_counter != 1)
@@ -184,8 +195,8 @@ int is_a_dif_char(char *s, char c)
 int	is_extremities_closed(char *top_line, char *bot_line)
 {
 	if (is_a_dif_char(top_line, '1') || is_a_dif_char(bot_line, '1'))
-		return (FALSE);
-	return (TRUE);
+		return (TRUE);
+	return (FALSE);
 }
 
 /*
@@ -194,6 +205,15 @@ int	is_extremities_closed(char *top_line, char *bot_line)
 	até o momento checa se existe um espaco ao redor dos numeros zeros que definem o piso do mapa, precisa de refatoracao e aprimoramentos.
 */
 
+int ft_isspace_two(char **map_start, int i, int j)
+{
+	if (!map_start[i - 1][j] || !map_start[i + 1][j] || !map_start[i][j - 1] || !map_start[i][j + 1])
+		return (FALSE);
+	if (map_start[i - 1][j] == ' ' || map_start[i + 1][j] == ' ' || map_start[i][j - 1] == ' ' || map_start[i][j + 1] == ' ')
+		return (FALSE);
+	return (TRUE);
+}
+
 int	is_all_land_closed(char **map_start)
 {
 	int	i;
@@ -201,7 +221,7 @@ int	is_all_land_closed(char **map_start)
 	int	map_height;
 
 	map_height = find_map_height(map_start);
-	if (!is_extremities_closed(map_start[0], map_start[map_height - 1]))
+	if (!is_extremities_closed(map_start[0], map_start[map_height - 2]))
 		return (FALSE);
 	i = 0;	
 	while(map_start[++i] && i < map_height - 2)
@@ -209,7 +229,7 @@ int	is_all_land_closed(char **map_start)
 		j = -1;
 		while (map_start[i][++j])
 		{
-			if (map_start[i][j] == '0' && (ft_isspace(map_start[i][j + 1]) || ft_isspace(map_start[i][j - 1]) || ft_isspace(map_start[i + 1][j]) || ft_isspace(map_start[i - 1][j])))
+			if (map_start[i][j] == '0' && ft_isspace_two(map_start, i, j) == FALSE)
 				return (FALSE);
 		}
 	}
@@ -222,20 +242,11 @@ void	validate_map(t_cub *cub, char **map_start)
 	int	j;
 
 	if (!is_valid_characters(map_start))
-	{
 		cub->err_flag = TRUE;
-		return ;
-	}
-	if (is_more_than_one_player(map_start))
-	{
+	else if (is_more_than_one_player(map_start))
 		cub->err_flag = TRUE;
-		return ;
-	}
-	if (!is_all_land_closed(map_start))
-	{
+	else if (!is_all_land_closed(map_start))
 		cub->err_flag = TRUE;
-		return ;
-	}
 }
 
 void	map_is_valid(t_cub *cub)
@@ -253,7 +264,7 @@ void	map_is_valid(t_cub *cub)
 			continue;
 		char_pos = find_first_char(cub->file[i]);
 		if (ft_isdigit(cub->file[i][char_pos]) == 1)
-		{	
+		{
 			validate_map(cub, &cub->file[i]);
 			break;
 		}
@@ -261,7 +272,8 @@ void	map_is_valid(t_cub *cub)
 		    validate_directions(cub->file[i] + char_pos, info, cub);
 	}
 	//Se o arquivo tiver mais de 0 strings na matriz ou se o arquivo tiver um erro, o programa é encerrado.
-	if (cub->err_flag == TRUE || ft_array_len(info) != 0)
+	//Adicionei mais uma verificação para se caso o arquivo não tiver mais linhas para ler, o que significa que não existe um mapa no arquivo.
+	if (cub->err_flag == TRUE || ft_array_len(info) != 0 || cub->file[i] == NULL)
 	{
 		free_array(info);
 		exit_program(cub, "Error in file. Exit\n");

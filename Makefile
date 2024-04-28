@@ -8,7 +8,7 @@ INCLUDES = -I ./includes/
 OBJ_DIR = obj/
 SRC_DIR = src/
 
-NAME = cub3d
+NAME = cub3D
 
 src += main.c init.c utils.c
 
@@ -44,8 +44,8 @@ endif
 valgrind: all
 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./cub3d maps/andrey.cub
 
-gdb: all
-	@gdb --tui --args ./cub3d maps/andrey.cub
+gdb:
+	gnome-terminal --maximize -- bash -c "sleep 1 && gdb --tui --args ./cub3d maps/andrey.cub"
 
 delete_mlx:
 	@rm -rf includes/MLX42

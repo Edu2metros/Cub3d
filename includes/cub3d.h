@@ -18,6 +18,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define VALID_CHARS "01 \nNSEW"
+#define PLAYER_CHARS "NSEW"
+
 enum e_flags
 {
 	FALSE = 0,

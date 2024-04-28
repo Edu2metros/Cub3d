@@ -12,6 +12,10 @@
 
 #include "../includes/cub3d.h"
 
+//Garbage collector:
+//Lista linkada para armazenas os ponteiros alocados
+//para liberar a memória no final do programa
+
 void *malloc_garbage_collector(t_garbage **garbage_collector, size_t size)
 {
 	void *ptr = ft_safe_malloc(size);
