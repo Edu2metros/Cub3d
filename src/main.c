@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:16:22 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/04/29 16:31:19 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/04/29 19:20:05 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	print_infos(t_info *info)
 void	cub3d(t_cub *cub)
 {
 	parser(cub);
-	print_infos(cub->info);
+	// print_infos(cub->info);
 	print_map(cub->info->map);
 }
 

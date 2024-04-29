@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 16:18:22 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/04/29 16:23:21 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/04/29 19:16:31 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,20 @@ static void	parser_info(t_cub *cub)
 	}
 }
 
+static int	get_exact_lines(char **file)
+{
+	int	i;
+
+	i = 0;
+	while (file[i])
+	{
+		if (file[i][0] == '\n')
+			break ;
+		i++;
+	}
+	return (i);
+}
+
 static void	parser_map(t_cub *cub)
 {
 	int	i;
@@ -72,15 +86,14 @@ static void	parser_map(t_cub *cub)
 
 	i = 0;
 	start = jump_lines(cub->file);
-	map_height = find_map_height(cub->file + start);
+	map_height = get_exact_lines(cub->file + start);
 	cub->info->map = (char **)malloc_garbage_collector(&cub->garbage,
-			sizeof(char *) * (map_height + 2));
-	while (i <= map_height)
+			sizeof(char *) * (map_height + 1));
+	while (i < map_height)
 	{
 		cub->info->map[i] = ft_strdup_two(cub->file[start + i], cub);
 		i++;
 	}
-	cub->info->map[i] = NULL;
 }
 
 // separa texturas, cores e mapa do arquivo e manda pra struct info
