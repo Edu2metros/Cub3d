@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:16:48 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/04/28 01:15:32 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/04/29 16:29:08 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,16 @@ enum					e_flags
 	TOTAL_INFOS = 6
 };
 
-typedef struct s_colors
+typedef struct s_info
 {
-	char				**cel;
-	char				**flo;
+	char				**map;
 	char				*no;
 	char				*so;
 	char				*we;
 	char				*ea;
-}						t_colors;
+	int					*cel;
+	int					*flo;
+}						t_info;
 
 typedef struct s_garbage
 {
@@ -50,7 +51,7 @@ typedef struct s_cub
 	int					fd;
 	int					err_flag;
 	char				**file;
-	t_colors			*colors;
+	t_info				*info;
 	t_garbage			*garbage;
 }						t_cub;
 
@@ -61,7 +62,7 @@ void					exit_program(t_cub *cub, char *str);
 
 // VALIDATION
 
-void					validation(int argc, char **argv, t_cub *cub);
+t_cub					*validation(int argc, char **argv);
 void					validate_map(t_cub *cub, char **map_start);
 int						validate_info(char *line, char **info, t_cub *cub);
 
@@ -79,5 +80,13 @@ void					*malloc_garbage_collector(t_garbage **garbage_collector,
 							size_t size);
 void					free_gargabe_collector(t_garbage *list);
 void					*ft_safe_malloc(size_t size);
+char					*ft_strdup_two(const char *str, t_cub *cub);
+
+// Utils
+int						jump_lines(char **file);
+void					remove_char(char *str, char c);
+
+// Parser
+void					parser(t_cub *cub);
 
 #endif

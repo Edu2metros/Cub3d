@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 00:57:02 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/04/28 01:05:47 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/04/29 16:21:20 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,14 @@ static void	map_is_valid(t_cub *cub)
 	free(info);
 }
 
-void	validation(int argc, char **argv, t_cub *cub)
+t_cub	*validation(int argc, char **argv)
 {
+	t_cub	*cub;
+
+	cub = init();
 	check_args(argc, cub);
 	check_file(argv[1], cub);
 	extract_lines(argv[1], cub);
 	map_is_valid(cub);
-	print_lines(cub);
+	return (cub);
 }

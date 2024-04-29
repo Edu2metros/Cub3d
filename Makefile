@@ -10,7 +10,7 @@ SRC_DIR = src/
 
 NAME = cub3D
 
-src += main.c init.c utils.c
+src += main.c init.c utils.c parser.c
 
 src += $(addprefix validate/,	valid.c \
 								valid_utils.c \
@@ -46,10 +46,10 @@ ifeq (,$(wildcard ./includes/MLX42/build/libmlx42.a))
 endif
 
 valgrind: all
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./cub3d maps/andrey.cub
+	clear && valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./cub3D maps/andrey.cub
 
 gdb:
-	gnome-terminal --maximize -- bash -c "sleep 1 && gdb --tui --args ./cub3d maps/andrey.cub"
+	gnome-terminal --maximize -- bash -c "sleep 0.3 && gdb --tui --args ./cub3D maps/andrey.cub"
 
 delete_mlx:
 	@rm -rf includes/MLX42

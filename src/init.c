@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 01:07:01 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/04/28 01:07:02 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/04/29 16:21:10 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,11 @@ t_cub	*init(void)
 	cub->fd = 0;
 	cub->err_flag = FALSE;
 	*get_struct() = *cub;
+	cub->info = (t_info *)malloc_garbage_collector(&cub->garbage,
+			sizeof(t_info));
+	cub->info->cel = (int *)malloc_garbage_collector(&cub->garbage, sizeof(int)
+			* 3);
+	cub->info->flo = (int *)malloc_garbage_collector(&cub->garbage, sizeof(int)
+			* 3);
 	return (cub);
 }
