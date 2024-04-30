@@ -6,7 +6,7 @@
 /*   By: nprudenc <nprudenc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:16:48 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/04/29 20:08:12 by nprudenc         ###   ########.fr       */
+/*   Updated: 2024/04/30 18:47:56 by nprudenc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,11 @@
 # define CUB3D_H
 
 # include "libft/libft.h"
+
 # include <fcntl.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include "MLX42/include/MLX42/MLX42.h"
 
 # define VALID_CHARS "01 \nNSEW"
 # define PLAYER_CHARS "NSEW"
@@ -27,6 +29,14 @@ enum					e_flags
 	TRUE,
 	ERROR,
 	TOTAL_INFOS = 6
+};
+
+enum					types
+{
+	FLOOR = 0,
+	WALL,
+	PLAYER,
+	SPACE
 };
 
 typedef struct s_info
@@ -50,7 +60,7 @@ typedef struct s_vectors
 {
 	int	x;
 	int	y;
-	int	is_space;
+	int	type;
 } 			 t_vectors;
 
 typedef struct s_cub
@@ -98,7 +108,11 @@ void					remove_char(char *str, char c);
 void					parser(t_cub *cub);
 
 // Draw Map
+void	define_vectors(char **map, t_cub *cub);
+void	free_vectors(t_vectors **vectors);
 
-void	define_vectors(char **map, t_vectors **vectors);
+// MLX
+
+mlx_t	*init_window(t_vectors **vectors);
 
 #endif

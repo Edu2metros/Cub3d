@@ -6,7 +6,7 @@
 /*   By: nprudenc <nprudenc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:16:22 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/04/29 20:24:39 by nprudenc         ###   ########.fr       */
+/*   Updated: 2024/04/30 19:43:45 by nprudenc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,12 @@ void	print_infos(t_info *info)
 void	cub3d(t_cub *cub)
 {
 	parser(cub);
-	define_vectors(cub->info->map, cub->vectors);
+	define_vectors(cub->info->map, cub);
+	printf("cub_vecs: %p\n", cub->vectors);
 	// print_infos(cub->info);
 	print_map(cub->info->map);
+	// init_window(cub->vectors);
+
 }
 
 int	main(int argc, char **argv)

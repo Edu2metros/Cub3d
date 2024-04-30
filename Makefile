@@ -21,6 +21,9 @@ src += $(addprefix validate/,	valid.c \
 src += $(addprefix draw_map/,	define_vectors.c \
 								)
 
+src += $(addprefix mlx_manager/,	window.c \
+								)
+
 src += $(addprefix memory/,	memory_manager.c)
 
 SRC_OBJ = $(addprefix $(OBJ_DIR), $(src:.c=.o))
@@ -52,7 +55,7 @@ valgrind: all
 	clear && valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./cub3D maps/andrey.cub
 
 gdb:
-	gnome-terminal --maximize -- bash -c "sleep 0.3 && gdb --tui --args ./cub3D maps/andrey.cub"
+	gnome-terminal --maximize -- bash -c "sleep 0.3 && gdb --tui --args ./cub3D maps/elevator.cub"
 
 delete_mlx:
 	@rm -rf includes/MLX42
