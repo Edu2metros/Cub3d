@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   valid_info.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nprudenc <nprudenc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 00:55:52 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/04/28 00:56:03 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/04/29 19:28:19 by nprudenc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +86,8 @@ int	validate_info(char *line, char **info, t_cub *cub)
 		return (TRUE);
 	else if (ft_strcmp_directions(line, "WE ", info) == TRUE)
 		return (TRUE);
-	else if (ft_strcmp_directions(line, "C ", info) == TRUE)
-	{
-		if (!validate_cel_n_floor(cub, line))
-			return (FALSE);
-		return (TRUE);
-	}
-	else if (ft_strcmp_directions(line, "F ", info) == TRUE)
+	else if (ft_strcmp_directions(line, "C ", info) == TRUE
+		|| ft_strcmp_directions(line, "F ", info) == TRUE)
 	{
 		if (!validate_cel_n_floor(cub, line))
 			return (FALSE);

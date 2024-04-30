@@ -18,6 +18,9 @@ src += $(addprefix validate/,	valid.c \
 								valid_info.c \
 								utils_valid.c)
 
+src += $(addprefix draw_map/,	define_vectors.c \
+								)
+
 src += $(addprefix memory/,	memory_manager.c)
 
 SRC_OBJ = $(addprefix $(OBJ_DIR), $(src:.c=.o))

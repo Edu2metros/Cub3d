@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nprudenc <nprudenc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:16:48 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/04/29 16:29:08 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/04/29 20:08:12 by nprudenc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,19 @@ typedef struct s_garbage
 	struct s_garbage	*next;
 }						t_garbage;
 
+typedef struct s_vectors
+{
+	int	x;
+	int	y;
+	int	is_space;
+} 			 t_vectors;
+
 typedef struct s_cub
 {
 	int					fd;
 	int					err_flag;
 	char				**file;
+	t_vectors			**vectors;
 	t_info				*info;
 	t_garbage			*garbage;
 }						t_cub;
@@ -88,5 +96,9 @@ void					remove_char(char *str, char c);
 
 // Parser
 void					parser(t_cub *cub);
+
+// Draw Map
+
+void	define_vectors(char **map, t_vectors **vectors);
 
 #endif

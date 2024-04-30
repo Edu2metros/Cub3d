@@ -1,7 +1,8 @@
 EA textures/resident_evil_gaiden_living_room.png
 WE textures/resident_evil_gaiden_living_room.png
-NO textures/resident_evil_gaiden_wall_lamp.png
 SO textures/resident_evil_gaiden_wall_lamp.png
+NO textures/resident_evil_gaiden_wall_lamp.png
+
 
 C 129,97,64
 F 127,17,1
@@ -15,5 +16,3 @@ F 127,17,1
      1001     100101  1001100011011001101111   101
      1N1       10001   1000001 101 1000000001  101
 11111111111111111111111111111111111111111111111111111111111111
-
-

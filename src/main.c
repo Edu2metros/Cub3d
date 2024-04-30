@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nprudenc <nprudenc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:16:22 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/04/29 19:20:05 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/04/29 20:24:39 by nprudenc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	print_infos(t_info *info)
 void	cub3d(t_cub *cub)
 {
 	parser(cub);
+	define_vectors(cub->info->map, cub->vectors);
 	// print_infos(cub->info);
 	print_map(cub->info->map);
 }
