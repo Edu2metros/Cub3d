@@ -8,7 +8,7 @@
 		"type": "cppdbg",
 		"request": "launch",
 		"program": "${workspaceFolder}/cub3D",
-		"args": ["/nfs/homes/eddos-sa/42sp/cub3d/Cub3d/maps/andrey.cub"],
+		"args": ["/home/eddos-sa/projects/Cub3d/maps/elevator.cub"],
 		"stopAtEntry": true,
 		"cwd": "${fileDirname}",
 		"environment": [],

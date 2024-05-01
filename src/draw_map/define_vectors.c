@@ -5,18 +5,17 @@ void	free_vectors(t_vectors **vectors);
 static int	find_max_x(char **map)
 {
 	int	i;
-	int	j;
 	int	result;
 	int	counter;
 
-	i = -1;
+	i = 0;
 	result = 0;
-	while (map[++i])
+	while (map[i])
 	{
-		j = -1;
 		counter = ft_strlen(map[i]);
 		if (counter > result)
 			result = counter;
+		i++;
 	}
 	return (result);
 }

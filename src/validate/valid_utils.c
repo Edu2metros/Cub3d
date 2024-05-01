@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 00:56:48 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/04/29 16:35:22 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/01 14:49:48 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,10 @@ int	find_map_height(char **map_start)
 	line_counter = 0;
 	while (map_start[++i])
 	{
-		if (ft_strchr(map_start[i], '\n'))
+		if (map_start[i][0] != '\n')
 			line_counter++;
 	}
-	line_counter = map_adjust(map_start, line_counter);
-	return (line_counter);
+	return (line_counter - 1);
 }
 
 int	is_a_dif_char(char *s, char c)
