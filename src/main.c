@@ -6,7 +6,7 @@
 /*   By: nprudenc <nprudenc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:16:22 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/02 16:22:48 by nprudenc         ###   ########.fr       */
+/*   Updated: 2024/05/02 16:28:45 by nprudenc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,6 @@ void	cub3d(t_cub *cub)
 	running(cub);
 	print_map(cub->info->map);
 	// init_window(cub->vectors);
-
 }
 
 // mlx_load_png();
