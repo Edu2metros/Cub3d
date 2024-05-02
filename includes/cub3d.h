@@ -6,7 +6,7 @@
 /*   By: nprudenc <nprudenc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:16:48 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/02 14:52:00 by nprudenc         ###   ########.fr       */
+/*   Updated: 2024/05/02 16:19:38 by nprudenc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,13 @@
 # include <fcntl.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <math.h>
 
 # define VALID_CHARS "01 \nNSEW"
 # define PLAYER_CHARS "NSEW"
+
+# define WIDTH 800
+# define HEIGHT 600
 
 enum					e_flags
 {
@@ -67,6 +71,8 @@ typedef struct s_cub
 	int					fd;
 	int					err_flag;
 	char				**file;
+	mlx_image_t			*img;
+	mlx_t				*mlx;
 	t_vectors			**vectors;
 	t_info				*info;
 	t_garbage			*garbage;
