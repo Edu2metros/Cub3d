@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nprudenc <nprudenc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 01:06:27 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/04/29 16:16:47 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/02 14:51:19 by nprudenc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ char	*ft_strdup_two(const char *str, t_cub *cub)
 	i = 0;
 	while (str[i] != '\0')
 		i++;
-	strdup = (char *)malloc_garbage_collector(&cub->garbage, (i + 1)
-			* sizeof(char));
+	strdup = (char *)calloc_garbage_collector(&cub->garbage, (i + 1),
+			sizeof(char));
 	if (strdup == NULL)
 		return (NULL);
 	j = 0;
