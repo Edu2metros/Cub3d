@@ -1,6 +1,6 @@
 cc =  cc
 
-FLAGS = -Wall -Wextra -Werror -g3
+FLAGS = -g3
 
 MLX_FLAGS = -ldl -lglfw -pthread -lm
 
@@ -54,8 +54,11 @@ endif
 valgrind: all
 	clear && valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./cub3D maps/andrey.cub
 
+test: all
+	clear && ./cub3D maps/running.cub
+
 gdb:
-	gnome-terminal --maximize -- bash -c "sleep 0.3 && gdb --tui --args ./cub3D maps/elevator.cub"
+	gnome-terminal --maximize -- bash -c "sleep 0.3 && gdb --tui --args ./cub3D maps/running.cub"
 
 delete_mlx:
 	@rm -rf includes/MLX42

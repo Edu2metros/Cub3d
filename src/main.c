@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nprudenc <nprudenc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:16:22 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/02 16:28:45 by nprudenc         ###   ########.fr       */
+/*   Updated: 2024/05/02 18:01:07 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	print_map(char **file)
 	i = 0;
 	while (file[i])
 	{
-		printf("%s\n", file[i]);
+		printf("line:%d string:%s\n", i, file[i]);
 		i++;
 	}
 }
@@ -34,10 +34,10 @@ void	print_infos(t_info *info)
 	printf("C: %d, %d, %d\n", info->cel[0], info->cel[1], info->cel[2]);
 }
 
-// void
 
-void running(t_cub *cub)
+void running(void *arg)
 {
+	t_cub *cub = (t_cub *)arg;
   double posX = 22, posY = 12;  //x and y start position
   double dirX = -1, dirY = 0; //initial direction vector
   double planeX = 0, planeY = 0.66; //the 2d raycaster version of camera plane
@@ -105,7 +105,7 @@ void running(t_cub *cub)
         sideDistY = (mapY + 1.0 - posY) * deltaDistY;
       }
       //perform DDA
-      while(hit == 0)
+    while(hit == 0)
       {
         //jump to next map square, either in x-direction, or in y-direction
         if(sideDistX < sideDistY)
@@ -120,8 +120,9 @@ void running(t_cub *cub)
           mapY += stepY;
           side = 1;
         }
-        //Check if ray has hit a wall
-        // if(cub->info->map[mapX][mapY] > 0) hit = 1;
+        // Check if ray has hit a wall
+        if(cub->info->map[mapX][mapY] == '1')
+			hit = 1;
       }
       //Calculate distance projected on camera direction. This is the shortest distance from the point where the wall is
       //hit to the camera plane. Euclidean to center camera point would give fisheye effect!
@@ -129,20 +130,39 @@ void running(t_cub *cub)
       //for size == 1, but can be simplified to the code below thanks to how sideDist and deltaDist are computed:
       //because they were left scaled to |rayDir|. sideDist is the entire length of the ray above after the multiple
       //steps, but we subtract deltaDist once because one step more into the wall was taken above.
-      if(side == 0) perpWallDist = (sideDistX - deltaDistX);
-      else          perpWallDist = (sideDistY - deltaDistY);
+      if(side == 0)
+	  {
+	   perpWallDist = (sideDistX - deltaDistX);
+	  }	
+      else
+	  {
+	    perpWallDist = (sideDistY - deltaDistY);
+	  }
 
       //Calculate height of line to draw on screen
       int lineHeight = (int)(HEIGHT / perpWallDist);
 
       //calculate lowest and highest pixel to fill in current stripe
       int drawStart = -lineHeight / 2 + HEIGHT / 2;
-      if(drawStart < 0) drawStart = 0;
-      int drawEnd = lineHeight / 2 + HEIGHT / 2;
-      if(drawEnd >= HEIGHT) drawEnd = HEIGHT - 1;
-      //draw the pixels of the stripe as a vertical line
-      mlx_put_pixel(cub->img, drawStart, drawEnd, 0XFFFFFF);
-    }
+      if(drawStart < 0)
+	{
+		drawStart = 0;
+	}
+	  int drawEnd = lineHeight / 2 + HEIGHT / 2;
+      if(drawEnd >= HEIGHT)
+	  {
+	   drawEnd = HEIGHT - 1;
+	  }
+	  //draw the pixels of the stripe as a vertical line
+	  while(drawStart < drawEnd)
+	  {
+	  if(cub->info->map[mapX][mapY] == '1')
+      	mlx_put_pixel(cub->img, drawStart, drawEnd, 0xFFFFFF);
+	  else
+	  	mlx_put_pixel(cub->img, drawStart, drawEnd, 0XFF0000);
+	  	drawStart++;
+	  }
+	}
     mlx_image_to_window(cub->mlx, cub->img, 0, 0);
   }
 }
@@ -151,13 +171,21 @@ void	cub3d(t_cub *cub)
 {
 	parser(cub);
 	define_vectors(cub->info->map, cub);
+	// print_map(cub->info->map);
 	// mlx_init(cub);
 	// printf("cub_vecs: %p\n", cub->vectors);
 	// print_infos(cub->info);
 	cub->mlx = mlx_init(WIDTH, HEIGHT, "helloworld",FALSE);
 	cub->img = mlx_new_image(cub->mlx, WIDTH, HEIGHT);
-	running(cub);
-	print_map(cub->info->map);
+	int x, y, i = 0;
+	while(i < 50)
+	{
+		mlx_put_pixel(cub->img, x++, y++, 0XFF0000);
+		i++;
+	}
+	mlx_image_to_window(cub->mlx, cub->img, 0, 0);
+	// running(cub);
+	mlx_loop(cub->mlx);
 	// init_window(cub->vectors);
 }
 

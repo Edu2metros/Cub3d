@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 16:18:22 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/01 15:08:56 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/02 16:38:04 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ static void	parser_map(t_cub *cub)
 	start = jump_lines(cub->file);
 	map_height = find_map_height(cub->file + start);
 	cub->info->map = calloc_garbage_collector(&cub->garbage,
-			map_height + 1, sizeof(char *));
-	while (i < map_height)
+			map_height + 2, sizeof(char *));
+	while (i < map_height + 1)
 	{
 		cub->info->map[i] = ft_strdup_two(cub->file[start + i], cub);
 		i++;
