@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nprudenc <nprudenc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:16:48 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/01 15:08:32 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/02 14:52:00 by nprudenc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,10 +93,7 @@ int						ft_isspace_two(char **map_start, int i, int j);
 int						is_a_dif_char(char *s, char c);
 
 // Memory
-void					*malloc_garbage_collector(t_garbage **garbage_collector,
-							size_t size);
-void					*calloc_garbage_collector(t_garbage **garbage_collector,
-							size_t count, size_t size);
+void					*calloc_garbage_collector(t_garbage **garbage_collector, size_t count, size_t size);
 void					free_gargabe_collector(t_garbage *list);
 void					*ft_safe_malloc(size_t size);
 char					*ft_strdup_two(const char *str, t_cub *cub);
