@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   valid.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nprudenc <nprudenc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 00:57:02 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/04/29 16:21:20 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/02 14:49:49 by nprudenc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,12 @@ static void	extract_lines(char *file, t_cub *cub)
 
 	temp_fd = open(file, O_RDONLY);
 	lines = get_how_many_lines(temp_fd);
-	cub->file = malloc_garbage_collector(&cub->garbage, sizeof(char *) * (lines
-				+ 1));
+	cub->file = calloc_garbage_collector(&cub->garbage, lines + 1, sizeof(char *));
 	i = 0;
 	tmp_line = get_next_line(cub->fd);
 	while (tmp_line != NULL)
 	{
-		cub->file[i] = malloc_garbage_collector(&cub->garbage,
-				ft_strlen(tmp_line) + 1);
+		cub->file[i] = calloc_garbage_collector(&cub->garbage, ft_strlen(tmp_line) + 1, sizeof(char));
 		ft_strlcpy(cub->file[i], tmp_line, ft_strlen(tmp_line) + 1);
 		free(tmp_line);
 		tmp_line = get_next_line(cub->fd);
