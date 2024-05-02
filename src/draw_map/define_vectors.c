@@ -42,11 +42,11 @@ void	define_vectors(char **map, t_cub *cub)
 	max_x = find_max_x(map);
 	while (map[++y])
 		;
-	cub->vectors = ft_calloc(y + 1, sizeof(t_vectors *));
+	cub->vectors = calloc_garbage_collector(&cub->garbage, y + 1, sizeof(t_vectors *));
 	y = -1;
 	while (map[++y])
 	{
-		cub->vectors[y] = ft_calloc(max_x, sizeof(t_vectors));
+		cub->vectors[y] = calloc_garbage_collector(&cub->garbage, max_x, sizeof(t_vectors));
 		x = -1;
 		while (map[y][++x])
 		{
@@ -59,7 +59,6 @@ void	define_vectors(char **map, t_cub *cub)
 		}
 	}
 	cub->vectors[y] = NULL;
-	free_vectors(cub->vectors);
 	// printf("Vectors: %p\n", vectors);
 }
 

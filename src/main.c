@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nprudenc <nprudenc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:16:22 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/04/30 19:43:45 by nprudenc         ###   ########.fr       */
+/*   Updated: 2024/05/02 14:41:05 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,22 @@ void	print_infos(t_info *info)
 	printf("C: %d, %d, %d\n", info->cel[0], info->cel[1], info->cel[2]);
 }
 
+// void
+
 void	cub3d(t_cub *cub)
 {
 	parser(cub);
 	define_vectors(cub->info->map, cub);
-	printf("cub_vecs: %p\n", cub->vectors);
+	// mlx_init(cub);
+	// printf("cub_vecs: %p\n", cub->vectors);
 	// print_infos(cub->info);
 	print_map(cub->info->map);
 	// init_window(cub->vectors);
 
 }
+
+// mlx_load_png();
+
 
 int	main(int argc, char **argv)
 {
