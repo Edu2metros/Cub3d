@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:16:22 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/02 18:01:07 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/02 19:11:04 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,13 @@ void	print_infos(t_info *info)
 	printf("C: %d, %d, %d\n", info->cel[0], info->cel[1], info->cel[2]);
 }
 
+// Pegar a função que retorna o player pos X e Y
+// Pegar a função que retorna a direção do player
+// Pegar a função que retorna a direção da camera (de acordo com o player?)
 
 void running(void *arg)
 {
-	t_cub *cub = (t_cub *)arg;
+  t_cub *cub = (t_cub *)arg;
   double posX = 22, posY = 12;  //x and y start position
   double dirX = -1, dirY = 0; //initial direction vector
   double planeX = 0, planeY = 0.66; //the 2d raycaster version of camera plane
@@ -105,7 +108,8 @@ void running(void *arg)
         sideDistY = (mapY + 1.0 - posY) * deltaDistY;
       }
       //perform DDA
-    while(hit == 0)
+	// criar uma função pra isso
+	while(hit == 0)
       {
         //jump to next map square, either in x-direction, or in y-direction
         if(sideDistX < sideDistY)
@@ -157,15 +161,33 @@ void running(void *arg)
 	  while(drawStart < drawEnd)
 	  {
 	  if(cub->info->map[mapX][mapY] == '1')
-      	mlx_put_pixel(cub->img, drawStart, drawEnd, 0xFFFFFF);
+      	mlx_put_pixel(cub->img, x, drawStart, 0xFF0000);
 	  else
-	  	mlx_put_pixel(cub->img, drawStart, drawEnd, 0XFF0000);
+	  	mlx_put_pixel(cub->img, x, drawStart, 0x00FF00);
 	  	drawStart++;
 	  }
 	}
     mlx_image_to_window(cub->mlx, cub->img, 0, 0);
   }
 }
+
+int32_t	ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
+{
+	return (r << 24 | g << 16 | b << 8 | a);
+}
+
+int32_t ft_bernstein_poly(int r, int g, int b)
+{
+    int32_t color;
+
+    int32_t red = r * 255 / 255;
+    int32_t green = g * 255 / 255;
+    int32_t blue = b * 255 / 255;
+
+    color = ft_pixel(red, green, blue, 255);
+    return color;
+}
+
 
 void	cub3d(t_cub *cub)
 {
@@ -177,14 +199,15 @@ void	cub3d(t_cub *cub)
 	// print_infos(cub->info);
 	cub->mlx = mlx_init(WIDTH, HEIGHT, "helloworld",FALSE);
 	cub->img = mlx_new_image(cub->mlx, WIDTH, HEIGHT);
-	int x, y, i = 0;
-	while(i < 50)
+/* 	int x, y, i = 0;
+	int32_t color = ft_bernstein_poly(cub->info->flo[0], cub->info->flo[1], cub->info->flo[2]);
+	while(i++ < 600)
 	{
-		mlx_put_pixel(cub->img, x++, y++, 0XFF0000);
-		i++;
+		mlx_put_pixel(cub->img, i, i, 255);
 	}
-	mlx_image_to_window(cub->mlx, cub->img, 0, 0);
-	// running(cub);
+	mlx_image_to_window(cub->mlx, cub->img, 0, 0); */
+	
+	running(cub);
 	mlx_loop(cub->mlx);
 	// init_window(cub->vectors);
 }
