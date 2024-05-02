@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   memory_manager.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nprudenc <nprudenc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 00:49:53 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/01 15:09:41 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/02 14:51:24 by nprudenc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,6 @@ void *ft_safe_calloc(size_t count, size_t size)
 	if (ptr == NULL)
 		exit_program(get_struct(), "Error\nCalloc failed\n");
 	return (ptr);	
-}
-
-void	*malloc_garbage_collector(t_garbage **garbage_collector, size_t size)
-{
-	void		*ptr;
-	t_garbage	*new;
-
-	ptr = ft_safe_malloc(size);
-	new = (t_garbage *)ft_safe_malloc(sizeof(t_garbage));
-	new->ptr = ptr;
-	new->next = *garbage_collector;
-	*garbage_collector = new;
-	return (ptr);
 }
 
 void *calloc_garbage_collector(t_garbage **garbage_collector, size_t count, size_t size)
