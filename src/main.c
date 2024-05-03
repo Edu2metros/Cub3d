@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:16:22 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/03 15:38:32 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/03 17:25:56 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	print_infos(t_info *info)
 	printf("C: %d, %d, %d\n", info->cel[0], info->cel[1], info->cel[2]);
 }
 
-/* #define screenWidth 640
+#define screenWidth 640
 #define screenHeight 480
 #define mapWidth 24
 #define mapHeight 24
@@ -205,7 +205,7 @@ while(drawStart < drawEnd)
 }
   }
   mlx_image_to_window(cub->mlx, cub->img, 0, 0);
-} */
+}
 
 // Pegar a função que retorna o player pos X e Y
 // Pegar a função que retorna a direção do player

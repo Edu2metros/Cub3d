@@ -1,6 +1,34 @@
 #include "../../includes/cub3d.h"
 
-double get_player_pos(t_vectors **vectors, char type)
+/* int worldMap[24][24]=
+{
+  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,2,2,2,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
+  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,3,0,0,0,3,0,0,0,1},
+  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,2,2,0,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,4,0,0,0,0,5,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,4,0,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
+}; */
+
+/* double get_player_pos(t_vectors **vectors, char type)
 {
 	int x;
 	int y;
@@ -23,9 +51,9 @@ double get_player_pos(t_vectors **vectors, char type)
 		y++;
 	}
 	return (0);
-}
+} */
 
-mlx_t	*init_window(t_vectors **vectors)
+/* mlx_t	*init_window(t_vectors **vectors)
 {
 	mlx_t	*mlx;
 	mlx_image_t *paint;
@@ -62,8 +90,6 @@ void variables_paint(t_cub *cub, t_math *m, int x)
 	m->camera_x = 2 * x / (double)WIDTH - 1;
 	m->ray_dir_x = m->dir_x + m->plane_x * m->camera_x;
 	m->ray_dir_y = m->dir_y + m->plane_y * m->camera_x;
-	m->pos_x = get_player_pos(cub->vectors, 'x');
-	m->pos_y = get_player_pos(cub->vectors, 'y');
 	m->mapx = (int)m->pos_x;
 	m->mapy = (int)m->pos_y;
 }
@@ -109,7 +135,7 @@ void calculate_dda(t_cub *cub, t_math *m)
 			m->mapy += m->step_y;
 			m->side = 1;
 		}
-		if(cub->vectors[m->mapx][m->mapy].type == WALL)
+		if(worldMap[m->mapx][m->mapy] > 0)
 			hit = 1;
 	}
 }
@@ -145,7 +171,7 @@ void draw_line(t_cub *cub, t_math *m, int x)
 
  	draw_start = calculate_line(cub, m, 's');
 	draw_end = calculate_line(cub, m, 'e');
-	if(cub->vectors[m->mapx][m->mapy].type == WALL)
+	if(worldMap[m->mapx][m->mapy] > 1)
 		color = 0XFF0000;
 	else
 		color = 0X00FF00;
@@ -155,12 +181,14 @@ void draw_line(t_cub *cub, t_math *m, int x)
 		draw_start++;
 	}
 	mlx_image_to_window(cub->mlx, cub->img, 0, 0);
-}
+} */
 
-void running(void *arg)
+/* void running(void *arg)
 {
 	t_cub *cub = (t_cub *)arg;
 	t_math *m = cub->math;
+	m->pos_x = 22;
+	m->pos_y = 12;
 	m->plane_x = 0;
 	m->plane_y = 0.66;
 	m->dir_x = -1;
@@ -176,4 +204,4 @@ void running(void *arg)
 		draw_line(cub, m, x);
 		x++;
 	}
-}
+} */

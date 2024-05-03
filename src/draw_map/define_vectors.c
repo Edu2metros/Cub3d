@@ -29,13 +29,7 @@ static void	assign_types(char type, t_vectors *vectors)
 	else if (type == '1')
 		vectors->type = WALL;
 	else
-	{
-		printf("ASSIGN TYPES FUNCTION:");
-		printf("Player found\n");
-		printf("Player x: %d\n", vectors->x);
-		printf("Player y: %d\n", vectors->y);
 		vectors->type = PLAYER;
-	}
 }
 
 void	define_vectors(char **map, t_cub *cub)
@@ -61,6 +55,11 @@ void	define_vectors(char **map, t_cub *cub)
 				cub->vectors[y][x].x = x;
 				cub->vectors[y][x].y = y;
 				assign_types(map[y][x], &cub->vectors[y][x]);
+				if(cub->vectors[y][x].type == PLAYER)
+				{
+					cub->math->pos_x = x;
+					cub->math->pos_y = y;
+				}
 			}
 		}
 	}
