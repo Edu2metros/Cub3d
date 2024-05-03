@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:16:48 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/03 15:38:28 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/03 17:12:09 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 # define VALID_CHARS "01 \nNSEW"
 # define PLAYER_CHARS "NSEW"
 
-# define WIDTH 800
-# define HEIGHT 600
+# define WIDTH 640
+# define HEIGHT 480
 
 enum					e_flags
 {
@@ -36,7 +36,7 @@ enum					e_flags
 
 enum					types
 {
-	FLOOR = 0,
+	FLOOR = 1,
 	WALL,
 	PLAYER,
 	SPACE

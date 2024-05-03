@@ -1,25 +1,26 @@
 #include "../../includes/cub3d.h"
 
-int get_player_pos(t_vectors **vectors, char type)
+double get_player_pos(t_vectors **vectors, char type)
 {
-	t_vectors *player;
-	int i;
-	int j;
+	int x;
+	int y;
 
-	i = 0;
-	while (vectors[i])
+	y = 0;
+	while(vectors[y])
 	{
-		j = 0;
-		while (vectors[i][j].type != PLAYER)
-			j++;
-		if (vectors[i][j].type == PLAYER)
+		x = 0;
+		while(vectors[y][x].type)
 		{
-			if (type == 'x')
-				return (vectors[i][j].x);
-			else if (type == 'y')
-				return (vectors[i][j].y);
+			if(vectors[y][x].type == PLAYER)
+			{
+				if(type == 'x')
+					return (vectors[y][x].x);
+				else if(type == 'y')
+					return (vectors[y][x].y);
+			}
+			x++;
 		}
-		i++;
+		y++;
 	}
 	return (0);
 }
@@ -61,10 +62,10 @@ void variables_paint(t_cub *cub, t_math *m, int x)
 	m->camera_x = 2 * x / (double)WIDTH - 1;
 	m->ray_dir_x = m->dir_x + m->plane_x * m->camera_x;
 	m->ray_dir_y = m->dir_y + m->plane_y * m->camera_x;
-	m->mapx = get_player_pos(cub->vectors, 'x');
-	m->mapy = get_player_pos(cub->vectors, 'y');
-	m->pos_x = (int)get_player_pos(cub->vectors, 'x');
-	m->pos_y = (int)get_player_pos(cub->vectors, 'y');
+	m->pos_x = get_player_pos(cub->vectors, 'x');
+	m->pos_y = get_player_pos(cub->vectors, 'y');
+	m->mapx = (int)m->pos_x;
+	m->mapy = (int)m->pos_y;
 }
 
 void determinate_side_distance(t_cub *cub, t_math *m)
@@ -78,6 +79,16 @@ void determinate_side_distance(t_cub *cub, t_math *m)
 	{
 		m->step_x = 1;
 		m->side_dist_x = (m->mapx + 1.0 - m->pos_x) * m->delta_dist_x;
+	}
+	if(m->ray_dir_y < 0)
+	{
+		m->step_y = -1;
+		m->side_dist_y = (m->pos_y - m->mapy) * m->delta_dist_y;
+	}
+	else
+	{
+		m->step_y = 1;
+		m->side_dist_y = (m->mapy + 1.0 - m->pos_y) * m->delta_dist_y;
 	}
 }
 
@@ -105,26 +116,26 @@ void calculate_dda(t_cub *cub, t_math *m)
 
 int calculate_line(t_cub *cub, t_math *m, char type)
 {
-	double wall_dist;
-	int draw_start;
-	int draw_end;
-	int line_height;
-	if(m->side == 0)
-		wall_dist =	(m->side_dist_x - m->delta_dist_x);
-	else
-		wall_dist = (m->side_dist_y - m->delta_dist_y);
-	line_height = (int)(HEIGHT / wall_dist);
-
-	draw_start = -line_height / 2 + HEIGHT / 2;
-	if(draw_start < 0)
-		draw_start = 0;
-	draw_end = line_height / 2 + HEIGHT / 2;
-	if(draw_end >= HEIGHT)
-		draw_end = HEIGHT - 1;
-	if(type == 's')
-		return(draw_start);
-	return(draw_end);
+    double wall_dist;
+    int draw_start;
+    int draw_end;
+    int line_height;
+    if(m->side == 0)
+        wall_dist = (m->side_dist_x - m->delta_dist_x);
+    else
+        wall_dist = (m->side_dist_y - m->delta_dist_y);
+    line_height = (int)(HEIGHT / wall_dist) + 1;
+    draw_start = -line_height / 2 + HEIGHT / 2;
+    if(draw_start < 0)
+        draw_start = 0;
+    draw_end = line_height / 2 + HEIGHT / 2;
+    if(draw_end >= HEIGHT)
+        draw_end = HEIGHT - 1;
+    if(type == 's')
+        return(draw_start);
+    return(draw_end);
 }
+
 
 void draw_line(t_cub *cub, t_math *m, int x)
 {
@@ -132,7 +143,7 @@ void draw_line(t_cub *cub, t_math *m, int x)
 	int draw_end;
 	int color;
 
-	draw_start = calculate_line(cub, m, 's');
+ 	draw_start = calculate_line(cub, m, 's');
 	draw_end = calculate_line(cub, m, 'e');
 	if(cub->vectors[m->mapx][m->mapy].type == WALL)
 		color = 0XFF0000;
@@ -150,6 +161,10 @@ void running(void *arg)
 {
 	t_cub *cub = (t_cub *)arg;
 	t_math *m = cub->math;
+	m->plane_x = 0;
+	m->plane_y = 0.66;
+	m->dir_x = -1;
+	m->dir_y = 0;
 	int x;
 	x = 0;
 	while(x < WIDTH)

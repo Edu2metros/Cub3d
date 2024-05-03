@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nprudenc <nprudenc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 01:07:01 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/02 14:48:42 by nprudenc         ###   ########.fr       */
+/*   Updated: 2024/05/03 15:42:15 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,7 @@ t_cub	*init(void)
 			1, sizeof(t_info));
 	cub->info->cel = (int *)calloc_garbage_collector(&cub->garbage, 3, sizeof(int));
 	cub->info->flo = (int *)calloc_garbage_collector(&cub->garbage, 3, sizeof(int));
+	cub->math = (t_math *)calloc_garbage_collector(&cub->garbage,
+			1, sizeof(t_math));
 	return (cub);
 }
