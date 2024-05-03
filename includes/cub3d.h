@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nprudenc <nprudenc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:16:48 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/02 16:19:38 by nprudenc         ###   ########.fr       */
+/*   Updated: 2024/05/03 15:38:28 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,35 @@ enum					types
 	SPACE
 };
 
+typedef struct s_math
+{
+	int side;
+	int mapx;
+	int mapy;
+	double pos_x;
+	double pos_y;
+	double dir_x;
+	double dir_y;
+	double plane_x;
+	double plane_y;
+
+	double camera_x;
+	double ray_dir_x;
+	double ray_dir_y;
+	
+	double delta_dist_x;
+	double delta_dist_y;
+
+	double side_dist_x;
+	double side_dist_y;
+	
+	int step_x;
+	int step_y;
+
+	double wall_dist;
+	
+}					t_math;
+
 typedef struct s_info
 {
 	char				**map;
@@ -73,6 +102,7 @@ typedef struct s_cub
 	char				**file;
 	mlx_image_t			*img;
 	mlx_t				*mlx;
+	t_math				*math;
 	t_vectors			**vectors;
 	t_info				*info;
 	t_garbage			*garbage;
@@ -118,5 +148,6 @@ void					free_vectors(t_vectors **vectors);
 // MLX
 
 mlx_t					*init_window(t_vectors **vectors);
+void 					running(void *arg);
 
 #endif

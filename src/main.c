@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:16:22 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/02 19:11:04 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/03 15:38:32 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,182 +34,191 @@ void	print_infos(t_info *info)
 	printf("C: %d, %d, %d\n", info->cel[0], info->cel[1], info->cel[2]);
 }
 
-// Pegar a função que retorna o player pos X e Y
-// Pegar a função que retorna a direção do player
-// Pegar a função que retorna a direção da camera (de acordo com o player?)
+/* #define screenWidth 640
+#define screenHeight 480
+#define mapWidth 24
+#define mapHeight 24
+
+int worldMap[mapWidth][mapHeight]=
+{
+  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,2,2,2,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
+  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,3,0,0,0,3,0,0,0,1},
+  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,2,2,0,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,4,0,0,0,0,5,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,4,0,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
+};
+
+double get_player_pos(t_vectors **vectos, char type)
+{
+  int x;
+  int y;
+
+  y = -1;
+  while (vectos[++y])
+  {
+    x = -1;
+    while (vectos[++x])
+    {
+      if (vectos[y][x].type == PLAYER)
+      {
+        if (type == 'x')
+          return (vectos[y][x].x);
+        else if (type == 'y')
+          return (vectos[y][x].y);
+      }
+    }
+  }
+  return (0);
+}
 
 void running(void *arg)
 {
-  t_cub *cub = (t_cub *)arg;
-  double posX = 22, posY = 12;  //x and y start position
-  double dirX = -1, dirY = 0; //initial direction vector
-  double planeX = 0, planeY = 0.66; //the 2d raycaster version of camera plane
+  t_cub *cub;
+  t_math *math;
+  cub = (t_cub *)arg;
+  math = cub->math;
+  //iniciar variaveis
+  math->pos_x = get_player_pos(cub->vectors, 'x');
+  math->pos_y = get_player_pos(cub->vectors, 'y');
 
-//   double time = 0; //time of current frame
-//   double oldTime = 0; //time of previous frame
-
-  while(1)
+  double posX = 22, posY = 12;
+  double dirX = -1, dirY = 0;
+  double planeX = 0, planeY = 0.66;
+  int w = screenWidth;
+  // começar o loop que vai pintar a tela inteira
+  for(int x = 0; x < w; x++)
   {
-    for(int x = 0; x < WIDTH; x++)
+    // iniciar de novo as variaveis
+    double cameraX = 2 * x / (double)w - 1;
+    double rayDirX = dirX + planeX * cameraX;
+    double rayDirY = dirY + planeY * cameraX;
+    int mapX = (int)posX;
+    int mapY = (int)posY;
+    double sideDistX;
+    double sideDistY;
+    
+    double deltaDistX;
+    double deltaDistY;
+    
+    if(rayDirX == 0)
+      deltaDistX = 1e30;
+    else
+      deltaDistX = fabs(1 / rayDirX);
+    
+    if (rayDirY == 0)
+      deltaDistY = 1e30;
+    else
+      deltaDistY = fabs(1 / rayDirY);
+    double perpWallDist;
+    int stepX;
+    int stepY;
+    int hit = 0;
+    int side;
+    
+    if (rayDirX < 0)
+    { 
+      stepX = -1;
+      sideDistX = (posX - mapX) * deltaDistX;
+    }
+    else
     {
-      //calculate ray position and direction
-      double cameraX = 2 * x / (double)WIDTH - 1; //x-coordinate in camera space
-      double rayDirX = dirX + planeX * cameraX;
-      double rayDirY = dirY + planeY * cameraX;
-      //which box of the map we're in
-      int mapX = (int)posX;
-      int mapY = (int)posY;
+      stepX = 1;
+      sideDistX = (mapX + 1.0 - posX) * deltaDistX;
+    }
+    if (rayDirY < 0)
+    {
+      stepY = -1;
+      sideDistY = (posY - mapY) * deltaDistY;
+    }
+    else
+    {
+      stepY = 1;
+      sideDistY = (mapY + 1.0 - posY) * deltaDistY;
+    }
 
-      //length of ray from current position to next x or y-side
-      double sideDistX;
-      double sideDistY;
 
-      //length of ray from one x or y-side to next x or y-side
-      //these are derived as:
-      //deltaDistX = sqrt(1 + (rayDirY * rayDirY) / (rayDirX * rayDirX))
-      //deltaDistY = sqrt(1 + (rayDirX * rayDirX) / (rayDirY * rayDirY))
-      //which can be simplified to abs(|rayDir| / rayDirX) and abs(|rayDir| / rayDirY)
-      //where |rayDir| is the length of the vector (rayDirX, rayDirY). Its length,
-      //unlike (dirX, dirY) is not 1, however this does not matter, only the
-      //ratio between deltaDistX and deltaDistY matters, due to the way the DDA
-      //stepping further below works. So the values can be computed as below.
-      // Division through zero is prevented, even though technically that's not
-      // needed in C++ with IEEE 754 floating point values.
-      double deltaDistX = (rayDirX == 0) ? 1e30 : fabs(1 / rayDirX);
-      double deltaDistY = (rayDirY == 0) ? 1e30 : fabs(1 / rayDirY);
 
-      double perpWallDist;
-
-      //what direction to step in x or y-direction (either +1 or -1)
-      int stepX;
-      int stepY;
-
-      int hit = 0; //was there a wall hit?
-      int side; //was a NS or a EW wall hit?
-      //calculate step and initial sideDist
-      if(rayDirX < 0)
+    // loop para verificar se o raio bateu em uma parede
+    while (hit == 0)
+    {
+      if (sideDistX < sideDistY)
       {
-        stepX = -1;
-        sideDistX = (posX - mapX) * deltaDistX;
+        sideDistX += deltaDistX;
+        mapX += stepX;
+        side = 0;
       }
       else
       {
-        stepX = 1;
-        sideDistX = (mapX + 1.0 - posX) * deltaDistX;
+        sideDistY += deltaDistY;
+        mapY += stepY;
+        side = 1;
       }
-      if(rayDirY < 0)
-      {
-        stepY = -1;
-        sideDistY = (posY - mapY) * deltaDistY;
-      }
-      else
-      {
-        stepY = 1;
-        sideDistY = (mapY + 1.0 - posY) * deltaDistY;
-      }
-      //perform DDA
-	// criar uma função pra isso
-	while(hit == 0)
-      {
-        //jump to next map square, either in x-direction, or in y-direction
-        if(sideDistX < sideDistY)
-        {
-          sideDistX += deltaDistX;
-          mapX += stepX;
-          side = 0;
-        }
-        else
-        {
-          sideDistY += deltaDistY;
-          mapY += stepY;
-          side = 1;
-        }
-        // Check if ray has hit a wall
-        if(cub->info->map[mapX][mapY] == '1')
-			hit = 1;
-      }
-      //Calculate distance projected on camera direction. This is the shortest distance from the point where the wall is
-      //hit to the camera plane. Euclidean to center camera point would give fisheye effect!
-      //This can be computed as (mapX - posX + (1 - stepX) / 2) / rayDirX for side == 0, or same formula with Y
-      //for size == 1, but can be simplified to the code below thanks to how sideDist and deltaDist are computed:
-      //because they were left scaled to |rayDir|. sideDist is the entire length of the ray above after the multiple
-      //steps, but we subtract deltaDist once because one step more into the wall was taken above.
-      if(side == 0)
-	  {
-	   perpWallDist = (sideDistX - deltaDistX);
-	  }	
-      else
-	  {
-	    perpWallDist = (sideDistY - deltaDistY);
-	  }
-
-      //Calculate height of line to draw on screen
-      int lineHeight = (int)(HEIGHT / perpWallDist);
-
-      //calculate lowest and highest pixel to fill in current stripe
-      int drawStart = -lineHeight / 2 + HEIGHT / 2;
-      if(drawStart < 0)
-	{
-		drawStart = 0;
-	}
-	  int drawEnd = lineHeight / 2 + HEIGHT / 2;
-      if(drawEnd >= HEIGHT)
-	  {
-	   drawEnd = HEIGHT - 1;
-	  }
-	  //draw the pixels of the stripe as a vertical line
-	  while(drawStart < drawEnd)
-	  {
-	  if(cub->info->map[mapX][mapY] == '1')
-      	mlx_put_pixel(cub->img, x, drawStart, 0xFF0000);
-	  else
-	  	mlx_put_pixel(cub->img, x, drawStart, 0x00FF00);
-	  	drawStart++;
-	  }
-	}
-    mlx_image_to_window(cub->mlx, cub->img, 0, 0);
+      if (worldMap[mapX][mapY] > 0)
+        hit = 1;
+    }
+    
+    if(side == 0)
+      perpWallDist = (sideDistX - deltaDistX);
+    else
+      perpWallDist = (sideDistY - deltaDistY);
+    int lineHeight = (int)(screenHeight / perpWallDist);
+    int drawStart = -lineHeight / 2 + screenHeight / 2;
+    if(drawStart < 0)
+      drawStart = 0;
+    int drawEnd = lineHeight / 2 + screenHeight / 2;
+    if(drawEnd >= screenHeight)
+      drawEnd = screenHeight - 1;
+    int color;
+    switch(worldMap[mapX][mapY])
+{
+  case 1:  color = 0xFF0000FF;  break;
+  case 2:  color = 0x00FF00FF;  break;
+  case 3:  color = 0x0000FFFF;  break;
+  case 4:  color = 0xFFFFFFFF;  break;
+  default: color = 0xFFFF00FF;  break;
+}
+if(side == 1)
+  color = color / 2;
+while(drawStart < drawEnd)
+{
+  mlx_put_pixel(cub->img, x, drawStart, color);
+  drawStart++;
+}
   }
-}
+  mlx_image_to_window(cub->mlx, cub->img, 0, 0);
+} */
 
-int32_t	ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
-{
-	return (r << 24 | g << 16 | b << 8 | a);
-}
-
-int32_t ft_bernstein_poly(int r, int g, int b)
-{
-    int32_t color;
-
-    int32_t red = r * 255 / 255;
-    int32_t green = g * 255 / 255;
-    int32_t blue = b * 255 / 255;
-
-    color = ft_pixel(red, green, blue, 255);
-    return color;
-}
-
+// Pegar a função que retorna o player pos X e Y
+// Pegar a função que retorna a direção do player
+// Pegar a função que retorna a direção da camera (de acordo com o player?)
 
 void	cub3d(t_cub *cub)
 {
 	parser(cub);
 	define_vectors(cub->info->map, cub);
-	// print_map(cub->info->map);
-	// mlx_init(cub);
-	// printf("cub_vecs: %p\n", cub->vectors);
-	// print_infos(cub->info);
 	cub->mlx = mlx_init(WIDTH, HEIGHT, "helloworld",FALSE);
 	cub->img = mlx_new_image(cub->mlx, WIDTH, HEIGHT);
-/* 	int x, y, i = 0;
-	int32_t color = ft_bernstein_poly(cub->info->flo[0], cub->info->flo[1], cub->info->flo[2]);
-	while(i++ < 600)
-	{
-		mlx_put_pixel(cub->img, i, i, 255);
-	}
-	mlx_image_to_window(cub->mlx, cub->img, 0, 0); */
-	
-	running(cub);
+  mlx_loop_hook(cub->mlx, running, cub);
 	mlx_loop(cub->mlx);
-	// init_window(cub->vectors);
 }
 
 // mlx_load_png();
