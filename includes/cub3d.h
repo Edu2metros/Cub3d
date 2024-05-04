@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:16:48 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/03 17:12:09 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/04 11:53:45 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 # include "MLX42/include/MLX42/MLX42.h"
 # include "libft/libft.h"
 # include <fcntl.h>
+# include <math.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include <math.h>
 
 # define VALID_CHARS "01 \nNSEW"
 # define PLAYER_CHARS "NSEW"
@@ -44,32 +44,32 @@ enum					types
 
 typedef struct s_math
 {
-	int side;
-	int mapx;
-	int mapy;
-	double pos_x;
-	double pos_y;
-	double dir_x;
-	double dir_y;
-	double plane_x;
-	double plane_y;
+	int					side;
+	int					mapx;
+	int					mapy;
+	double				pos_x;
+	double				pos_y;
+	double				dir_x;
+	double				dir_y;
+	double				plane_x;
+	double				plane_y;
 
-	double camera_x;
-	double ray_dir_x;
-	double ray_dir_y;
-	
-	double delta_dist_x;
-	double delta_dist_y;
+	double				camera_x;
+	double				ray_dir_x;
+	double				ray_dir_y;
 
-	double side_dist_x;
-	double side_dist_y;
-	
-	int step_x;
-	int step_y;
+	double				delta_dist_x;
+	double				delta_dist_y;
 
-	double wall_dist;
-	
-}					t_math;
+	double				side_dist_x;
+	double				side_dist_y;
+
+	int					step_x;
+	int					step_y;
+
+	double				wall_dist;
+
+}						t_math;
 
 typedef struct s_info
 {
@@ -112,6 +112,7 @@ t_cub					*get_struct(void);
 t_cub					*init(void);
 void					print_lines(t_cub *cub);
 void					exit_program(t_cub *cub, char *str);
+void					key(void *arg);
 
 // VALIDATION
 
@@ -129,7 +130,8 @@ int						ft_isspace_two(char **map_start, int i, int j);
 int						is_a_dif_char(char *s, char c);
 
 // Memory
-void					*calloc_garbage_collector(t_garbage **garbage_collector, size_t count, size_t size);
+void					*calloc_garbage_collector(t_garbage **garbage_collector,
+							size_t count, size_t size);
 void					free_gargabe_collector(t_garbage *list);
 void					*ft_safe_malloc(size_t size);
 char					*ft_strdup_two(const char *str, t_cub *cub);
@@ -148,6 +150,6 @@ void					free_vectors(t_vectors **vectors);
 // MLX
 
 mlx_t					*init_window(t_vectors **vectors);
-void 					running(void *arg);
+void					running(void *arg);
 
 #endif
