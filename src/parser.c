@@ -6,19 +6,25 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 16:18:22 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/02 16:38:04 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/06 11:59:49 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-static char	*assign_textures(char *line, t_cub *cub)
+static mlx_texture_t *assign_textures(char *line, t_cub *cub)
 {
-	char	*result;
+	char	*path;
+	mlx_texture_t	*result;
 	int		first_char;
 
 	first_char = find_first_char(line + 2);
-	result = ft_strdup_two(line + 2 + first_char, cub);
+	path = ft_strdup(line + 2 + first_char);
+	remove_char(path, '\n');
+	result = mlx_load_png(path);
+	free(path);
+	if(result == NULL)
+		exit_program(cub, "MLX error loading texture\n");
 	return (result);
 }
 

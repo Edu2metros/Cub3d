@@ -1,37 +1,5 @@
 #include "../../includes/cub3d.h"
 
-int		worldMap[24][24] = {{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-			1, 1, 1, 1, 1, 1, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-			0, 0, 0, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 2, 2, 2,
-			2, 2, 0, 0, 0, 0, 3, 0, 3, 0, 3, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 2,
-			0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0,
-			0, 2, 0, 0, 0, 2, 0, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 1}, {1, 0, 0,
-			0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {1,
-			0, 0, 0, 0, 0, 2, 2, 0, 2, 2, 0, 0, 0, 0, 3, 0, 3, 0, 3, 0, 0, 0,
-			1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-			0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-			0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-			0, 0, 0, 0, 0, 0, 1},
-						{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-							0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-							0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0,
-							0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-							0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-							0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {1, 4, 4, 4, 4, 4, 4,
-							4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-							{1, 4, 0, 4, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0,
-							0, 0, 0, 0, 0, 0, 1}, {1, 4, 0, 0, 0, 0, 5, 0, 4, 0,
-							0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {1, 4, 0,
-							4, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-							0, 0, 0, 1}, {1, 4, 0, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0,
-							0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {1, 4, 0, 0, 0, 0,
-							0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-							1}, {1, 4, 4, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0,
-							0, 0, 0, 0, 0, 0, 0, 1}, {1, 1, 1, 1, 1, 1, 1, 1, 1,
-							1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
-
 double	get_player_pos(t_vectors **vectors, char type)
 {
 	int	x;
@@ -91,35 +59,47 @@ void	calculate_distance(t_cub *cub, t_math *m)
 
 void	variables_paint(t_cub *cub, t_math *m, int x)
 {
-	m->camera_x = 2 * x / (double)WIDTH - 1;
-	m->ray_dir_x = m->dir_x + m->plane_x * m->camera_x;
-	m->ray_dir_y = m->dir_y + m->plane_y * m->camera_x;
+	m->camera_x = 2 * x / (WIDTH - 1.0) - 1.0;
+	m->ray_dir_x = m->dir_x + m->camera_x * m->plane_x;
+	m->ray_dir_y = m->dir_y + m->camera_x * m->plane_y;
 	m->mapx = (int)m->pos_x;
 	m->mapy = (int)m->pos_y;
 }
 
 void	determinate_side_distance(t_cub *cub, t_math *m)
 {
+	double mapx = (double)(int)m->pos_x;
+	double mapy = (double)(int)m->pos_y;
+
 	if (m->ray_dir_x < 0)
 	{
 		m->step_x = -1;
-		m->side_dist_x = (m->pos_x - m->mapx) * m->delta_dist_x;
+		m->side_dist_x = (m->pos_x - mapx) * m->delta_dist_x;
 	}
 	else
 	{
 		m->step_x = 1;
-		m->side_dist_x = (m->mapx + 1.0 - m->pos_x) * m->delta_dist_x;
+		m->side_dist_x = (mapx + 1.0 - m->pos_x) * m->delta_dist_x;
 	}
 	if (m->ray_dir_y < 0)
 	{
 		m->step_y = -1;
-		m->side_dist_y = (m->pos_y - m->mapy) * m->delta_dist_y;
+		m->side_dist_y = (m->pos_y - mapy) * m->delta_dist_y;
 	}
 	else
 	{
 		m->step_y = 1;
-		m->side_dist_y = (m->mapy + 1.0 - m->pos_y) * m->delta_dist_y;
+		m->side_dist_y = (mapy + 1.0 - m->pos_y) * m->delta_dist_y;
 	}
+}
+
+int is_hit(t_cub *cub, t_math *m)
+{
+	if(m->mapx < 0 || m->mapy < 0)
+		return (1);
+	if (cub->info->map[m->mapx][m->mapy] && cub->info->map[m->mapx][m->mapy] == '1')
+		return (1);
+	return (0);
 }
 
 void	calculate_dda(t_cub *cub, t_math *m)
@@ -141,7 +121,7 @@ void	calculate_dda(t_cub *cub, t_math *m)
 			m->mapy += m->step_y;
 			m->side = 1;
 		}
-		if (worldMap[m->mapx][m->mapy] > 0)
+		if (cub->info->map[m->mapy][m->mapx] == '1')
 			hit = 1;
 	}
 }
@@ -177,10 +157,10 @@ void	draw_line(t_cub *cub, t_math *m, int x)
 
 	draw_start = calculate_line(cub, m, 's');
 	draw_end = calculate_line(cub, m, 'e');
-	if (worldMap[m->mapx][m->mapy] == 1)
-		color = 0xFF0000FFu;
+	if (cub->info->map[m->mapy][m->mapx] == '1')
+		color = GREEN;
 	else
-		color = 0xFFFF00FFu;
+		color = BLACK;
 	while (draw_start < draw_end)
 	{
 		mlx_put_pixel(cub->img, x, draw_start, color);
@@ -189,20 +169,17 @@ void	draw_line(t_cub *cub, t_math *m, int x)
 	mlx_image_to_window(cub->mlx, cub->img, 0, 0);
 }
 
-void	running(void *arg)
+void update_time(t_math *m)
 {
-	t_cub	*cub;
-	t_math	*m;
-	int		x;
+	m->old_time = m->time;
+	m->time = mlx_get_time();
+}
 
-	cub = (t_cub *)arg;
+void	running(t_cub *cub)
+{
+	t_math	*m;
 	m = cub->math;
-	m->pos_x = 22;
-	m->pos_y = 12;
-	m->plane_x = 0;
-	m->plane_y = 0.66;
-	m->dir_x = -1;
-	m->dir_y = 0;
+	int x;
 	x = 0;
 	while (x < WIDTH)
 	{
@@ -211,8 +188,7 @@ void	running(void *arg)
 		determinate_side_distance(cub, m);
 		calculate_dda(cub, m);
 		draw_line(cub, m, x);
-		if (mlx_is_key_down(cub->mlx, MLX_KEY_ESCAPE))
-			mlx_terminate(cub->mlx);
 		x++;
 	}
+	update_time(m);
 }

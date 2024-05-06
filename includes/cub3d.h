@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:16:48 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/04 11:53:45 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/06 11:59:39 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,15 @@
 
 # define WIDTH 640
 # define HEIGHT 480
+
+# define BLACK 0x000000FFu
+# define WHITE 0xFFFFFFFFu
+# define RED 0xFF0000FFu
+# define GREEN 0x00FF00FFu
+# define BLUE 0x0000FFFFu
+# define YELLOW 0xFFFF00FFu
+# define CYAN 0x00FFFFFFu
+# define MAGENTA 0xFF00FFFFu
 
 enum					e_flags
 {
@@ -68,16 +77,17 @@ typedef struct s_math
 	int					step_y;
 
 	double				wall_dist;
-
+	double time;
+	double old_time;
 }						t_math;
 
 typedef struct s_info
 {
-	char				**map;
-	char				*no;
-	char				*so;
-	char				*we;
-	char				*ea;
+	char					    **map;
+	mlx_texture_t				*no;
+	mlx_texture_t				*so;
+	mlx_texture_t				*we;
+	mlx_texture_t				*ea;
 	int					*cel;
 	int					*flo;
 }						t_info;
@@ -150,6 +160,6 @@ void					free_vectors(t_vectors **vectors);
 // MLX
 
 mlx_t					*init_window(t_vectors **vectors);
-void					running(void *arg);
+void					running(t_cub *cub);
 
 #endif

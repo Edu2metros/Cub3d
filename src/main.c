@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:16:22 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/04 11:56:07 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/06 11:18:43 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,13 +212,120 @@ while(drawStart < drawEnd)
 // Pegar a função que retorna a direção do player
 // Pegar a função que retorna a direção da camera (de acordo com o player?)
 
+void key_up(t_cub *cub, double move_speed, double rot_speed)
+{
+  int pos_x;
+  int pos_y;
+
+  pos_x = (int)cub->math->pos_x + (int)cub->math->dir_x * move_speed;
+  pos_y = (int)cub->math->pos_y + (int)cub->math->dir_y * move_speed;
+
+  if(cub->info->map[pos_x][(int)cub->math->pos_y] == '0' || cub->info->map[pos_x][(int)cub->math->pos_y] == 'E')
+    cub->math->pos_x += cub->math->dir_x * move_speed;
+  if(cub->info->map[(int)cub->math->pos_x][pos_y] == '0' || cub->info->map[(int)cub->math->pos_x][pos_y] == 'E')
+    cub->math->pos_y += cub->math->dir_y * move_speed;
+  running(cub);
+}
+
+void key_down(t_cub *cub, double move_speed, double rot_speed)
+{
+  int pos_x;
+  int pos_y;
+  
+  pos_x = (int)cub->math->pos_x - (int)cub->math->dir_x * move_speed;
+  pos_y = (int)cub->math->pos_y - (int)cub->math->dir_y * move_speed;
+  if(cub->info->map[pos_x][(int)cub->math->pos_y] == '0' || cub->info->map[pos_x][(int)cub->math->pos_y] == 'E')
+    cub->math->pos_x -= cub->math->dir_x * move_speed;
+  if(cub->info->map[(int)cub->math->pos_x][pos_y] == '0' || cub->info->map[(int)cub->math->pos_x][pos_y] == 'E')
+    cub->math->pos_y -= cub->math->dir_y * move_speed;
+  running(cub);
+}
+
+void key_right(t_cub *cub, double rot_speed)
+{
+  double old_dir_x;
+  double old_plane_x;
+
+  old_dir_x = cub->math->dir_x;
+  cub->math->dir_x = cub->math->dir_x * cos(-rot_speed) - cub->math->dir_y * sin(-rot_speed);
+  cub->math->dir_y = old_dir_x * sin(-rot_speed) + cub->math->dir_y * cos(-rot_speed);
+  old_plane_x = cub->math->plane_x;
+  cub->math->plane_x = cub->math->plane_x * cos(-rot_speed) - cub->math->plane_y * sin(-rot_speed);
+  cub->math->plane_y = old_plane_x * sin(-rot_speed) + cub->math->plane_y * cos(-rot_speed);
+  running(cub);
+}
+
+void key_left(t_cub *cub, double rot_speed)
+{
+  double old_dir_x;
+  double old_plane_x;
+
+  old_dir_x = cub->math->dir_x;
+  cub->math->dir_x = cub->math->dir_x * cos(rot_speed) - cub->math->dir_y * sin(rot_speed);
+  cub->math->dir_y = old_dir_x * sin(rot_speed) + cub->math->dir_y * cos(rot_speed);
+  old_plane_x = cub->math->plane_x;
+  cub->math->plane_x = cub->math->plane_x * cos(rot_speed) - cub->math->plane_y * sin(rot_speed);
+  cub->math->plane_y = old_plane_x * sin(rot_speed) + cub->math->plane_y * cos(rot_speed);
+  running(cub);
+}
+
+void keys(void *arg)
+{
+  t_cub *cub = (t_cub *)arg;
+  double frame_time;
+  double move_speed = frame_time * 5.0;
+  double rot_speed = frame_time * 3.0;
+  
+  frame_time = (cub->math->time - cub->math->old_time) / 1000.0;
+  if(mlx_is_key_down(cub->mlx, MLX_KEY_UP))
+    key_up(cub, move_speed, rot_speed);
+  if(mlx_is_key_down(cub->mlx, MLX_KEY_DOWN))
+    key_down(cub, move_speed, rot_speed);
+  if(mlx_is_key_down(cub->mlx, MLX_KEY_RIGHT))
+    key_right(cub, rot_speed);
+  if(mlx_is_key_down(cub->mlx, MLX_KEY_LEFT))
+    key_left(cub, rot_speed);
+  if(mlx_is_key_down(cub->mlx, MLX_KEY_ESCAPE))
+    mlx_terminate(cub->mlx);
+}
+
+void init_variables_TEMPORARIOMUDAR(t_math *m)
+{
+  m->dir_x = -1;
+  m->dir_y = 0;
+  m->plane_x = 0;
+  m->plane_y = 0.66;
+  m->time = 0;
+  m->old_time = 0;
+}
+void all_black(t_cub *cub)
+{
+	int x;
+	int y;
+
+	x = 0;
+	while (x < WIDTH)
+	{
+		y = 0;
+		while (y < HEIGHT)
+		{
+			mlx_put_pixel(cub->img, x, y, BLACK);
+			y++;
+		}
+		x++;
+	}
+}
+
 void	cub3d(t_cub *cub)
 {
 	parser(cub);
 	define_vectors(cub->info->map, cub);
-	cub->mlx = mlx_init(WIDTH, HEIGHT, "helloworld",FALSE);
+	init_variables_TEMPORARIOMUDAR(cub->math);
+  cub->mlx = mlx_init(WIDTH, HEIGHT, "helloworld",FALSE);
 	cub->img = mlx_new_image(cub->mlx, WIDTH, HEIGHT);
-  mlx_loop_hook(cub->mlx, running, cub);
+  all_black(cub);
+  running(cub);
+  mlx_loop_hook(cub->mlx, keys, cub);
 	mlx_loop(cub->mlx);
 }
 

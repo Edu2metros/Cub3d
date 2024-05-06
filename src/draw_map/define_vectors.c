@@ -20,7 +20,7 @@ static int	find_max_x(char **map)
 	return (result);
 }
 
-static void	assign_types(char type, t_vectors *vectors)
+static void	assign_types(char type, t_vectors *vectors, t_math *math)
 {
 	if (ft_isspace(type))
 		vectors->type = SPACE;
@@ -29,7 +29,11 @@ static void	assign_types(char type, t_vectors *vectors)
 	else if (type == '1')
 		vectors->type = WALL;
 	else
+	{
 		vectors->type = PLAYER;
+		math->pos_x = (double)vectors->y;
+		math->pos_y = (double)vectors->x;
+	}
 }
 
 void	define_vectors(char **map, t_cub *cub)
@@ -54,17 +58,11 @@ void	define_vectors(char **map, t_cub *cub)
 			{
 				cub->vectors[y][x].x = x;
 				cub->vectors[y][x].y = y;
-				assign_types(map[y][x], &cub->vectors[y][x]);
-				if(cub->vectors[y][x].type == PLAYER)
-				{
-					cub->math->pos_x = x;
-					cub->math->pos_y = y;
-				}
+				assign_types(map[y][x], &cub->vectors[y][x], cub->math);
 			}
 		}
 	}
 	cub->vectors[y] = NULL;
-	// printf("Vectors: %p\n", vectors);
 }
 
 void	free_vectors(t_vectors **vectors)
