@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:16:22 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/06 11:18:43 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/06 12:21:39 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -324,7 +324,7 @@ void	cub3d(t_cub *cub)
   cub->mlx = mlx_init(WIDTH, HEIGHT, "helloworld",FALSE);
 	cub->img = mlx_new_image(cub->mlx, WIDTH, HEIGHT);
   all_black(cub);
-  running(cub);
+  running2(cub);
   mlx_loop_hook(cub->mlx, keys, cub);
 	mlx_loop(cub->mlx);
 }

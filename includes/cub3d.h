@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:16:48 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/06 11:59:39 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/06 12:36:59 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ t_cub					*init(void);
 void					print_lines(t_cub *cub);
 void					exit_program(t_cub *cub, char *str);
 void					key(void *arg);
+void running2(t_cub *cub);
 
 // VALIDATION
 
