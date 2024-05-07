@@ -1,6 +1,6 @@
 cc =  cc
 
-FLAGS = -g3
+FLAGS = -g3 -Wall -Wextra -Werror
 
 MLX_FLAGS = -ldl -lglfw -pthread -lm
 
@@ -21,8 +21,10 @@ src += $(addprefix validate/,	valid.c \
 src += $(addprefix draw_map/,	define_vectors.c \
 								)
 
-src += $(addprefix mlx_manager/,	window.c \
-								)
+src += $(addprefix mlx_manager/,	running.c \
+									math.c \
+									utils.c \
+									keys.c)
 
 src += $(addprefix memory/,	memory_manager.c)
 

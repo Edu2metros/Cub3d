@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 00:56:48 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/01 14:49:48 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/07 16:15:53 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ char	**fill_info(void)
 	info[4] = ft_strdup("C ");
 	info[5] = ft_strdup("F ");
 	info[6] = NULL;
+	if(!info[0] || !info[1] || !info[2] || !info[3] || !info[4] || !info[5])
+		exit_program(get_struct(), "Error\nMalloc failed\n");
 	return (info);
 }
 

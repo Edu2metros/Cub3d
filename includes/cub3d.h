@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:16:48 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/06 12:36:59 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/07 16:07:46 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,17 +77,17 @@ typedef struct s_math
 	int					step_y;
 
 	double				wall_dist;
-	double time;
-	double old_time;
+	double				time;
+	double				old_time;
 }						t_math;
 
 typedef struct s_info
 {
-	char					    **map;
-	mlx_texture_t				*no;
-	mlx_texture_t				*so;
-	mlx_texture_t				*we;
-	mlx_texture_t				*ea;
+	char				**map;
+	mlx_texture_t		*no;
+	mlx_texture_t		*so;
+	mlx_texture_t		*we;
+	mlx_texture_t		*ea;
 	int					*cel;
 	int					*flo;
 }						t_info;
@@ -123,11 +123,11 @@ t_cub					*init(void);
 void					print_lines(t_cub *cub);
 void					exit_program(t_cub *cub, char *str);
 void					key(void *arg);
-void running2(t_cub *cub);
+void					running2(t_cub *cub);
 
 // VALIDATION
 
-t_cub					*validation(int argc, char **argv);
+void					validation(int argc, char **argv, t_cub *cub);
 void					validate_map(t_cub *cub, char **map_start);
 int						validate_info(char *line, char **info, t_cub *cub);
 
@@ -161,6 +161,20 @@ void					free_vectors(t_vectors **vectors);
 // MLX
 
 mlx_t					*init_window(t_vectors **vectors);
-void					running(t_cub *cub);
+void					draw_frame(t_cub *cub);
+
+// Math
+void					calculate_distance(t_math *m);
+void					determinate_side_distance(t_math *m);
+void					calculate_dda(t_cub *cub, t_math *m);
+int						calculate_line_start(t_math *m);
+int						calculate_line_end(t_math *m);
+
+// UTILS MLX
+int32_t					ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a);
+void					update_time(t_math *m);
+
+// KEYS
+void					keys(void *arg);
 
 #endif

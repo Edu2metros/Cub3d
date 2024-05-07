@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nprudenc <nprudenc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 01:06:27 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/02 14:51:19 by nprudenc         ###   ########.fr       */
+/*   Updated: 2024/05/07 16:14:29 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	exit_program(t_cub *cub, char *str)
 {
-	ft_printf_fd(STDERR_FILENO, "%s", str);
+	if(str != NULL)
+		ft_printf_fd(STDERR_FILENO, "%s", str);
 	free_gargabe_collector(cub->garbage);
 	exit(EXIT_FAILURE);
 }

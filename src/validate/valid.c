@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   valid.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nprudenc <nprudenc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 00:57:02 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/02 14:49:49 by nprudenc         ###   ########.fr       */
+/*   Updated: 2024/05/07 16:26:42 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,14 +86,10 @@ static void	map_is_valid(t_cub *cub)
 	free(info);
 }
 
-t_cub	*validation(int argc, char **argv)
+void validation(int argc, char **argv, t_cub *cub)
 {
-	t_cub	*cub;
-
-	cub = init();
 	check_args(argc, cub);
 	check_file(argv[1], cub);
 	extract_lines(argv[1], cub);
 	map_is_valid(cub);
-	return (cub);
 }

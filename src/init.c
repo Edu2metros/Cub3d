@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 01:07:01 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/03 15:42:15 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/07 15:47:52 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,16 @@ t_cub	*get_struct(void)
 	static t_cub	cub;
 
 	return (&cub);
+}
+
+static void init_variables_math(t_math *m)
+{
+  m->dir_x = -1;
+  m->dir_y = 0;
+  m->plane_x = 0;
+  m->plane_y = 0.66;
+  m->time = 0;
+  m->old_time = 0;
 }
 
 t_cub	*init(void)
@@ -36,5 +46,6 @@ t_cub	*init(void)
 	cub->info->flo = (int *)calloc_garbage_collector(&cub->garbage, 3, sizeof(int));
 	cub->math = (t_math *)calloc_garbage_collector(&cub->garbage,
 			1, sizeof(t_math));
+	init_variables_math(cub->math);
 	return (cub);
 }

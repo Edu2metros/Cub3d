@@ -3,20 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   valid_info.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nprudenc <nprudenc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 00:55:52 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/04/29 19:28:19 by nprudenc         ###   ########.fr       */
+/*   Updated: 2024/05/07 16:44:56 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
+int only_digit(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (!ft_isdigit(line[i]))
+			return (FALSE);
+		i++;
+	}
+	return (TRUE);
+}
+
+void remove_char_color(char *line)
+{
+	remove_char(line, ' ');
+	remove_char(line, '\n');
+	remove_char(line, 'C');
+	remove_char(line, 'F');
+}
+
 static int	range_color(t_cub *cub, char *line)
 {
 	char	**colors;
 	int		i;
-
+	// printf("line: %s\n", line);
+	// remove_char_color(line);
+	// printf("line: %s\n", line);
 	colors = ft_split(line, ',');
 	i = 0;
 	if (ft_array_len(colors) != 3)
@@ -27,7 +51,7 @@ static int	range_color(t_cub *cub, char *line)
 	}
 	while (colors[i])
 	{
-		if (ft_atof(colors[i]) < 0 || ft_atof(colors[i]) > 255)
+		if (only_digit(colors[i]) == FALSE ||  ft_atof(colors[i]) < 0 || ft_atof(colors[i]) > 255)
 		{
 			cub->err_flag = TRUE;
 			free_array(colors);
