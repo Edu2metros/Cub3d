@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 00:55:52 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/07 16:44:56 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/07 16:49:02 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static int	range_color(t_cub *cub, char *line)
 	}
 	while (colors[i])
 	{
-		if (only_digit(colors[i]) == FALSE ||  ft_atof(colors[i]) < 0 || ft_atof(colors[i]) > 255)
+		if (ft_atof(colors[i]) < 0 || ft_atof(colors[i]) > 255)
 		{
 			cub->err_flag = TRUE;
 			free_array(colors);
