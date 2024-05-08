@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:00:15 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/08 15:44:09 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/08 16:10:30 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 int	is_wallhit(char **map, double x, double y)
 {
-	if (!map[(int)y][(int)x] || map[(int)y][(int)x] == '1' || map[(int)y][(int)x] == ' ' || map[(int)y][(int)x] == '\n' || map[(int)y][(int)x] == '\0')
+	if (map[(int)y][(int)x] != '0' && map[(int)y][(int)x] != 'N'
+		&& map[(int)y][(int)x] != 'S' && map[(int)y][(int)x] != 'W'
+		&& map[(int)y][(int)x] != 'E')
 		return (TRUE);
 	return (FALSE);
 }
@@ -74,13 +76,17 @@ void	key_right(t_cub *cub)
 
 	frame_time = (cub->math->time - cub->math->old_time) / 1000.0;
 	//   rot_speed = frame_time * 3.0;
-	rot_speed = 0.2;
+	rot_speed = 0.02;
 	old_dir_x = cub->math->dir_x;
-	cub->math->dir_x = cub->math->dir_x * cos(-rot_speed) - cub->math->dir_y * sin(-rot_speed);
-	cub->math->dir_y = old_dir_x * sin(-rot_speed) + cub->math->dir_y * cos(-rot_speed);
+	cub->math->dir_x = cub->math->dir_x * cos(-rot_speed) - cub->math->dir_y
+		* sin(-rot_speed);
+	cub->math->dir_y = old_dir_x * sin(-rot_speed) + cub->math->dir_y
+		* cos(-rot_speed);
 	old_plane_x = cub->math->plane_x;
-	cub->math->plane_x = cub->math->plane_x * cos(-rot_speed) - cub->math->plane_y * sin(-rot_speed);
-	cub->math->plane_y = old_plane_x * sin(-rot_speed) + cub->math->plane_y * cos(-rot_speed);
+	cub->math->plane_x = cub->math->plane_x * cos(-rot_speed)
+		- cub->math->plane_y * sin(-rot_speed);
+	cub->math->plane_y = old_plane_x * sin(-rot_speed) + cub->math->plane_y
+		* cos(-rot_speed);
 	draw_frame(cub);
 }
 
@@ -94,7 +100,7 @@ void	key_left(t_cub *cub)
 	frame_time = (cub->math->time - cub->math->old_time) / 1000.0;
 	rot_speed = frame_time * 3.0;
 	//   rot_speed = 1.0;
-	rot_speed = 0.2;
+	rot_speed = 0.02;
 	old_dir_x = cub->math->dir_x;
 	cub->math->dir_x = cub->math->dir_x * cos(rot_speed) - cub->math->dir_y
 		* sin(rot_speed);
