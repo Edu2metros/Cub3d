@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 15:34:24 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/08 19:00:08 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/08 19:01:36 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,14 @@ mlx_texture_t *get_texture(t_math *m, t_cub *cub)
 uint32_t get_pixel(mlx_texture_t *texture, t_math *m, int draw_start)
 {
 	uint32_t pixel;
-	
-	
+	if(m->side == NO)
+		pixel = GREEN;
+	else if(m->side == SO)
+		pixel = RED;
+	else if(m->side == WE)
+		pixel = BLUE;
+	else
+		pixel = YELLOW;	
 	return(pixel);
 }
 
@@ -70,7 +76,7 @@ void draw_line(t_cub *cub, t_math *m, int x)
 	draw_start = calculate_line_start(m);
 	draw_end = calculate_line_end(m);
 	texture = get_texture(m, cub);
-	double tex_pos = (draw_start - HEIGHT / 2 + m->line_height / 2) * m->step;
+	// double tex_pos = (draw_start - HEIGHT / 2 + m->line_height / 2) * m->step;
 	while (draw_start < draw_end)
 	{
 		color = get_pixel(texture, m, draw_start);
