@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 15:34:24 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/07 16:08:32 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/08 15:51:32 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,25 +29,57 @@ static void	draw_line(t_cub *cub, t_math *m, int x)
 
 	draw_start = calculate_line_start(m);
 	draw_end = calculate_line_end(m);
-	if (cub->info->map[m->mapy][m->mapx] == '1')
+	if(wall_hit(cub, m) == TRUE)
 		color = GREEN;
-	else
-		color = BLACK;
+	// if (cub->info->map[m->mapy][m->mapx] == '1')
+	// 	color = GREEN;
 	while (draw_start < draw_end)
 	{
 		mlx_put_pixel(cub->img, x, draw_start, color);
 		draw_start++;
 	}
-	mlx_image_to_window(cub->mlx, cub->img, 0, 0);
+}
+
+float calculate_raydir(double dir, double plane, char type)
+{
+	if(type == '-')
+		return (dir - plane);
+	else
+		return (dir + plane);
+}
+
+void draw_cel_floor(t_cub *cub, t_math *m)
+{
+	uint32_t color_cel;
+	uint32_t color_floor;
+	int y;
+	int x;
+	
+	color_cel = ft_pixel(cub->info->cel[0], cub->info->cel[1], cub->info->cel[2], 255);
+	color_floor = ft_pixel(cub->info->flo[0], cub->info->flo[1], cub->info->flo[2], 255);
+
+	y = HEIGHT / 2 + 1;
+	while(y < HEIGHT)
+	{
+		x = 0;
+		while(x < WIDTH)
+		{
+			mlx_put_pixel(cub->img, x, y, color_cel);
+			mlx_put_pixel(cub->img, x, HEIGHT - y - 1, color_floor);
+			x++;
+		}
+		y++;
+	}
 }
 
 void	draw_frame(t_cub *cub)
 {
 	t_math	*m;
 	int x;
-
 	m = cub->math;
 	x = 0;
+
+	draw_cel_floor(cub, m);
 	while (x < WIDTH)
 	{
 		init_variables_paint(m, x);
@@ -57,10 +89,11 @@ void	draw_frame(t_cub *cub)
 		draw_line(cub, m, x);
 		x++;
 	}
+	mlx_image_to_window(cub->mlx, cub->img, 0, 0);
 	update_time(m);
 }
 
-/* void running2(t_cub *cub)
+void running2(t_cub *cub)
 {
 	for(int y = HEIGHT / 2 + 1; y < HEIGHT; ++y)
 	{
@@ -187,4 +220,4 @@ void	draw_frame(t_cub *cub)
 		img = mlx_new_image(cub->mlx, tex->width, tex->height);
 	}
 	mlx_image_to_window(cub->mlx, cub->img, 0, 0);
-} */
+}

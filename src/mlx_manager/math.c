@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 15:31:35 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/07 16:06:51 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/08 16:03:07 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,15 @@ void	determinate_side_distance(t_math *m)
 	}
 }
 
+int wall_hit(t_cub *cub, t_math *m)
+{
+	if(m->mapx < 0 || m->mapy < 0)
+		return(TRUE);
+	if(cub->vectors[m->mapy][m->mapx].type == WALL)
+		return (TRUE);
+	return (FALSE);
+}
+
 void	calculate_dda(t_cub *cub, t_math *m)
 {
 	while (TRUE)
@@ -67,7 +76,7 @@ void	calculate_dda(t_cub *cub, t_math *m)
 			m->mapy += m->step_y;
 			m->side = 1;
 		}
-		if (cub->info->map[m->mapy][m->mapx] == '1')
+		if(cub->vectors[m->mapy][m->mapx].type == WALL)
 			break;
 	}
 }

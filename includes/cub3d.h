@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:16:48 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/07 16:07:46 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/08 16:02:51 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ typedef struct s_cub
 	int					fd;
 	int					err_flag;
 	char				**file;
+	int					loop;
 	mlx_image_t			*img;
 	mlx_t				*mlx;
 	t_math				*math;
@@ -124,6 +125,7 @@ void					print_lines(t_cub *cub);
 void					exit_program(t_cub *cub, char *str);
 void					key(void *arg);
 void					running2(t_cub *cub);
+int						wall_hit(t_cub *cub, t_math *m);
 
 // VALIDATION
 

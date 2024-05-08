@@ -1,6 +1,6 @@
 cc =  cc
 
-FLAGS = -g3 -Wall -Wextra -Werror
+FLAGS = -g3
 
 MLX_FLAGS = -ldl -lglfw -pthread -lm
 
@@ -60,7 +60,7 @@ test: all
 	clear && ./cub3D maps/running.cub
 
 gdb:
-	gnome-terminal --maximize -- bash -c "sleep 0.3 && gdb --tui --args ./cub3D maps/running.cub"
+	gnome-terminal --maximize -- bash -c "sleep 0.3 && gdb --tui --args ./cub3D maps/big.cub"
 
 delete_mlx:
 	@rm -rf includes/MLX42
