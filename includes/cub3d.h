@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:16:48 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/08 16:02:51 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/08 18:32:19 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,14 @@
 # define YELLOW 0xFFFF00FFu
 # define CYAN 0x00FFFFFFu
 # define MAGENTA 0xFF00FFFFu
+
+enum					e_directions
+{
+	NO = 0,
+	SO,
+	WE,
+	EA	
+};
 
 enum					e_flags
 {
@@ -75,10 +83,13 @@ typedef struct s_math
 
 	int					step_x;
 	int					step_y;
-
+	double				surface_x;
 	double				wall_dist;
 	double				time;
 	double				old_time;
+	int line_height;
+	double x;
+	double step;
 }						t_math;
 
 typedef struct s_info

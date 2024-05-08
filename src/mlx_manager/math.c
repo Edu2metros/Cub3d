@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 15:31:35 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/08 16:03:07 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/08 18:05:28 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,18 @@ int wall_hit(t_cub *cub, t_math *m)
 	return (FALSE);
 }
 
+void wall_side(t_math *m, char type)
+{
+	if(type == 'x' && m->ray_dir_x > 0)
+		m->side = EA;
+	else if(type == 'x' && m->ray_dir_x <= 0)
+		m->side = WE;
+	else if(type == 'y' && m->ray_dir_y > 0)
+		m->side = SO;
+	else if(type == 'y' && m->ray_dir_y <= 0)
+		m->side = NO;
+}
+
 void	calculate_dda(t_cub *cub, t_math *m)
 {
 	while (TRUE)
@@ -68,13 +80,13 @@ void	calculate_dda(t_cub *cub, t_math *m)
 		{
 			m->side_dist_x += m->delta_dist_x;
 			m->mapx += m->step_x;
-			m->side = 0;
+			wall_side(m, 'x');
 		}
 		else
 		{
 			m->side_dist_y += m->delta_dist_y;
 			m->mapy += m->step_y;
-			m->side = 1;
+			wall_side(m, 'y');
 		}
 		if(cub->vectors[m->mapy][m->mapx].type == WALL)
 			break;
@@ -86,8 +98,8 @@ int calculate_line_start(t_math *m)
 	double wall_dist;
 	int draw_start;
 	int line_height;
-	
-	if(m->side == 0)
+
+	if(m->side == EA || m->side == WE)
 		wall_dist = (m->side_dist_x - m->delta_dist_x);
 	else
 		wall_dist = (m->side_dist_y - m->delta_dist_y);
@@ -104,11 +116,12 @@ int calculate_line_end(t_math *m)
 	int draw_end;
 	int line_height;
 	
-	if(m->side == 0)
+	if(m->side == EA || m->side == WE)
 		wall_dist = (m->side_dist_x - m->delta_dist_x);
 	else
 		wall_dist = (m->side_dist_y - m->delta_dist_y);
 	line_height = (int)(HEIGHT / wall_dist);
+	m->line_height = line_height;
 	draw_end = line_height / 2 + HEIGHT / 2;
 	if(draw_end >= HEIGHT)
 		draw_end = HEIGHT - 1;

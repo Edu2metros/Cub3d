@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:00:15 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/08 16:10:30 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/08 16:20:20 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	key_right(t_cub *cub)
 
 	frame_time = (cub->math->time - cub->math->old_time) / 1000.0;
 	//   rot_speed = frame_time * 3.0;
-	rot_speed = 0.02;
+	rot_speed = 0.09;
 	old_dir_x = cub->math->dir_x;
 	cub->math->dir_x = cub->math->dir_x * cos(-rot_speed) - cub->math->dir_y
 		* sin(-rot_speed);
@@ -100,7 +100,7 @@ void	key_left(t_cub *cub)
 	frame_time = (cub->math->time - cub->math->old_time) / 1000.0;
 	rot_speed = frame_time * 3.0;
 	//   rot_speed = 1.0;
-	rot_speed = 0.02;
+	rot_speed = 0.09;
 	old_dir_x = cub->math->dir_x;
 	cub->math->dir_x = cub->math->dir_x * cos(rot_speed) - cub->math->dir_y
 		* sin(rot_speed);

@@ -1,10 +1,10 @@
 C 130,202,255
 F 255,255,255
 
-NO textures/minecraft_diamond.png
-SO textures/minecraft_gold.png
-WE textures/minecraft_emerald.png
-EA textures/minecraft_iron.png
+NO       textures/fern_north.png
+SO        textures/fern_south.png
+WE ./textures/fern_west.png
+EA ./textures/fern_east.png
 
 111111111111111111111111
 100000000000000000000001
