@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 15:34:24 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/08 19:01:36 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/09 19:42:49 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ mlx_texture_t *get_texture(t_math *m, t_cub *cub)
 	}
 } */
 
-uint32_t get_pixel(mlx_texture_t *texture, t_math *m, int draw_start)
+/* uint32_t get_pixel(mlx_texture_t *texture, t_math *m, int draw_start)
 {
 	uint32_t pixel;
 	if(m->side == NO)
@@ -64,6 +64,22 @@ uint32_t get_pixel(mlx_texture_t *texture, t_math *m, int draw_start)
 	else
 		pixel = YELLOW;	
 	return(pixel);
+} */
+
+int	get_pixel(mlx_texture_t *texture, int texy, int texx)
+{
+	uint8_t *pixel;
+	uint8_t alpha;
+	uint8_t r;
+	uint8_t g;
+	uint8_t b;
+	
+	pixel = (uint8_t *)&texture->pixels[((texy * texture->width) + texx) * 4];
+	r = pixel[0];
+	g = pixel[1];
+	b = pixel[2];
+	alpha = pixel[3];
+	return (ft_pixel(r, g, b, alpha));
 }
 
 void draw_line(t_cub *cub, t_math *m, int x)
@@ -76,12 +92,36 @@ void draw_line(t_cub *cub, t_math *m, int x)
 	draw_start = calculate_line_start(m);
 	draw_end = calculate_line_end(m);
 	texture = get_texture(m, cub);
-	// double tex_pos = (draw_start - HEIGHT / 2 + m->line_height / 2) * m->step;
-	while (draw_start < draw_end)
+	
+	// LO DEV
+	double wallX;
+	if(m->side == NO || m->side == SO)
+		wallX = m->pos_y + m->wall_dist * m->ray_dir_y;
+	else
+		wallX = m->pos_x + m->wall_dist * m->ray_dir_x;
+	wallX -= floor(wallX);
+	int texx = (int)(wallX * (double)texture->width);
+	if(m->side == 0 || m->ray_dir_x > 0)
+		texx = texture->width - texx - 1;
+	if(m->side == 1 || m->ray_dir_y < 0)
+		texx = texture->width - texx - 1;
+	double step = 1.0 * texture->height / m->line_height;
+	double texPos = (draw_start - HEIGHT / 2 + m->line_height / 2) * step;
+	int y = draw_start;
+	int buffer[600];
+	while(y < draw_end)
 	{
-		color = get_pixel(texture, m, draw_start);
-		mlx_put_pixel(cub->img, x, draw_start, color);
-		draw_start++;
+		int texy = (int)texPos & (texture->height - 1);
+		texPos += step;
+		uint32_t color = get_pixel(texture, texy, texx); 
+		buffer[y] = color;
+		y++;
+	}
+	y = draw_start;
+	while(y < draw_end)
+	{
+		mlx_put_pixel(cub->img, x, y, buffer[y]);
+		y++;
 	}
 }
 
