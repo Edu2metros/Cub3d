@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 15:34:24 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/09 19:42:49 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/10 15:13:43 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	init_variables_paint(t_math *m, int x)
 {
-	m->camera_x = 2 * x / (WIDTH - 1.0) - 1.0;
+	m->camera_x = 2 * x / (double)WIDTH - 1;
 	m->ray_dir_x = m->dir_x + m->camera_x * m->plane_x;
 	m->ray_dir_y = m->dir_y + m->camera_x * m->plane_y;
 	m->mapx = (int)m->pos_x;
@@ -82,6 +82,18 @@ int	get_pixel(mlx_texture_t *texture, int texy, int texx)
 	return (ft_pixel(r, g, b, alpha));
 }
 
+uint32_t get_colors(t_math *m)
+{
+	if(m->side == NO)
+		return (GREEN);
+	else if(m->side == SO)
+		return (RED);
+	else if(m->side == WE)
+		return (BLUE);
+	else
+		return (YELLOW);
+}
+
 void draw_line(t_cub *cub, t_math *m, int x)
 {
 	int draw_start;
@@ -91,10 +103,10 @@ void draw_line(t_cub *cub, t_math *m, int x)
 	
 	draw_start = calculate_line_start(m);
 	draw_end = calculate_line_end(m);
-	texture = get_texture(m, cub);
+	// texture = get_texture(m, cub);
 	
 	// LO DEV
-	double wallX;
+	/* double wallX;
 	if(m->side == NO || m->side == SO)
 		wallX = m->pos_y + m->wall_dist * m->ray_dir_y;
 	else
@@ -107,21 +119,14 @@ void draw_line(t_cub *cub, t_math *m, int x)
 		texx = texture->width - texx - 1;
 	double step = 1.0 * texture->height / m->line_height;
 	double texPos = (draw_start - HEIGHT / 2 + m->line_height / 2) * step;
-	int y = draw_start;
-	int buffer[600];
-	while(y < draw_end)
+	int y = draw_start; */
+	while(draw_start < draw_end)
 	{
-		int texy = (int)texPos & (texture->height - 1);
-		texPos += step;
-		uint32_t color = get_pixel(texture, texy, texx); 
-		buffer[y] = color;
-		y++;
-	}
-	y = draw_start;
-	while(y < draw_end)
-	{
-		mlx_put_pixel(cub->img, x, y, buffer[y]);
-		y++;
+		// int texy = (int)texPos & (texture->height - 1);
+		// texPos += step;
+		uint32_t color = get_colors(m);
+		mlx_put_pixel(cub->img, x, draw_start, color);
+		draw_start++;
 	}
 }
 
@@ -174,5 +179,4 @@ void	draw_frame(t_cub *cub)
 		x++;
 	}
 	mlx_image_to_window(cub->mlx, cub->img, 0, 0);
-	update_time(m);
 }

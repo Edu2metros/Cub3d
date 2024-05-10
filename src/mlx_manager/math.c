@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 15:31:35 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/08 18:05:28 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/10 15:08:55 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,30 +24,27 @@ void	calculate_distance(t_math *m)
 		m->delta_dist_y = fabs(1 / m->ray_dir_y);
 }
 
-void	determinate_side_distance(t_math *m)
+void determinate_side_distance(t_math *m)
 {
-	double mapx = (double)(int)m->pos_x;
-	double mapy = (double)(int)m->pos_y;
-
-	if (m->ray_dir_x < 0)
+	if(m->ray_dir_x < 0)
 	{
 		m->step_x = -1;
-		m->side_dist_x = (m->pos_x - mapx) * m->delta_dist_x;
+		m->side_dist_x = (m->pos_x - m->mapx) * m->delta_dist_x;
 	}
 	else
 	{
 		m->step_x = 1;
-		m->side_dist_x = (mapx + 1.0 - m->pos_x) * m->delta_dist_x;
+		m->side_dist_x = (m->mapx + 1.0 - m->pos_x) * m->delta_dist_x;
 	}
-	if (m->ray_dir_y < 0)
+	if(m->ray_dir_y < 0)
 	{
 		m->step_y = -1;
-		m->side_dist_y = (m->pos_y - mapy) * m->delta_dist_y;
+		m->side_dist_y = (m->pos_y - m->mapy) * m->delta_dist_y;
 	}
 	else
 	{
 		m->step_y = 1;
-		m->side_dist_y = (mapy + 1.0 - m->pos_y) * m->delta_dist_y;
+		m->side_dist_y = (m->mapy + 1.0 - m->pos_y) * m->delta_dist_y;
 	}
 }
 
@@ -88,7 +85,7 @@ void	calculate_dda(t_cub *cub, t_math *m)
 			m->mapy += m->step_y;
 			wall_side(m, 'y');
 		}
-		if(cub->vectors[m->mapy][m->mapx].type == WALL)
+		if(cub->vectors[m->mapx][m->mapy].type == WALL)
 			break;
 	}
 }

@@ -31,38 +31,38 @@ static void	assign_types(char type, t_vectors *vectors, t_math *math)
 	else
 	{
 		vectors->type = PLAYER;
-		math->pos_x = (double)vectors->y;
-		math->pos_y = (double)vectors->x;
+		math->pos_x = vectors->x;
+		math->pos_y = vectors->y;
 	}
 }
 
-void	define_vectors(char **map, t_cub *cub)
+void define_vectors(char **map, t_cub *cub)
 {
-	int	x;
-	int	y;
-	int	max_x;
+	int x;
+	int y;
+	int max_x;
+	x = -1;
 
-	y = -1;
 	max_x = find_max_x(map);
-	while (map[++y])
+	while(map[++x])
 		;
-	cub->vectors = calloc_garbage_collector(&cub->garbage, y + 1, sizeof(t_vectors *));
-	y = -1;
-	while (map[++y])
+	cub->vectors = calloc_garbage_collector(&cub->garbage, x + 1, sizeof(t_vectors *));
+	x = -1;
+	while(map[++x])
 	{
-		cub->vectors[y] = calloc_garbage_collector(&cub->garbage, max_x, sizeof(t_vectors));
-		x = -1;
-		while (map[y][++x])
+		cub->vectors[x] = calloc_garbage_collector(&cub->garbage, max_x, sizeof(t_vectors));
+		y = -1;
+		while(map[x][++y])
 		{
-			if (map[y][x] != '\n')
+			if(map[x][y] != '\n')
 			{
-				cub->vectors[y][x].x = x;
-				cub->vectors[y][x].y = y;
-				assign_types(map[y][x], &cub->vectors[y][x], cub->math);
+				cub->vectors[x][y].x = x;
+				cub->vectors[x][y].y = y;
+				assign_types(map[x][y], &cub->vectors[x][y], cub->math);
 			}
 		}
 	}
-	cub->vectors[y] = NULL;
+	cub->vectors[x] = NULL;
 }
 
 void	free_vectors(t_vectors **vectors)

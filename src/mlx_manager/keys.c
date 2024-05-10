@@ -6,17 +6,16 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:00:15 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/08 16:20:20 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/10 16:17:47 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-int	is_wallhit(char **map, double x, double y)
+int	is_wallhit(t_vectors **vector, t_math *math, t_cub *cub, double x, double y)
 {
-	if (map[(int)y][(int)x] != '0' && map[(int)y][(int)x] != 'N'
-		&& map[(int)y][(int)x] != 'S' && map[(int)y][(int)x] != 'W'
-		&& map[(int)y][(int)x] != 'E')
+	printf("plane pos:%c\n", cub->info->map[(int)x][(int)y]);
+	if(vector[(int)((x))][(int)(y)].type == WALL)	
 		return (TRUE);
 	return (FALSE);
 }
@@ -36,15 +35,14 @@ void	key_up(t_cub *cub, char **map)
 	int		pos_x;
 	int		pos_y;
 
-	move_speed = 0.05;
+	move_speed = 0.10;
 	pos_x = (int)cub->math->pos_x + (int)cub->math->dir_x * move_speed;
 	pos_y = (int)cub->math->pos_y + (int)cub->math->dir_y * move_speed;
-	if (is_wallhit(map, pos_x, cub->math->pos_y) == FALSE)
+	printf("player pos: %c\n", map[(int)cub->math->pos_x][(int)cub->math->pos_y]);
+	if(is_wallhit(cub->vectors, cub->math, cub, pos_x, cub->math->pos_y) == FALSE)
 		cub->math->pos_x += cub->math->dir_x * move_speed;
-	printf("%c\n", map[pos_y][(int)cub->math->pos_x]);
-	if (is_wallhit(map, cub->math->pos_x, pos_y) == FALSE)
+	if(is_wallhit(cub->vectors, cub->math, cub, cub->math->pos_x, pos_y) == FALSE)
 		cub->math->pos_y += cub->math->dir_y * move_speed;
-	printf("%c\n", map[(int)cub->math->pos_y][pos_x]);
 	draw_frame(cub);
 }
 
@@ -58,11 +56,11 @@ void	key_down(t_cub *cub, char **map)
 	//   frame_time = (cub->math->time - cub->math->old_time) / 1000.0;
 	//   move_speed = frame_time * 5.0;
 	move_speed = 0.05;
-	pos_x = (int)cub->math->pos_x - (int)cub->math->dir_x * move_speed;
-	pos_y = (int)cub->math->pos_y - (int)cub->math->dir_y * move_speed;
-	if (is_wallhit(map, pos_x, cub->math->pos_y) == FALSE)
+	pos_x = (int)cub->math->pos_x - (int)cub->math->dir_x * move_speed + -0.4;
+	pos_y = (int)cub->math->pos_y - (int)cub->math->dir_y * move_speed + -0.4;
+	if(is_wallhit(cub->vectors, cub->math,cub, pos_x, cub->math->pos_y) == FALSE)
 		cub->math->pos_x -= cub->math->dir_x * move_speed;
-	if (is_wallhit(map, cub->math->pos_x, pos_y) == FALSE)
+	if(is_wallhit(cub->vectors, cub->math, cub, cub->math->pos_x, pos_y) == FALSE)
 		cub->math->pos_y -= cub->math->dir_y * move_speed;
 	draw_frame(cub);
 }
