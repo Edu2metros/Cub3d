@@ -30,38 +30,61 @@ int	is_wallhit(t_vectors **vector, t_math *math, t_cub *cub, double x, double y)
 
 void	key_up(t_cub *cub, char **map)
 {
-	double	frame_time;
 	double	move_speed;
 	int		pos_x;
 	int		pos_y;
+	int		steps = 0;
+	int		max_steps = 1000;
+	double	player_radius = 0.2;
+	double	angle_step = M_PI / 4;
+	double	angle = 0;
 
-	move_speed = 0.10;
-	pos_x = (int)cub->math->pos_x + (int)cub->math->dir_x * move_speed;
-	pos_y = (int)cub->math->pos_y + (int)cub->math->dir_y * move_speed;
-	printf("player pos: %c\n", map[(int)cub->math->pos_x][(int)cub->math->pos_y]);
-	if(is_wallhit(cub->vectors, cub->math, cub, pos_x, cub->math->pos_y) == FALSE)
+	move_speed = 0.10 / max_steps;
+	while (steps < max_steps)
+	{
+		while (angle < 2 * M_PI)
+		{
+			pos_x = (int)(cub->math->pos_x + player_radius * cos(angle) + cub->math->dir_x * move_speed);
+			pos_y = (int)(cub->math->pos_y + player_radius * sin(angle) + cub->math->dir_y * move_speed);
+			if(is_wallhit(cub->vectors, cub->math, cub, pos_x, pos_y) == TRUE)
+				return;
+			angle += angle_step;
+		}
+		angle = 0;
 		cub->math->pos_x += cub->math->dir_x * move_speed;
-	if(is_wallhit(cub->vectors, cub->math, cub, cub->math->pos_x, pos_y) == FALSE)
 		cub->math->pos_y += cub->math->dir_y * move_speed;
+		steps++;
+	}
 	draw_frame(cub);
 }
 
 void	key_down(t_cub *cub, char **map)
 {
-	double	frame_time;
 	double	move_speed;
 	int		pos_x;
 	int		pos_y;
+	int		steps = 0;
+	int		max_steps = 1000;
+	double	player_radius = 0.2;
+	double	angle_step = M_PI / 4;
+	double	angle = 0;
 
-	//   frame_time = (cub->math->time - cub->math->old_time) / 1000.0;
-	//   move_speed = frame_time * 5.0;
-	move_speed = 0.05;
-	pos_x = (int)cub->math->pos_x - (int)cub->math->dir_x * move_speed + -0.4;
-	pos_y = (int)cub->math->pos_y - (int)cub->math->dir_y * move_speed + -0.4;
-	if(is_wallhit(cub->vectors, cub->math,cub, pos_x, cub->math->pos_y) == FALSE)
+	move_speed = 0.10 / max_steps;
+	while (steps < max_steps)
+	{
+		while (angle < 2 * M_PI) 
+		{
+			pos_x = (int)(cub->math->pos_x + player_radius * cos(angle) - cub->math->dir_x * move_speed);
+			pos_y = (int)(cub->math->pos_y + player_radius * sin(angle) - cub->math->dir_y * move_speed);
+			if(is_wallhit(cub->vectors, cub->math, cub, pos_x, pos_y) == TRUE)
+				return;
+			angle += angle_step;
+		}
+		angle = 0;
 		cub->math->pos_x -= cub->math->dir_x * move_speed;
-	if(is_wallhit(cub->vectors, cub->math, cub, cub->math->pos_x, pos_y) == FALSE)
 		cub->math->pos_y -= cub->math->dir_y * move_speed;
+		steps++;
+	}
 	draw_frame(cub);
 }
 
