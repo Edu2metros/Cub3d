@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:16:48 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/13 12:25:57 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/13 12:38:58 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 # define VALID_CHARS "01 \nNSEW"
 # define PLAYER_CHARS "NSEW"
 
-# define WIDTH 640
-# define HEIGHT 480
+# define WIDTH 800
+# define HEIGHT 600
 
 # define BLACK 0x000000FFu
 # define WHITE 0xFFFFFFFFu

@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 15:34:24 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/13 12:28:38 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/13 13:06:21 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ mlx_texture_t *get_texture(t_math *m, t_cub *cub)
 	return(pixel);
 } */
 
-int	get_pixel(mlx_texture_t *texture, int texy, int texx)
+int	get_pixel(mlx_texture_t *texture, int texx, int texy)
 {
 	uint8_t *pixel;
 	uint8_t a;
@@ -74,7 +74,7 @@ int	get_pixel(mlx_texture_t *texture, int texy, int texx)
 	uint8_t g;
 	uint8_t b;
 	
-	pixel = (uint8_t *)&texture->pixels[((texy * texture->width) + texx) * 4];
+	pixel = (uint8_t *)&texture->pixels[((texx * texture->width) + texy) * 4];
 	r = pixel[0];
 	g = pixel[1];
 	b = pixel[2];
@@ -124,15 +124,14 @@ void draw_line(t_cub *cub, t_math *m, int x)
 	texture = get_texture(m, cub);
 	m->tex_x = define_tex_x(m, texture);
 	m->step_line = 1.0 * texture->height / m->line_height;
-	m->tex_pos = (draw_start - HEIGHT / 2 + m->line_height / 2) * m->step;
+	m->tex_pos = (draw_start - HEIGHT / 2 + m->line_height / 2) * m->step_line;
 	while(draw_start < draw_end)
 	{
 		tex_y = (int)m->tex_pos & (texture->height - 1);
 		m->tex_pos += m->step_line;
-		uint32_t color = get_pixel(texture, tex_y, m->tex_x);
-		mlx_put_pixel(cub->img, x, draw_start, color);
+		mlx_put_pixel(cub->img, x, draw_start, get_pixel(texture, m->tex_x, tex_y));
 		draw_start++;
-	}	
+	}
 }
 
 float calculate_raydir(double dir, double plane, char type)
@@ -143,7 +142,7 @@ float calculate_raydir(double dir, double plane, char type)
 		return (dir + plane);
 }
 
-void draw_cel_floor(t_cub *cub, t_math *m)
+void draw_background(t_cub *cub, t_math *m)
 {
 	uint32_t color_cel;
 	uint32_t color_floor;
@@ -173,7 +172,7 @@ void	draw_frame(t_cub *cub)
 	m = cub->math;
 	x = 0;
 
-	draw_cel_floor(cub, m);
+	draw_background(cub, m);
 	while (x < WIDTH)
 	{
 		init_variables_paint(m, x);
