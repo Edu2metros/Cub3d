@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 15:34:24 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/10 15:13:43 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/13 12:28:38 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ mlx_texture_t *get_texture(t_math *m, t_cub *cub)
 int	get_pixel(mlx_texture_t *texture, int texy, int texx)
 {
 	uint8_t *pixel;
-	uint8_t alpha;
+	uint8_t a;
 	uint8_t r;
 	uint8_t g;
 	uint8_t b;
@@ -78,11 +78,11 @@ int	get_pixel(mlx_texture_t *texture, int texy, int texx)
 	r = pixel[0];
 	g = pixel[1];
 	b = pixel[2];
-	alpha = pixel[3];
-	return (ft_pixel(r, g, b, alpha));
+	a = pixel[3];
+	return (ft_pixel(r, g, b, a));
 }
 
-uint32_t get_colors(t_math *m)
+/* uint32_t get_colors(t_math *m)
 {
 	if(m->side == NO)
 		return (GREEN);
@@ -92,6 +92,23 @@ uint32_t get_colors(t_math *m)
 		return (BLUE);
 	else
 		return (YELLOW);
+} */
+
+int define_tex_x(t_math *m, mlx_texture_t *texture)
+{
+	double wallx;
+	int tex_x;
+	if(m->side == NO || m->side == SO)
+		wallx = m->pos_y + m->wall_dist * m->ray_dir_y;
+	else
+		wallx = m->pos_x + m->wall_dist * m->ray_dir_x;
+	wallx -= floor(wallx);
+	tex_x = (int)(wallx * (double)texture->width);
+	if(m->side == 0 || m->ray_dir_x > 0)
+		tex_x = texture->width - tex_x - 1;
+	if(m->side == 1 || m->ray_dir_y < 0)
+		tex_x = texture->width - tex_x - 1;
+	return(tex_x);
 }
 
 void draw_line(t_cub *cub, t_math *m, int x)
@@ -100,34 +117,22 @@ void draw_line(t_cub *cub, t_math *m, int x)
 	int draw_end;
 	uint32_t color;
 	mlx_texture_t *texture;
-	
+	int tex_y;
+
 	draw_start = calculate_line_start(m);
 	draw_end = calculate_line_end(m);
-	// texture = get_texture(m, cub);
-	
-	// LO DEV
-	/* double wallX;
-	if(m->side == NO || m->side == SO)
-		wallX = m->pos_y + m->wall_dist * m->ray_dir_y;
-	else
-		wallX = m->pos_x + m->wall_dist * m->ray_dir_x;
-	wallX -= floor(wallX);
-	int texx = (int)(wallX * (double)texture->width);
-	if(m->side == 0 || m->ray_dir_x > 0)
-		texx = texture->width - texx - 1;
-	if(m->side == 1 || m->ray_dir_y < 0)
-		texx = texture->width - texx - 1;
-	double step = 1.0 * texture->height / m->line_height;
-	double texPos = (draw_start - HEIGHT / 2 + m->line_height / 2) * step;
-	int y = draw_start; */
+	texture = get_texture(m, cub);
+	m->tex_x = define_tex_x(m, texture);
+	m->step_line = 1.0 * texture->height / m->line_height;
+	m->tex_pos = (draw_start - HEIGHT / 2 + m->line_height / 2) * m->step;
 	while(draw_start < draw_end)
 	{
-		// int texy = (int)texPos & (texture->height - 1);
-		// texPos += step;
-		uint32_t color = get_colors(m);
+		tex_y = (int)m->tex_pos & (texture->height - 1);
+		m->tex_pos += m->step_line;
+		uint32_t color = get_pixel(texture, tex_y, m->tex_x);
 		mlx_put_pixel(cub->img, x, draw_start, color);
 		draw_start++;
-	}
+	}	
 }
 
 float calculate_raydir(double dir, double plane, char type)

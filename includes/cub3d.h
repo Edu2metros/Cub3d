@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:16:48 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/09 19:50:54 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/13 12:25:57 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,9 @@ enum					types
 
 typedef struct s_math
 {
+	double 				tex_x;
+	double 				tex_pos;
+	double 				step_line;
 	int					side;
 	int					mapx;
 	int					mapy;

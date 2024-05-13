@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:00:15 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/10 16:17:47 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/13 11:18:22 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	is_wallhit(t_vectors **vector, t_math *math, t_cub *cub, double x, double y)
 {
-	printf("plane pos:%c\n", cub->info->map[(int)x][(int)y]);
 	if(vector[(int)((x))][(int)(y)].type == WALL)	
 		return (TRUE);
 	return (FALSE);
