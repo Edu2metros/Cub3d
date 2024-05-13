@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 15:34:24 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/13 13:06:21 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/13 13:42:54 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	get_pixel(mlx_texture_t *texture, int texx, int texy)
 	uint8_t g;
 	uint8_t b;
 	
-	pixel = (uint8_t *)&texture->pixels[((texx * texture->width) + texy) * 4];
+	pixel = (uint8_t *)&texture->pixels[((texx * texture->width) + texy) * texture->bytes_per_pixel];
 	r = pixel[0];
 	g = pixel[1];
 	b = pixel[2];
@@ -104,9 +104,9 @@ int define_tex_x(t_math *m, mlx_texture_t *texture)
 		wallx = m->pos_x + m->wall_dist * m->ray_dir_x;
 	wallx -= floor(wallx);
 	tex_x = (int)(wallx * (double)texture->width);
-	if(m->side == 0 || m->ray_dir_x > 0)
+	if(m->side == NO || m->side == SO)
 		tex_x = texture->width - tex_x - 1;
-	if(m->side == 1 || m->ray_dir_y < 0)
+	if(m->side == WE || m->side == EA)
 		tex_x = texture->width - tex_x - 1;
 	return(tex_x);
 }
@@ -115,7 +115,6 @@ void draw_line(t_cub *cub, t_math *m, int x)
 {
 	int draw_start;
 	int draw_end;
-	uint32_t color;
 	mlx_texture_t *texture;
 	int tex_y;
 
@@ -123,7 +122,7 @@ void draw_line(t_cub *cub, t_math *m, int x)
 	draw_end = calculate_line_end(m);
 	texture = get_texture(m, cub);
 	m->tex_x = define_tex_x(m, texture);
-	m->step_line = 1.0 * texture->height / m->line_height;
+	m->step_line = (1.0 * texture->height / m->line_height);
 	m->tex_pos = (draw_start - HEIGHT / 2 + m->line_height / 2) * m->step_line;
 	while(draw_start < draw_end)
 	{
@@ -132,14 +131,6 @@ void draw_line(t_cub *cub, t_math *m, int x)
 		mlx_put_pixel(cub->img, x, draw_start, get_pixel(texture, m->tex_x, tex_y));
 		draw_start++;
 	}
-}
-
-float calculate_raydir(double dir, double plane, char type)
-{
-	if(type == '-')
-		return (dir - plane);
-	else
-		return (dir + plane);
 }
 
 void draw_background(t_cub *cub, t_math *m)
