@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 15:31:35 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/10 15:08:55 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/13 19:04:31 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,13 @@ void	calculate_dda(t_cub *cub, t_math *m)
 			m->side_dist_x += m->delta_dist_x;
 			m->mapx += m->step_x;
 			wall_side(m, 'x');
+			m->side2 = 0;
 		}
 		else
 		{
 			m->side_dist_y += m->delta_dist_y;
 			m->mapy += m->step_y;
+			m->side2 = 1;
 			wall_side(m, 'y');
 		}
 		if(cub->vectors[m->mapx][m->mapy].type == WALL)

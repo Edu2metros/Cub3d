@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   memory_manager.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nprudenc <nprudenc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 00:49:53 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/02 14:51:24 by nprudenc         ###   ########.fr       */
+/*   Updated: 2024/05/13 22:29:08 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void *calloc_garbage_collector(t_garbage **garbage_collector, size_t count, size
 	t_garbage *new;
 
 	ptr = ft_safe_calloc(count, size);
-	new = (t_garbage *)ft_safe_malloc(sizeof(t_garbage));
+	new = (t_garbage *)ft_safe_calloc(1, sizeof(t_garbage));
 	new->ptr = ptr;
 	new->next = *garbage_collector;
 	*garbage_collector = new;
@@ -50,6 +50,8 @@ void	free_gargabe_collector(t_garbage *list)
 		list = list->next;
 		free(temp->ptr);
 		free(temp);
+		// temp->ptr = NULL;
+		// temp = NULL;
 	}
 }
 
@@ -61,4 +63,17 @@ void	*ft_safe_malloc(size_t size)
 	if (ptr == NULL)
 		exit_program(get_struct(), "Error\nMalloc failed\n");
 	return (ptr);
+}
+
+void finish_mlx(t_cub *cub)
+{
+	if(cub->info->no)
+		mlx_delete_texture(cub->info->no);
+	if(cub->info->so)
+		mlx_delete_texture(cub->info->so);
+	if(cub->info->we)
+		mlx_delete_texture(cub->info->we);
+	if(cub->info->ea)
+		mlx_delete_texture(cub->info->ea);
+	mlx_terminate(cub->mlx);
 }

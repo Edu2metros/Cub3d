@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 15:34:24 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/13 13:42:54 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/13 21:37:51 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,19 +66,20 @@ mlx_texture_t *get_texture(t_math *m, t_cub *cub)
 	return(pixel);
 } */
 
-int	get_pixel(mlx_texture_t *texture, int texx, int texy)
+uint32_t	get_pixel(mlx_texture_t *texture, int texx, int texy)
 {
-	uint8_t *pixel;
-	uint8_t a;
+	int index;
 	uint8_t r;
 	uint8_t g;
 	uint8_t b;
-	
-	pixel = (uint8_t *)&texture->pixels[((texx * texture->width) + texy) * texture->bytes_per_pixel];
-	r = pixel[0];
-	g = pixel[1];
-	b = pixel[2];
-	a = pixel[3];
+	uint8_t a;
+	uint8_t *pixels;
+	index = (texy * texture->width + texx) * texture->bytes_per_pixel;
+	pixels = texture->pixels;
+	r = pixels[index];
+	g = pixels[index + 1];
+	b = pixels[index + 2];
+	a = pixels[index + 3];
 	return (ft_pixel(r, g, b, a));
 }
 
@@ -98,15 +99,21 @@ int define_tex_x(t_math *m, mlx_texture_t *texture)
 {
 	double wallx;
 	int tex_x;
-	if(m->side == NO || m->side == SO)
+	if(m->side2 == 0)
+	{
+		m->wall_dist = (m->side_dist_x - m->delta_dist_x);
 		wallx = m->pos_y + m->wall_dist * m->ray_dir_y;
+	}
 	else
+	{
+		m->wall_dist = (m->side_dist_y - m->delta_dist_y);
 		wallx = m->pos_x + m->wall_dist * m->ray_dir_x;
+	}
 	wallx -= floor(wallx);
 	tex_x = (int)(wallx * (double)texture->width);
-	if(m->side == NO || m->side == SO)
+	if(m->side2 == 0 && m->ray_dir_x > 0)
 		tex_x = texture->width - tex_x - 1;
-	if(m->side == WE || m->side == EA)
+	if(m->side2 == 1 && m->ray_dir_y < 0)
 		tex_x = texture->width - tex_x - 1;
 	return(tex_x);
 }
@@ -116,19 +123,21 @@ void draw_line(t_cub *cub, t_math *m, int x)
 	int draw_start;
 	int draw_end;
 	mlx_texture_t *texture;
+	int tex_x;
 	int tex_y;
-
 	draw_start = calculate_line_start(m);
 	draw_end = calculate_line_end(m);
 	texture = get_texture(m, cub);
-	m->tex_x = define_tex_x(m, texture);
+	tex_x = define_tex_x(m, texture);
 	m->step_line = (1.0 * texture->height / m->line_height);
 	m->tex_pos = (draw_start - HEIGHT / 2 + m->line_height / 2) * m->step_line;
-	while(draw_start < draw_end)
+	while(draw_start < draw_end && draw_start < HEIGHT)
 	{
 		tex_y = (int)m->tex_pos & (texture->height - 1);
+		// printf("tex x: %d, tex y: %d\n", tex_x, tex_y);
 		m->tex_pos += m->step_line;
-		mlx_put_pixel(cub->img, x, draw_start, get_pixel(texture, m->tex_x, tex_y));
+		uint32_t pixel = get_pixel(texture, tex_x, tex_y);
+		mlx_put_pixel(cub->img, x, draw_start, pixel);
 		draw_start++;
 	}
 }

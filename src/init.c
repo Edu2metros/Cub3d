@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 01:07:01 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/10 15:26:29 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/13 21:54:08 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static void init_variables_math(t_math *m)
   m->plane_y = 0.66;
   m->time = 0;
   m->old_time = 0;
+  m->side2 = 0;
 }
 
 t_cub	*init(void)

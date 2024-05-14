@@ -6,11 +6,12 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:00:15 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/13 11:18:22 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/13 21:52:25 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
+#define M_PI 3.14159265358979323846
 
 int	is_wallhit(t_vectors **vector, t_math *math, t_cub *cub, double x, double y)
 {
@@ -19,13 +20,6 @@ int	is_wallhit(t_vectors **vector, t_math *math, t_cub *cub, double x, double y)
 	return (FALSE);
 }
 
-// if (map[(int)cub->math->pos_y][pos_x] == '0'
-// || map[(int)cub->math->pos_y][pos_x] == 'E')
-// if (map[pos_y][(int)cub->math->pos_x] == '0'
-// || map[pos_y][(int)cub->math->pos_x] == 'E')
-// 	cub->math->pos_y += cub->math->dir_y * move_speed;
-//   frame_time = (cub->math->time - cub->math->old_time) / 1000.0;
-//   move_speed = frame_time * 5.0;
 
 void	key_up(t_cub *cub, char **map)
 {

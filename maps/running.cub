@@ -4,7 +4,7 @@ F 255,255,255
 NO       textures/fern_north.png
 SO        textures/fern_south.png
 WE ./textures/fern_west.png
-EA ./textures/fern_east.png
+EA 
 
 111111111111111111111111
 100000000000000000000001

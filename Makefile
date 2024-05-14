@@ -54,7 +54,7 @@ ifeq (,$(wildcard ./includes/MLX42/build/libmlx42.a))
 endif
 
 valgrind: all
-	clear && valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./cub3D maps/andrey.cub
+	clear && valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=mlx.sup ./cub3D maps/running.cub
 
 test: all
 	clear && ./cub3D maps/running.cub

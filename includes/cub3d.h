@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:16:48 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/13 12:38:58 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/13 22:19:24 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 # define VALID_CHARS "01 \nNSEW"
 # define PLAYER_CHARS "NSEW"
 
-# define WIDTH 800
-# define HEIGHT 600
+# define WIDTH 640
+# define HEIGHT 480
 
 # define BLACK 0x000000FFu
 # define WHITE 0xFFFFFFFFu
@@ -93,6 +93,7 @@ typedef struct s_math
 	int line_height;
 	double x;
 	double step;
+	int side2;
 }						t_math;
 
 typedef struct s_info
@@ -140,6 +141,7 @@ void					exit_program(t_cub *cub, char *str);
 void					key(void *arg);
 void					running2(t_cub *cub);
 int						wall_hit(t_cub *cub, t_math *m);
+void finish_mlx(t_cub *cub);
 
 // VALIDATION
 

@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 16:18:22 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/10 15:10:09 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/13 22:20:17 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ static mlx_texture_t *assign_textures(char *line, t_cub *cub)
 	result = mlx_load_png(path);
 	free(path);
 	if(result == NULL)
+	{
+		finish_mlx(cub);
 		exit_program(cub, "MLX error loading texture\n");
+	}
 	return (result);
 }
 
