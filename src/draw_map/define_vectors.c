@@ -1,6 +1,16 @@
-#include "../../includes/cub3d.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   define_vectors.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/14 08:08:08 by eddos-sa          #+#    #+#             */
+/*   Updated: 2024/05/14 08:10:31 by eddos-sa         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void	free_vectors(t_vectors **vectors);
+#include "../../includes/cub3d.h"
 
 static int	find_max_x(char **map)
 {
@@ -36,25 +46,25 @@ static void	assign_types(char type, t_vectors *vectors, t_math *math)
 	}
 }
 
-void define_vectors(char **map, t_cub *cub)
+void	define_vectors(char **map, t_cub *cub)
 {
-	int x;
-	int y;
-	int max_x;
-	x = -1;
+	int	x;
+	int	y;
+	int	max_x;
 
-	max_x = find_max_x(map);
-	while(map[++x])
-		;
-	cub->vectors = calloc_garbage_collector(&cub->garbage, x + 1, sizeof(t_vectors *));
 	x = -1;
-	while(map[++x])
+	max_x = find_max_x(map);
+	while (map[++x])
+		;
+	cub->vectors = calloc_gc(&cub->garbage, x + 1, sizeof(t_vectors *));
+	x = -1;
+	while (map[++x])
 	{
-		cub->vectors[x] = calloc_garbage_collector(&cub->garbage, max_x, sizeof(t_vectors));
+		cub->vectors[x] = calloc_gc(&cub->garbage, max_x, sizeof(t_vectors));
 		y = -1;
-		while(map[x][++y])
+		while (map[x][++y])
 		{
-			if(map[x][y] != '\n')
+			if (map[x][y] != '\n')
 			{
 				cub->vectors[x][y].x = x;
 				cub->vectors[x][y].y = y;
@@ -63,14 +73,4 @@ void define_vectors(char **map, t_cub *cub)
 		}
 	}
 	cub->vectors[x] = NULL;
-}
-
-void	free_vectors(t_vectors **vectors)
-{
-	int	i;
-
-	i = -1;
-	while(vectors[++i])
-		free(vectors[i]);
-	free(vectors);
 }

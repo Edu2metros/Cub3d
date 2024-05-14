@@ -1,6 +1,6 @@
 cc =  cc
 
-FLAGS = -g3
+FLAGS = -g3 -Wall -Wextra -Werror
 
 MLX_FLAGS = -ldl -lglfw -pthread -lm
 

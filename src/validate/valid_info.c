@@ -6,13 +6,13 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 00:55:52 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/07 16:49:02 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/14 08:30:24 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-int only_digit(char *line)
+int	only_digit(char *line)
 {
 	int	i;
 
@@ -26,21 +26,11 @@ int only_digit(char *line)
 	return (TRUE);
 }
 
-void remove_char_color(char *line)
-{
-	remove_char(line, ' ');
-	remove_char(line, '\n');
-	remove_char(line, 'C');
-	remove_char(line, 'F');
-}
-
 static int	range_color(t_cub *cub, char *line)
 {
 	char	**colors;
 	int		i;
-	// printf("line: %s\n", line);
-	// remove_char_color(line);
-	// printf("line: %s\n", line);
+
 	colors = ft_split(line, ',');
 	i = 0;
 	if (ft_array_len(colors) != 3)

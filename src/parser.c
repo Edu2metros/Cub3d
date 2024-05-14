@@ -6,24 +6,24 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 16:18:22 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/13 22:20:17 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/14 08:11:40 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-static mlx_texture_t *assign_textures(char *line, t_cub *cub)
+static mlx_texture_t	*assign_textures(char *line, t_cub *cub)
 {
-	char	*path;
+	char			*path;
 	mlx_texture_t	*result;
-	int		first_char;
+	int				first_char;
 
 	first_char = find_first_char(line + 2);
 	path = ft_strdup(line + 2 + first_char);
 	remove_char(path, '\n');
 	result = mlx_load_png(path);
 	free(path);
-	if(result == NULL)
+	if (result == NULL)
 	{
 		finish_mlx(cub);
 		exit_program(cub, "MLX error loading texture\n");
@@ -82,16 +82,13 @@ static void	parser_map(t_cub *cub)
 	i = 0;
 	start = jump_lines(cub->file);
 	map_height = find_map_height(cub->file + start);
-	cub->info->map = calloc_garbage_collector(&cub->garbage,
-			map_height + 2, sizeof(char *));
+	cub->info->map = calloc_gc(&cub->garbage, map_height + 2, sizeof(char *));
 	while (i < map_height + 1)
 	{
 		cub->info->map[i] = ft_strdup_two(cub->file[start + i], cub);
 		i++;
 	}
 }
-
-// separa texturas, cores e mapa do arquivo e manda pra struct info
 
 void	parser(t_cub *cub)
 {

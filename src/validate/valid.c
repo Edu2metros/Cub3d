@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 00:57:02 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/07 16:26:42 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/14 08:44:27 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ static void	check_file(char *file, t_cub *cub)
 	int	fd;
 
 	if (!ft_strchr(file, '.'))
-		exit_program(cub, "Error\nInvalid file extension\n");
+		exit_program(cub, MSG_ERROR "nInvalid file extension\n");
 	if (ft_strcmp(ft_strrchr(file, '.'), ".cub") != 0)
-		exit_program(cub, "Error\nInvalid file extension\n");
+		exit_program(cub, MSG_ERROR "nInvalid file extension\n");
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
-		exit_program(cub, "Error\nFile does not exist\n");
+		exit_program(cub, MSG_ERROR "nFile does not exist\n");
 	cub->fd = fd;
 }
 
@@ -35,12 +35,13 @@ static void	extract_lines(char *file, t_cub *cub)
 
 	temp_fd = open(file, O_RDONLY);
 	lines = get_how_many_lines(temp_fd);
-	cub->file = calloc_garbage_collector(&cub->garbage, lines + 1, sizeof(char *));
+	cub->file = calloc_gc(&cub->garbage, lines + 1, sizeof(char *));
 	i = 0;
 	tmp_line = get_next_line(cub->fd);
 	while (tmp_line != NULL)
 	{
-		cub->file[i] = calloc_garbage_collector(&cub->garbage, ft_strlen(tmp_line) + 1, sizeof(char));
+		cub->file[i] = calloc_gc(&cub->garbage, ft_strlen(tmp_line) + 1,
+				sizeof(char));
 		ft_strlcpy(cub->file[i], tmp_line, ft_strlen(tmp_line) + 1);
 		free(tmp_line);
 		tmp_line = get_next_line(cub->fd);
@@ -54,7 +55,9 @@ static void	extract_lines(char *file, t_cub *cub)
 static void	check_args(int argc, t_cub *cub)
 {
 	if (argc != 2)
-		exit_program(cub, "Error\nInvalid number of arguments\n");
+		exit_program(cub,
+			MSG_ERROR "Invalid number of arguments!\n \
+The correct format is ./cub3D <map/map.cub>\n");
 }
 
 static void	map_is_valid(t_cub *cub)
@@ -77,16 +80,16 @@ static void	map_is_valid(t_cub *cub)
 		}
 		validate_info(cub->file[i] + char_pos, info, cub);
 	}
-	if (cub->err_flag == TRUE || ft_array_len(info) != 0
-		|| cub->file[i] == NULL)
+	if (is_error(cub, info, i) == TRUE)
 	{
 		free_array(info);
-		exit_program(cub, "Error in file. Exit\n");
+		exit_program(cub,
+			MSG_ERROR "There is something wrong in file. Exit.\n");
 	}
 	free(info);
 }
 
-void validation(int argc, char **argv, t_cub *cub)
+void	validation(int argc, char **argv, t_cub *cub)
 {
 	check_args(argc, cub);
 	check_file(argv[1], cub);

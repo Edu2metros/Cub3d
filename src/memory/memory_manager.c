@@ -6,31 +6,26 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 00:49:53 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/13 22:29:08 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/14 08:37:35 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-// Garbage collector:
-// Lista linkada para armazenas os ponteiros alocados
-// para liberar a memória no final do programa
-
-
-void *ft_safe_calloc(size_t count, size_t size)
+void	*ft_safe_calloc(size_t count, size_t size)
 {
-	void *ptr;
+	void	*ptr;
 
 	ptr = ft_calloc(count, size);
 	if (ptr == NULL)
 		exit_program(get_struct(), "Error\nCalloc failed\n");
-	return (ptr);	
+	return (ptr);
 }
 
-void *calloc_garbage_collector(t_garbage **garbage_collector, size_t count, size_t size)
+void	*calloc_gc(t_garbage **garbage_collector, size_t count, size_t size)
 {
-	void *ptr;
-	t_garbage *new;
+	void		*ptr;
+	t_garbage	*new;
 
 	ptr = ft_safe_calloc(count, size);
 	new = (t_garbage *)ft_safe_calloc(1, sizeof(t_garbage));
@@ -49,9 +44,9 @@ void	free_gargabe_collector(t_garbage *list)
 		temp = list;
 		list = list->next;
 		free(temp->ptr);
+		temp->ptr = NULL;
 		free(temp);
-		// temp->ptr = NULL;
-		// temp = NULL;
+		temp = NULL;
 	}
 }
 
@@ -65,15 +60,15 @@ void	*ft_safe_malloc(size_t size)
 	return (ptr);
 }
 
-void finish_mlx(t_cub *cub)
+void	finish_mlx(t_cub *cub)
 {
-	if(cub->info->no)
+	if (cub->info->no)
 		mlx_delete_texture(cub->info->no);
-	if(cub->info->so)
+	if (cub->info->so)
 		mlx_delete_texture(cub->info->so);
-	if(cub->info->we)
+	if (cub->info->we)
 		mlx_delete_texture(cub->info->we);
-	if(cub->info->ea)
+	if (cub->info->ea)
 		mlx_delete_texture(cub->info->ea);
 	mlx_terminate(cub->mlx);
 }

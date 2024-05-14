@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 00:56:48 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/07 16:15:53 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/14 08:43:59 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,13 @@ char	**fill_info(void)
 	char	**info;
 
 	info = (char **)ft_safe_malloc(sizeof(char *) * 7);
-	info[0] = ft_strdup("NO ");
-	info[1] = ft_strdup("SO ");
-	info[2] = ft_strdup("EA ");
-	info[3] = ft_strdup("WE ");
-	info[4] = ft_strdup("C ");
-	info[5] = ft_strdup("F ");
+	info[0] = ft_strdup_two("NO ", get_struct());
+	info[1] = ft_strdup_two("SO ", get_struct());
+	info[2] = ft_strdup_two("EA ", get_struct());
+	info[3] = ft_strdup_two("WE ", get_struct());
+	info[4] = ft_strdup_two("C ", get_struct());
+	info[5] = ft_strdup_two("F ", get_struct());
 	info[6] = NULL;
-	if(!info[0] || !info[1] || !info[2] || !info[3] || !info[4] || !info[5])
-		exit_program(get_struct(), "Error\nMalloc failed\n");
 	return (info);
 }
 
@@ -43,20 +41,6 @@ int	find_first_char(char *str)
 		i++;
 	}
 	return (-1);
-}
-
-/*
-	find_map_height
-
-	seu retorno é + 1 por conta que
-	a última linha não contém '\n'
-*/
-
-int	map_adjust(char **map_start, int line_counter)
-{
-	while (!map_start[line_counter])
-		line_counter--;
-	return (line_counter);
 }
 
 int	find_map_height(char **map_start)
@@ -85,4 +69,12 @@ int	is_a_dif_char(char *s, char c)
 			return (FALSE);
 	}
 	return (TRUE);
+}
+
+int	is_error(t_cub *cub, char **info, int i)
+{
+	if (cub->err_flag == TRUE || ft_array_len(info) != 0
+		|| cub->file[i] == NULL)
+		return (TRUE);
+	return (FALSE);
 }

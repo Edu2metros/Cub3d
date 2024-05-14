@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 00:56:19 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/07 16:27:40 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/14 07:32:40 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,19 +34,6 @@ static int	is_all_land_closed(char **map_start)
 	}
 	return (TRUE);
 }
-
-/*
-	is_more_than_one_player
-
-	param map_start -> ponto inicial onde iniciam-se os vetores
-
-	o loop while roda por todo o mapa, e utiliza a string
-	player_chars para identificar através da funcao strchr
-	quantos players o mapa possuí,
-		se possuir algum valor diferente de 1 que é o esperado, considera erro.
-	(o player pode ser identificado por qualquer um desses caracteres: N, S, E,
-		W)
-*/
 
 static int	is_more_than_one_player(char **map_start)
 {

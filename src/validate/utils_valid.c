@@ -6,18 +6,11 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 00:55:31 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/04/28 00:55:35 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/14 08:30:29 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
-
-/*
-	is_extremities_closed
-
-	Checa se as linhas do topo e do final contém
-	apenas paredes
-*/
 
 int	is_extremities_closed(char *top_line, char *bot_line)
 {
@@ -41,4 +34,12 @@ int	ft_isspace_two(char **map_start, int i, int j)
 int	ft_isvalid(char c)
 {
 	return (c == '0' || c == 'N' || c == 'S' || c == 'E' || c == 'W');
+}
+
+void	remove_char_color(char *line)
+{
+	remove_char(line, ' ');
+	remove_char(line, '\n');
+	remove_char(line, 'C');
+	remove_char(line, 'F');
 }

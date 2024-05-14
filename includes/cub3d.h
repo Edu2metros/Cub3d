@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:16:48 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/13 22:19:24 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/14 08:44:13 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,25 +22,17 @@
 
 # define VALID_CHARS "01 \nNSEW"
 # define PLAYER_CHARS "NSEW"
+# define MSG_ERROR "\x1b[31mError\n\x1b[0m"
 
 # define WIDTH 640
 # define HEIGHT 480
-
-# define BLACK 0x000000FFu
-# define WHITE 0xFFFFFFFFu
-# define RED 0xFF0000FFu
-# define GREEN 0x00FF00FFu
-# define BLUE 0x0000FFFFu
-# define YELLOW 0xFFFF00FFu
-# define CYAN 0x00FFFFFFu
-# define MAGENTA 0xFF00FFFFu
 
 enum					e_directions
 {
 	NO = 0,
 	SO,
 	WE,
-	EA	
+	EA
 };
 
 enum					e_flags
@@ -51,7 +43,7 @@ enum					e_flags
 	TOTAL_INFOS = 6
 };
 
-enum					types
+enum					e_types
 {
 	FLOOR = 1,
 	WALL,
@@ -61,10 +53,10 @@ enum					types
 
 typedef struct s_math
 {
-	double 				tex_x;
-	double 				tex_pos;
-	double 				step_line;
-	int					side;
+	double				tex_x;
+	double				tex_pos;
+	double				step_line;
+	int					side_ray_hit;
 	int					mapx;
 	int					mapy;
 	double				pos_x;
@@ -90,10 +82,10 @@ typedef struct s_math
 	double				wall_dist;
 	double				time;
 	double				old_time;
-	int line_height;
-	double x;
-	double step;
-	int side2;
+	int					line_height;
+	double				x;
+	double				step;
+	int					side;
 }						t_math;
 
 typedef struct s_info
@@ -141,7 +133,14 @@ void					exit_program(t_cub *cub, char *str);
 void					key(void *arg);
 void					running2(t_cub *cub);
 int						wall_hit(t_cub *cub, t_math *m);
-void finish_mlx(t_cub *cub);
+void					finish_mlx(t_cub *cub);
+void					ft_mlx_init(t_cub *cub);
+void					update_side_hit(t_math *m, char type);
+void					init_variables_paint(t_math *m, int x);
+mlx_texture_t			*get_texture(t_math *m, t_cub *cub);
+uint32_t				get_pixel(mlx_texture_t *texture, int texx, int texy);
+void					remove_char_color(char *line);
+int						is_error(t_cub *cub, char **info, int i);
 
 // VALIDATION
 
@@ -159,8 +158,8 @@ int						ft_isspace_two(char **map_start, int i, int j);
 int						is_a_dif_char(char *s, char c);
 
 // Memory
-void					*calloc_garbage_collector(t_garbage **garbage_collector,
-							size_t count, size_t size);
+void					*calloc_gc(t_garbage **garbage_collector, size_t count,
+							size_t size);
 void					free_gargabe_collector(t_garbage *list);
 void					*ft_safe_malloc(size_t size);
 char					*ft_strdup_two(const char *str, t_cub *cub);

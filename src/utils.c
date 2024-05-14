@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 01:06:27 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/07 16:14:29 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/14 08:11:26 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,17 @@
 
 void	exit_program(t_cub *cub, char *str)
 {
-	if(str != NULL)
+	if (str != NULL)
 		ft_printf_fd(STDERR_FILENO, "%s", str);
 	free_gargabe_collector(cub->garbage);
 	exit(EXIT_FAILURE);
 }
 
-void	print_lines(t_cub *cub)
+t_cub	*get_struct(void)
 {
-	int	i;
+	static t_cub	cub;
 
-	i = 0;
-	while (cub->file[i])
-	{
-		printf("%s\n", cub->file[i]);
-		i++;
-	}
+	return (&cub);
 }
 
 char	*ft_strdup_two(const char *str, t_cub *cub)
@@ -41,8 +36,7 @@ char	*ft_strdup_two(const char *str, t_cub *cub)
 	i = 0;
 	while (str[i] != '\0')
 		i++;
-	strdup = (char *)calloc_garbage_collector(&cub->garbage, (i + 1),
-			sizeof(char));
+	strdup = (char *)calloc_gc(&cub->garbage, (i + 1), sizeof(char));
 	if (strdup == NULL)
 		return (NULL);
 	j = 0;

@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 15:31:35 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/13 19:04:31 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/14 08:20:10 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ void	calculate_distance(t_math *m)
 		m->delta_dist_y = fabs(1 / m->ray_dir_y);
 }
 
-void determinate_side_distance(t_math *m)
+void	determinate_side_distance(t_math *m)
 {
-	if(m->ray_dir_x < 0)
+	if (m->ray_dir_x < 0)
 	{
 		m->step_x = -1;
 		m->side_dist_x = (m->pos_x - m->mapx) * m->delta_dist_x;
@@ -36,7 +36,7 @@ void determinate_side_distance(t_math *m)
 		m->step_x = 1;
 		m->side_dist_x = (m->mapx + 1.0 - m->pos_x) * m->delta_dist_x;
 	}
-	if(m->ray_dir_y < 0)
+	if (m->ray_dir_y < 0)
 	{
 		m->step_y = -1;
 		m->side_dist_y = (m->pos_y - m->mapy) * m->delta_dist_y;
@@ -48,27 +48,6 @@ void determinate_side_distance(t_math *m)
 	}
 }
 
-int wall_hit(t_cub *cub, t_math *m)
-{
-	if(m->mapx < 0 || m->mapy < 0)
-		return(TRUE);
-	if(cub->vectors[m->mapy][m->mapx].type == WALL)
-		return (TRUE);
-	return (FALSE);
-}
-
-void wall_side(t_math *m, char type)
-{
-	if(type == 'x' && m->ray_dir_x > 0)
-		m->side = EA;
-	else if(type == 'x' && m->ray_dir_x <= 0)
-		m->side = WE;
-	else if(type == 'y' && m->ray_dir_y > 0)
-		m->side = SO;
-	else if(type == 'y' && m->ray_dir_y <= 0)
-		m->side = NO;
-}
-
 void	calculate_dda(t_cub *cub, t_math *m)
 {
 	while (TRUE)
@@ -77,52 +56,52 @@ void	calculate_dda(t_cub *cub, t_math *m)
 		{
 			m->side_dist_x += m->delta_dist_x;
 			m->mapx += m->step_x;
-			wall_side(m, 'x');
-			m->side2 = 0;
+			m->side = 0;
+			update_side_hit(m, 'x');
 		}
 		else
 		{
 			m->side_dist_y += m->delta_dist_y;
 			m->mapy += m->step_y;
-			m->side2 = 1;
-			wall_side(m, 'y');
+			m->side = 1;
+			update_side_hit(m, 'y');
 		}
-		if(cub->vectors[m->mapx][m->mapy].type == WALL)
-			break;
+		if (cub->vectors[m->mapx][m->mapy].type == WALL)
+			break ;
 	}
 }
 
-int calculate_line_start(t_math *m)
+int	calculate_line_start(t_math *m)
 {
-	double wall_dist;
-	int draw_start;
-	int line_height;
+	double	wall_dist;
+	int		draw_start;
+	int		line_height;
 
-	if(m->side == EA || m->side == WE)
+	if (m->side_ray_hit == EA || m->side_ray_hit == WE)
 		wall_dist = (m->side_dist_x - m->delta_dist_x);
 	else
 		wall_dist = (m->side_dist_y - m->delta_dist_y);
 	line_height = (int)(HEIGHT / wall_dist);
 	draw_start = -line_height / 2 + HEIGHT / 2;
-	if(draw_start < 0)
+	if (draw_start < 0)
 		draw_start = 0;
 	return (draw_start);
 }
 
-int calculate_line_end(t_math *m)
+int	calculate_line_end(t_math *m)
 {
-	double wall_dist;
-	int draw_end;
-	int line_height;
-	
-	if(m->side == EA || m->side == WE)
+	double	wall_dist;
+	int		draw_end;
+	int		line_height;
+
+	if (m->side_ray_hit == EA || m->side_ray_hit == WE)
 		wall_dist = (m->side_dist_x - m->delta_dist_x);
 	else
 		wall_dist = (m->side_dist_y - m->delta_dist_y);
 	line_height = (int)(HEIGHT / wall_dist);
 	m->line_height = line_height;
 	draw_end = line_height / 2 + HEIGHT / 2;
-	if(draw_end >= HEIGHT)
+	if (draw_end >= HEIGHT)
 		draw_end = HEIGHT - 1;
 	return (draw_end);
 }
