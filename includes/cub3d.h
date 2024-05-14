@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:16:48 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/14 09:47:45 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/14 11:01:24 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@
 
 # define WIDTH 640
 # define HEIGHT 480
+
+# define MAX_STEPS 1000
+# define PLAYER_RADIUS 0.05
 
 enum					e_directions
 {
@@ -143,6 +146,9 @@ uint32_t				get_pixel(mlx_texture_t *texture, int texx, int texy);
 void					remove_char_color(char *line);
 int						is_error(t_cub *cub, char **info, int i);
 void					define_variable_math(t_cub *cub);
+int						is_wallhit(t_vectors **vector, double x, double y);
+int						walk_up(t_cub *cub, double angle, double move_speed);
+int						walk_down(t_cub *cub, double angle, double move_speed);
 
 // VALIDATION
 
