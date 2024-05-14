@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:16:48 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/14 08:44:13 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/14 09:47:45 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ typedef struct s_math
 typedef struct s_info
 {
 	char				**map;
+	char				dir;
 	mlx_texture_t		*no;
 	mlx_texture_t		*so;
 	mlx_texture_t		*we;
@@ -141,6 +142,7 @@ mlx_texture_t			*get_texture(t_math *m, t_cub *cub);
 uint32_t				get_pixel(mlx_texture_t *texture, int texx, int texy);
 void					remove_char_color(char *line);
 int						is_error(t_cub *cub, char **info, int i);
+void					define_variable_math(t_cub *cub);
 
 // VALIDATION
 

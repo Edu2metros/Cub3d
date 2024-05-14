@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 08:08:08 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/14 08:10:31 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/14 10:43:06 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	find_max_x(char **map)
 	return (result);
 }
 
-static void	assign_types(char type, t_vectors *vectors, t_math *math)
+static void	assign_types(char type, t_vectors *vectors, t_cub *cub)
 {
 	if (ft_isspace(type))
 		vectors->type = SPACE;
@@ -41,8 +41,9 @@ static void	assign_types(char type, t_vectors *vectors, t_math *math)
 	else
 	{
 		vectors->type = PLAYER;
-		math->pos_x = vectors->x;
-		math->pos_y = vectors->y;
+		cub->math->pos_x = vectors->x + 0.5;
+		cub->math->pos_y = vectors->y + 0.5;
+		cub->info->dir = type;
 	}
 }
 
@@ -68,7 +69,7 @@ void	define_vectors(char **map, t_cub *cub)
 			{
 				cub->vectors[x][y].x = x;
 				cub->vectors[x][y].y = y;
-				assign_types(map[x][y], &cub->vectors[x][y], cub->math);
+				assign_types(map[x][y], &cub->vectors[x][y], cub);
 			}
 		}
 	}

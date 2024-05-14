@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 00:56:48 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/14 08:43:59 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/14 08:53:23 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ char	**fill_info(void)
 	char	**info;
 
 	info = (char **)ft_safe_malloc(sizeof(char *) * 7);
-	info[0] = ft_strdup_two("NO ", get_struct());
-	info[1] = ft_strdup_two("SO ", get_struct());
-	info[2] = ft_strdup_two("EA ", get_struct());
-	info[3] = ft_strdup_two("WE ", get_struct());
-	info[4] = ft_strdup_two("C ", get_struct());
-	info[5] = ft_strdup_two("F ", get_struct());
+	info[0] = ft_strdup("NO ");
+	info[1] = ft_strdup("SO ");
+	info[2] = ft_strdup("WE ");
+	info[3] = ft_strdup("EA ");
+	info[4] = ft_strdup("C ");
+	info[5] = ft_strdup("F ");
 	info[6] = NULL;
 	return (info);
 }
