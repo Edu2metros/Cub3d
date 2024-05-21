@@ -42,7 +42,6 @@ $(NAME): $(SRC_OBJ)
 
 build_mlx:
 ifeq (,$(wildcard ./includes/MLX42/build/libmlx42.a))
-	echo "\033[1;32mBuilding MLX42...\033[0m"
 	@cd includes && \
 	git clone https://github.com/codam-coding-college/MLX42.git && \
 	cd MLX42 && \
@@ -53,15 +52,6 @@ ifeq (,$(wildcard ./includes/MLX42/build/libmlx42.a))
 		cmake --build build -j4; \
 	fi
 endif
-
-valgrind: all
-	clear && valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=mlx.sup ./cub3D maps/running.cub
-
-test: all
-	clear && ./cub3D maps/andrey.cub
-
-gdb:
-	gnome-terminal --maximize -- bash -c "sleep 0.3 && gdb --tui --args ./cub3D maps/big.cub"
 
 delete_mlx:
 	@rm -rf includes/MLX42
@@ -76,6 +66,7 @@ clean:
 fclean: clean
 	@rm -f $(NAME)
 	@make -C ./includes/libft fclean
+	@rm -rf ./includes/MLX42
 
 re: fclean all
 
