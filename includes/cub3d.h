@@ -186,7 +186,7 @@ void					free_vectors(t_vectors **vectors);
 // MLX
 
 mlx_t					*init_window(t_vectors **vectors);
-void					draw_frame(t_cub *cub);
+void					draw_frame(void *p);
 
 // Math
 void					calculate_distance(t_math *m);
