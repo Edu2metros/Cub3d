@@ -14,6 +14,15 @@
 
 #define M_PI 3.14159265358979323846
 
+void	replace_image(t_cub *cub)
+{
+	if (cub->img)
+	{
+		mlx_delete_image(cub->mlx, cub->img);
+		cub->img = mlx_new_image(cub->mlx, WIDTH, HEIGHT);
+	}
+}
+
 void	key_up(t_cub *cub)
 {
 	double	move_speed;
@@ -38,7 +47,6 @@ void	key_up(t_cub *cub)
 		cub->math->pos_y += cub->math->dir_y * move_speed;
 		steps++;
 	}
-	draw_frame(cub);
 }
 
 void	key_down(t_cub *cub)
@@ -65,7 +73,6 @@ void	key_down(t_cub *cub)
 		cub->math->pos_y -= cub->math->dir_y * move_speed;
 		steps++;
 	}
-	draw_frame(cub);
 }
 
 void	key_right(t_cub *cub)
@@ -85,7 +92,6 @@ void	key_right(t_cub *cub)
 		- cub->math->plane_y * sin(-rot_speed);
 	cub->math->plane_y = old_plane_x * sin(-rot_speed) + cub->math->plane_y
 		* cos(-rot_speed);
-	draw_frame(cub);
 }
 
 void	key_left(t_cub *cub)
@@ -93,19 +99,22 @@ void	key_left(t_cub *cub)
 	double	rot_speed;
 	double	old_dir_x;
 	double	old_plane_x;
+	double	cos_rot_speed;
+	double	sin_rot_speed;
 
 	rot_speed = 0.09;
+	cos_rot_speed = cos(rot_speed);
+	sin_rot_speed = sin(rot_speed);
 	old_dir_x = cub->math->dir_x;
-	cub->math->dir_x = cub->math->dir_x * cos(rot_speed) - cub->math->dir_y
-		* sin(rot_speed);
-	cub->math->dir_y = old_dir_x * sin(rot_speed) + cub->math->dir_y
-		* cos(rot_speed);
+	cub->math->dir_x = cub->math->dir_x * cos_rot_speed - cub->math->dir_y
+		* sin_rot_speed;
+	cub->math->dir_y = old_dir_x * sin_rot_speed + cub->math->dir_y
+		* cos_rot_speed;
 	old_plane_x = cub->math->plane_x;
-	cub->math->plane_x = cub->math->plane_x * cos(rot_speed)
-		- cub->math->plane_y * sin(rot_speed);
-	cub->math->plane_y = old_plane_x * sin(rot_speed) + cub->math->plane_y
-		* cos(rot_speed);
-	draw_frame(cub);
+	cub->math->plane_x = cub->math->plane_x * cos_rot_speed
+		- cub->math->plane_y * sin_rot_speed;
+	cub->math->plane_y = old_plane_x * sin_rot_speed + cub->math->plane_y
+		* cos_rot_speed;
 }
 
 void	keys(void *arg)
@@ -113,6 +122,8 @@ void	keys(void *arg)
 	t_cub	*cub;
 
 	cub = (t_cub *)arg;
+	if (mlx_is_key_down(cub->mlx, MLX_KEY_ESCAPE))
+		mlx_close_window(cub->mlx);
 	if (mlx_is_key_down(cub->mlx, MLX_KEY_UP)
 		|| mlx_is_key_down(cub->mlx, MLX_KEY_W))
 		key_up(cub);
@@ -125,6 +136,4 @@ void	keys(void *arg)
 	if (mlx_is_key_down(cub->mlx, MLX_KEY_LEFT)
 		|| mlx_is_key_down(cub->mlx, MLX_KEY_A))
 		key_left(cub);
-	if (mlx_is_key_down(cub->mlx, MLX_KEY_ESCAPE))
-		mlx_close_window(cub->mlx);
 }

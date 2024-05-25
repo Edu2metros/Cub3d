@@ -85,13 +85,25 @@ static void	draw_background(t_cub *cub)
 	}
 }
 
-void	draw_frame(t_cub *cub)
+static void replace_img(t_cub *cub)
 {
+	if (cub->img)
+	{
+		mlx_delete_image(cub->mlx, cub->img);
+		cub->img = mlx_new_image(cub->mlx, WIDTH, HEIGHT);
+	}
+}
+
+void	draw_frame(void *p)
+{
+	t_cub *cub;
 	t_math	*m;
 	int		x;
 
+	cub = (t_cub *)p;
 	m = cub->math;
 	x = 0;
+	replace_img(cub);
 	draw_background(cub);
 	while (x < WIDTH)
 	{
