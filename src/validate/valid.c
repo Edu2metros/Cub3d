@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   valid.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nprudenc <nprudenc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 00:57:02 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/14 08:44:27 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/25 17:29:29 by nprudenc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ static void	check_file(char *file, t_cub *cub)
 	int	fd;
 
 	if (!ft_strchr(file, '.'))
-		exit_program(cub, MSG_ERROR "nInvalid file extension\n");
+		exit_program(cub, MSG_ERROR "Invalid file extension\n");
 	if (ft_strcmp(ft_strrchr(file, '.'), ".cub") != 0)
-		exit_program(cub, MSG_ERROR "nInvalid file extension\n");
+		exit_program(cub, MSG_ERROR "Invalid file extension\n");
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
-		exit_program(cub, MSG_ERROR "nFile does not exist\n");
+		exit_program(cub, MSG_ERROR "File does not exist\n");
 	cub->fd = fd;
 }
 

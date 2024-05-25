@@ -3,25 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   keys.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nprudenc <nprudenc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:00:15 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/25 16:47:40 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/25 17:41:54 by nprudenc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
-
-#define M_PI 3.14159265358979323846
-
-void	replace_image(t_cub *cub)
-{
-	if (cub->img)
-	{
-		mlx_delete_image(cub->mlx, cub->img);
-		cub->img = mlx_new_image(cub->mlx, WIDTH, HEIGHT);
-	}
-}
 
 void	key_up(t_cub *cub)
 {
@@ -128,8 +117,12 @@ void	keys(void *arg)
 		key_up(cub);
 	if (mlx_is_key_down(cub->mlx, MLX_KEY_S))
 		key_down(cub);
-	if (mlx_is_key_down(cub->mlx, MLX_KEY_D))
+	if (mlx_is_key_down(cub->mlx, MLX_KEY_RIGHT))
 		key_right(cub);
-	if (mlx_is_key_down(cub->mlx, MLX_KEY_A))
+	if (mlx_is_key_down(cub->mlx, MLX_KEY_LEFT))
 		key_left(cub);
+	if (mlx_is_key_down(cub->mlx, MLX_KEY_D))
+		key_right_strafe(cub);
+	if (mlx_is_key_down(cub->mlx, MLX_KEY_A))
+		key_left_strafe(cub);
 }

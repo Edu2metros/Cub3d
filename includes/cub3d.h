@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nprudenc <nprudenc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:16:48 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/14 11:01:24 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/25 17:42:06 by nprudenc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@
 # define HEIGHT 480
 
 # define MAX_STEPS 1000
-# define PLAYER_RADIUS 0.05
+# define PLAYER_RADIUS 0.1
+# define M_PI 3.14159265358979323846
 
 enum					e_directions
 {
@@ -149,6 +150,8 @@ void					define_variable_math(t_cub *cub);
 int						is_wallhit(t_vectors **vector, double x, double y);
 int						walk_up(t_cub *cub, double angle, double move_speed);
 int						walk_down(t_cub *cub, double angle, double move_speed);
+int						walk_right(t_cub *cub, double angle, double move_speed);
+int						walk_left(t_cub *cub, double angle, double move_speed);
 
 // VALIDATION
 
@@ -201,5 +204,7 @@ void					update_time(t_math *m);
 
 // KEYS
 void					keys(void *arg);
+void					key_right_strafe(t_cub *cub);
+void					key_left_strafe(t_cub *cub);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   running.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nprudenc <nprudenc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 15:34:24 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/14 08:28:38 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/25 17:40:05 by nprudenc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static void	draw_background(t_cub *cub)
 	}
 }
 
-static void replace_img(t_cub *cub)
+static void	replace_img(t_cub *cub)
 {
 	if (cub->img)
 	{
@@ -96,7 +96,7 @@ static void replace_img(t_cub *cub)
 
 void	draw_frame(void *p)
 {
-	t_cub *cub;
+	t_cub	*cub;
 	t_math	*m;
 	int		x;
 

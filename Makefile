@@ -25,6 +25,7 @@ src += $(addprefix mlx_manager/,	running.c \
 									math.c \
 									utils.c \
 									keys.c \
+									key_strafe.c \
 									key_utils.c)
 
 src += $(addprefix memory/,	memory_manager.c)
@@ -54,7 +55,7 @@ ifeq (,$(wildcard ./includes/MLX42/build/libmlx42.a))
 endif
 
 valgrind: all
-	@valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=mlx.sup ./cub3D maps/valid.cub
+	@valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=mlx.sup ./cub3D maps/elevator.cub
 
 delete_mlx:
 	@rm -rf includes/MLX42
