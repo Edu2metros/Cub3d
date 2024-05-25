@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 16:18:22 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/14 08:11:40 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/25 13:47:32 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,18 +58,18 @@ static void	parser_info(t_cub *cub)
 			continue ;
 		if (ft_isdigit(cub->file[i][first_char]))
 			break ;
-		if (ft_strcmp_until(cub->file[i], "NO ", ' ') == 0)
-			cub->info->no = assign_textures(cub->file[i], cub);
-		else if (ft_strcmp_until(cub->file[i], "SO ", ' ') == 0)
-			cub->info->so = assign_textures(cub->file[i], cub);
-		else if (ft_strcmp_until(cub->file[i], "WE ", ' ') == 0)
-			cub->info->we = assign_textures(cub->file[i], cub);
-		else if (ft_strcmp_until(cub->file[i], "EA ", ' ') == 0)
-			cub->info->ea = assign_textures(cub->file[i], cub);
-		else if (ft_strcmp_until(cub->file[i], "F ", ' ') == 0)
-			assign_colors(cub->file[i], cub->info->flo);
-		else if (ft_strcmp_until(cub->file[i], "C ", ' ') == 0)
-			assign_colors(cub->file[i], cub->info->cel);
+		if (ft_strcmp_until(cub->file[i] + first_char, "NO ", ' ') == 0)
+			cub->info->no = assign_textures(cub->file[i] + first_char, cub);
+		else if (ft_strcmp_until(cub->file[i] + first_char, "SO ", ' ') == 0)
+			cub->info->so = assign_textures(cub->file[i] + first_char, cub);
+		else if (ft_strcmp_until(cub->file[i] + first_char, "WE ", ' ') == 0)
+			cub->info->we = assign_textures(cub->file[i] + first_char, cub);
+		else if (ft_strcmp_until(cub->file[i] + first_char, "EA ", ' ') == 0)
+			cub->info->ea = assign_textures(cub->file[i] + first_char, cub);
+		else if (ft_strcmp_until(cub->file[i] + first_char, "F ", ' ') == 0)
+			assign_colors(cub->file[i] + first_char, cub->info->flo);
+		else if (ft_strcmp_until(cub->file[i] + first_char, "C ", ' ') == 0)
+			assign_colors(cub->file[i] + first_char, cub->info->cel);
 	}
 }
 
