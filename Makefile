@@ -53,11 +53,17 @@ ifeq (,$(wildcard ./includes/MLX42/build/libmlx42.a))
 	fi
 endif
 
+valgrind: all
+	@valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=mlx.sup ./cub3D maps/valid.cub
+
 delete_mlx:
 	@rm -rf includes/MLX42
 
 libft: 
 	@make -C ./includes/libft
+
+gdb: all
+	@gdb ./cub3D
 
 clean:
 	@rm -rf $(OBJ_DIR)
@@ -65,7 +71,7 @@ clean:
 
 fclean: clean
 	@rm -f $(NAME)
-	@make -C ./includes/libft fclean
+	@rm -f ./includes/libft/libft.a
 	@rm -rf ./includes/MLX42
 
 re: fclean all

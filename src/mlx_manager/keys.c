@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:00:15 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/21 10:01:23 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/25 13:25:56 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,17 +113,13 @@ void	keys(void *arg)
 	t_cub	*cub;
 
 	cub = (t_cub *)arg;
-	if (mlx_is_key_down(cub->mlx, MLX_KEY_UP) || \
-mlx_is_key_down(cub->mlx, MLX_KEY_W))
+	if (mlx_is_key_down(cub->mlx, MLX_KEY_UP) || mlx_is_key_down(cub->mlx, MLX_KEY_W))
 		key_up(cub);
-	if (mlx_is_key_down(cub->mlx, MLX_KEY_DOWN) || \
-mlx_is_key_down(cub->mlx, MLX_KEY_S))
+	if (mlx_is_key_down(cub->mlx, MLX_KEY_DOWN) || mlx_is_key_down(cub->mlx, MLX_KEY_S))
 		key_down(cub);
-	if (mlx_is_key_down(cub->mlx, MLX_KEY_RIGHT) || \
-mlx_is_key_down(cub->mlx, MLX_KEY_D))
+	if (mlx_is_key_down(cub->mlx, MLX_KEY_RIGHT) || mlx_is_key_down(cub->mlx, MLX_KEY_D))
 		key_right(cub);
-	if (mlx_is_key_down(cub->mlx, MLX_KEY_LEFT) || \
-mlx_is_key_down(cub->mlx, MLX_KEY_A))
+	if (mlx_is_key_down(cub->mlx, MLX_KEY_LEFT) || mlx_is_key_down(cub->mlx, MLX_KEY_A))
 		key_left(cub);
 	if (mlx_is_key_down(cub->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(cub->mlx);
