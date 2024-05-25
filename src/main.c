@@ -6,7 +6,7 @@
 /*   By: eddos-sa <eddos-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:16:22 by eddos-sa          #+#    #+#             */
-/*   Updated: 2024/05/21 09:54:02 by eddos-sa         ###   ########.fr       */
+/*   Updated: 2024/05/25 16:49:51 by eddos-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static void	ft_mlx_handler(t_cub *cub)
 {
+	mlx_loop_hook(cub->mlx, draw_frame, cub);
 	mlx_loop_hook(cub->mlx, keys, cub);
 	mlx_loop(cub->mlx);
 	finish_mlx(cub);
@@ -29,7 +30,6 @@ static int	cub3d(int argc, char **argv)
 	parser(cub);
 	define_vectors(cub->info->map, cub);
 	define_variable_math(cub);
-	draw_frame(cub);
 	ft_mlx_handler(cub);
 	free_gargabe_collector(cub->garbage);
 	return (EXIT_SUCCESS);
