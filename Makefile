@@ -74,6 +74,8 @@ fclean: clean
 	@rm -f ./includes/libft/libft.a
 	@rm -rf ./includes/MLX42
 
-re: fclean all
+re: fclean
+	@sleep 0.1
+	@make all
 
 .PHONY: all clean fclean re libft build_mlx delete_mlx 
