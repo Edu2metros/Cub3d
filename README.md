@@ -1,6 +1,6 @@
 <h1 align="center"><strong>CUB3D - @42SP</strong></h1>
 
-<p align="center">This was the first project of the 42 curriculum. The project aims to recreate several functions from the standard libc.</p>
+<p align="center">A Wolfenstein 3D-inspired project.</p>
 
 <p align="center"><a href="https://www.42sp.org.br/" target="_blank"><img src="https://img.shields.io/static/v1?label=&message=SP&color=000&style=for-the-badge&logo=42""></a></p>
 <p align="center"><img src="https://github.com/ayogun/42-project-badges/raw/main/badges/cub3dm.png"> </p>
